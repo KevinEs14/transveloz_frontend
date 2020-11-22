@@ -3,11 +3,13 @@ import '../pages/accountspage.dart';
 import '../pages/myorderspage.dart';
 
 import '../pages/homepage.dart';
+import '../pages/userRegister.dart';
 
 enum NavigationEvents {
   HomePageClickedEvent,
   AccountClickedEvent,
   MyOrdersClickedEvent,
+  UserRegisterClickedEvent,
 }
 
 abstract class NavigationStates {}
@@ -27,6 +29,9 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         break;
       case NavigationEvents.MyOrdersClickedEvent:
         yield MyOrdersPage();
+        break;
+      case NavigationEvents.UserRegisterClickedEvent:
+        yield UserRegisterPage();
         break;
     }
   }
