@@ -55,26 +55,19 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                   ),
                   SizedBox(height: size.height*0.05,),
                   Container(
-                    height: 60,
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            blurRadius: 20,
-                            offset: Offset(0,10),
-                          )
-                        ]
-                    ),
-                    child: Container(
                       height: 60,
                       width: size.width*0.8,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: color4)),
-                          color: color4
+                          color: color4,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              blurRadius: 20,
+                              offset: Offset(0,10),
+                            )
+                          ]
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -88,29 +81,21 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         controller: number,
                       ),
                     ),
-                  ),
                   SizedBox(height: size.height*0.02,),
                   Container(
-                    height: 60,
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            blurRadius: 20,
-                            offset: Offset(0,10),
-                          )
-                        ]
-                    ),
-                    child: Container(
                       height: 60,
                       width: size.width*0.8,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: color4)),
-                          color: color4
+                          color: color4,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              blurRadius: 20,
+                              offset: Offset(0,10),
+                            )
+                          ]
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -124,29 +109,21 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         controller: street,
                       ),
                     ),
-                  ),
                   SizedBox(height: size.height*0.02,),
                   Container(
-                    height: 60,
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            blurRadius: 20,
-                            offset: Offset(0,10),
-                          )
-                        ]
-                    ),
-                    child: Container(
                       height: 60,
                       width: size.width*0.8,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: color4)),
-                          color: color4
+                          color: color4,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              blurRadius: 20,
+                              offset: Offset(0,10),
+                            )
+                          ]
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -160,29 +137,21 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         controller: zone,
                       ),
                     ),
-                  ),
                   SizedBox(height: size.height*0.02,),
                   Container(
-                    height: 60,
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            blurRadius: 20,
-                            offset: Offset(0,10),
-                          )
-                        ]
-                    ),
-                    child: Container(
                       height: 60,
                       width: size.width*0.8,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: color4)),
-                          color: color4
+                          color: color4,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              blurRadius: 20,
+                              offset: Offset(0,10),
+                            )
+                          ]
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -196,29 +165,21 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         controller: city,
                       ),
                     ),
-                  ),
                   SizedBox(height: size.height*0.02,),
                   Container(
-                    height: 60,
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            blurRadius: 20,
-                            offset: Offset(0,10),
-                          )
-                        ]
-                    ),
-                    child: Container(
                       height: 60,
                       width: size.width*0.8,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: color4)),
-                          color: color4
+                          color: color4,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              blurRadius: 20,
+                              offset: Offset(0,10),
+                            )
+                          ]
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -232,7 +193,6 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         controller: country,
                       ),
                     ),
-                  ),
                   SizedBox(height: size.height*0.02,),
                   GestureDetector(
                     onTap: (){
