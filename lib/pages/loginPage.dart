@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/pages/homepage.dart';
+//import 'file:///D:/trabajos%20flutter/transveloz/transveloz_frontend/lib/pages/User/userregister.dart';
+import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
 class LoginPage extends StatefulWidget {
   @override
@@ -113,7 +115,6 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
               SizedBox(height: size.height*0.05,),
               Container(
                 height: 60,
-
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -160,6 +161,27 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                     ),
                   ),
                   child: Center(child: Text("Login",style: TextStyle(fontSize:size.width*0.05,color: Colors.white,fontWeight: FontWeight.bold),)),
+                ),
+              ),
+              SizedBox(height: size.height*0.01,),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (conext)=>UserSideBarLayout()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (conext)=>RegisterUser()));
+
+                },
+                child: Container(
+                  margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xff121212),Color(0xff99091A),
+                          Color(0xff121212)]
+                    ),
+                  ),
+                  child: Center(child: Text("User",style: TextStyle(fontSize:size.width*0.05,color: Colors.white,fontWeight: FontWeight.bold),)),
                 ),
               ),
             ],
