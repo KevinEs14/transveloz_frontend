@@ -82,7 +82,11 @@ class _RegisterUserAddressState extends State<RegisterUserAddress> with Navigati
                   ),
                 ),
               ),
-              SizedBox(height: size.height*0.018,),
+              SizedBox(height: size.height*0.04,),
+              Container(
+
+              ),
+              SizedBox(height: size.height*0.04,),
               GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (conext)=>RegisterUser()));
