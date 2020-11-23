@@ -110,7 +110,6 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                     "Nombre",
                                     style: TextStyle(color: Color(0xFF225957), fontSize: 30, fontWeight: FontWeight.w800),
                                   ),
-
                                   subtitle: Text(
                                     "Email",
                                     style: TextStyle(
@@ -236,7 +235,6 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
               ),
             ),
           ],
-
         );
       },
     );

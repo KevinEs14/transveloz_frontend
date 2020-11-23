@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/models/UserHistory.dart';
 import 'package:transveloz_frontend/repository/userhistory_repository.dart';
-import '../bloc.navigation_bloc/navigation_bloc.dart';
-import '../color.dart';
+import '../../color.dart';
 
 class UserHistoryPage extends StatefulWidget with NavigationStates {
   @override
@@ -17,83 +15,19 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
   List<UserHistory> data = List<UserHistory>();
 
   UserHistoryRepository userHistoryRepository = UserHistoryRepository();
-/*
-  Future<List<UserHistory>> tomar_datos() async{
-    try{
-      //var url = 'http://192.168.128.11:8070/v1/user/1/payment';
-      //var response = await http.post(url).timeout(Duration(seconds: 90));
-      var url = 'http://192.168.128.11:8070/v1/user/2/payment';
-      print(url);
-      var response = await http.get(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          }
-      );
-      var datos = jsonDecode(response.body);
-      var registros = List<UserHistory>();
 
-      for(datos in datos){
-        registros.add(UserHistory.fromJson(datos));
-      }
-
-      return registros;
-    }
-    catch(error){
-      print(error);
-      return null;
-    }
-  }
-
- */
-
-  /*
-  Future<List<UserHistory>> tomar_datos2() async {
-    try {
-      List<Color> colors = List();
-      var url = 'http://192.168.128.11:8070/v1/user/1/payment';
-      print(url);
-      final response = await http.get(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          }
-      );
-      List resCol = jsonDecode(response.body);
-      resCol.forEach((element) {
-        Color newColor = Color();
-        newColor.idColor = element["idColor"];
-        newColor.color = element["color"];
-        colors.add(newColor);
-      });
-      print(colors);
-      if (response.statusCode == 200) {
-        return ;
-      }
-      else {
-        return null;
-      }
-    }
-    catch (e) {
-      print(e);
-      return null;
-    }
-  }
-  */
   @override
   void initState(){
     // TODO: implement initState
     super.initState();
-
-    userHistoryRepository.tomar_datos().then((value){
+      userHistoryRepository.tomar_datos().then((value){
       setState(() {
         data.addAll(value);
       });
     });
   }
-  Size size;
-  List nam = ["Jorge","Juan Carlos","Antonio","Kebin","Joel","Jorge","Juan Carlos","Antonio","Kebin","Joel"];
-  List des = ["Programador","Administrador","Programador","Analista","Registrador","Programador","Administrador","Programador","Analista","Registrador"];
-  List pres = ["123.53","2343.22","212.543","212.21","423.23","434.56","645.53","323.34","323.98","321.33"];
 
+  Size size;
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;

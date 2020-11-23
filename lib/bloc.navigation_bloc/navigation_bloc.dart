@@ -1,4 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:transveloz_frontend/pages/User/profilePage.dart';
+import 'package:transveloz_frontend/pages/User/requestServicePage.dart';
+import 'package:transveloz_frontend/pages/User/userHistoryPage.dart';
+import 'package:transveloz_frontend/pages/User/userHomePage.dart';
 import 'package:transveloz_frontend/pages/Vehicle/vehicleList.dart';
 import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/pages/loginPage.dart';
@@ -7,10 +11,6 @@ import '../pages/myorderspage.dart';
 
 import '../pages/homepage.dart';
 import '../pages/User/userregister.dart';
-import 'package:transveloz_frontend/pages/profilePage.dart';
-import 'package:transveloz_frontend/pages/requestServicePage.dart';
-import 'package:transveloz_frontend/pages/userHistoryPage.dart';
-import 'package:transveloz_frontend/pages/userHomePage.dart';
 
 enum NavigationEvents {
   HomePageClickedEvent,

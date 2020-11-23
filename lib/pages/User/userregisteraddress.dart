@@ -2,11 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/models/User.dart';
-import 'package:transveloz_frontend/pages/User/userregister.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
-//import 'file:///D:/trabajos%20flutter/transveloz/transveloz_frontend/lib/pages/User/userregister.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
-import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 
 class UserRegisterAddress extends StatefulWidget with NavigationStates{
   UserRegisterAddress(this.user);
