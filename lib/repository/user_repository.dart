@@ -8,13 +8,13 @@ class UserRepository{
 
   Future<bool> createUser(User user) async{
     try{
-      var res = await http.post("http://192.168.128.8:8070/v1/user",
+      var res = await http.post("http://192.168.128.11:8070/v1/user",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(user.toJson()));
       if(res.statusCode == 200){
-        print("Done");
+        print("Done1");
         return true;
       }else{
         return false;

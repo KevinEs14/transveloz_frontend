@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:transveloz_frontend/models/UserHistory.dart';
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../color.dart';
 
@@ -9,6 +13,75 @@ class UserHistoryPage extends StatefulWidget with NavigationStates {
 }
 class _UserHistoryPageState extends State<UserHistoryPage> {
 
+  List<UserHistory> data = List<UserHistory>();
+
+  Future<List<UserHistory>> tomar_datos() async{
+    try{
+      //var url = 'http://192.168.128.11:8070/v1/user/1/payment';
+      //var response = await http.post(url).timeout(Duration(seconds: 90));
+      var url = 'http://192.168.128.11:8070/v1/user/2/payment';
+      print(url);
+      var response = await http.get(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          }
+      );
+      var datos = jsonDecode(response.body);
+      var registros = List<UserHistory>();
+
+      for(datos in datos){
+        registros.add(UserHistory.fromJson(datos));
+      }
+
+      return registros;
+    }
+    catch(error){
+      print(error);
+      return null;
+    }
+  }
+  /*
+  Future<List<UserHistory>> tomar_datos2() async {
+    try {
+      List<Color> colors = List();
+      var url = 'http://192.168.128.11:8070/v1/user/1/payment';
+      print(url);
+      final response = await http.get(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          }
+      );
+      List resCol = jsonDecode(response.body);
+      resCol.forEach((element) {
+        Color newColor = Color();
+        newColor.idColor = element["idColor"];
+        newColor.color = element["color"];
+        colors.add(newColor);
+      });
+      print(colors);
+      if (response.statusCode == 200) {
+        return ;
+      }
+      else {
+        return null;
+      }
+    }
+    catch (e) {
+      print(e);
+      return null;
+    }
+  }
+  */
+  @override
+  void initState(){
+    // TODO: implement initState
+    super.initState();
+    tomar_datos().then((value){
+      setState(() {
+        data.addAll(value);
+      });
+    });
+  }
   Size size;
   List nam = ["Jorge","Juan Carlos","Antonio","Kebin","Joel","Jorge","Juan Carlos","Antonio","Kebin","Joel"];
   List des = ["Programador","Administrador","Programador","Analista","Registrador","Programador","Administrador","Programador","Analista","Registrador"];
@@ -70,7 +143,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: nam.length,
+                itemCount: data.length,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) => Container(
                   width: MediaQuery.of(context).size.width,
@@ -110,25 +183,25 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                     children: [
                                       Text("Conductor:  ", style: TextStyle(color: color1,
                                           fontSize: 18.0, fontWeight: FontWeight.bold),),
-                                      Text(nam[index], style: TextStyle(color: color5,
+                                      Text(data[index].driverFirstName, style: TextStyle(color: color5,
                                           fontSize: 17.0, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Tipo:   ", style: TextStyle(color: color1,
+                                      Text("Direccion:   ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
-                                      Text(des[index], style: TextStyle(color: color5,
+                                      Text(data[index].deliveryStreet, style: TextStyle(color: color5,
                                           fontSize: 16.0),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Precio:   ", style: TextStyle(color: color1,
+                                      Text("Estado de Entrega:   ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
-                                      Text(pres[index]+" Bs.", style: TextStyle(color: color5,
+                                      Text(data[index].travelStatus, style: TextStyle(color: color5,
                                           fontSize: 16.0),),
                                     ],
                                   ),

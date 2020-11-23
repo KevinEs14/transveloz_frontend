@@ -7,7 +7,8 @@ class DriverRepository{
   
   Future<bool> createDriver(Driver driver) async{
     try{
-      var res = await http.post("http://192.168.0.18:8070/v1/driver",
+      //var res = await http.post("http://192.168.0.18:8070/v1/driver",
+      var res = await http.post("http://192.168.128.11:8070/v1/driver",
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

@@ -6,6 +6,7 @@ import 'package:transveloz_frontend/pages/User/userregister.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
 //import 'file:///D:/trabajos%20flutter/transveloz/transveloz_frontend/lib/pages/User/userregister.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
+import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 
 class UserRegisterAddress extends StatefulWidget with NavigationStates{
   UserRegisterAddress(this.user);
@@ -185,6 +186,7 @@ class _UserRegisterAddressState extends State<UserRegisterAddress> {
                 onTap: (){
                   bool check = Submit();
                   if(check){
+                    userRepository.createUser(user);
                     Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
                   }
                 },
