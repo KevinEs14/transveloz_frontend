@@ -8,10 +8,12 @@ class UserHistoryPage extends StatefulWidget with NavigationStates {
   _UserHistoryPageState createState() => _UserHistoryPageState();
 }
 class _UserHistoryPageState extends State<UserHistoryPage> {
+
   Size size;
   List nam = ["Jorge","Juan Carlos","Antonio","Kebin","Joel","Jorge","Juan Carlos","Antonio","Kebin","Joel"];
   List des = ["Programador","Administrador","Programador","Analista","Registrador","Programador","Administrador","Programador","Analista","Registrador"];
   List pres = ["123.53","2343.22","212.543","212.21","423.23","434.56","645.53","323.34","323.98","321.33"];
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -96,7 +98,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                 child: CircleAvatar(
                                   //backgroundColor: Colors.green,
                                   //foregroundColor: Colors.green,
-                                  backgroundImage: NetworkImage('assets/images/fondoRegistro.jpg'),
+                                  backgroundImage: NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
                                 ),
                               ),
                               SizedBox(width: 10.0),

@@ -1,15 +1,30 @@
 
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:transveloz_frontend/models/User.dart';
 import 'package:transveloz_frontend/pages/User/userregister.dart';
+import 'package:transveloz_frontend/repository/user_repository.dart';
 //import 'file:///D:/trabajos%20flutter/transveloz/transveloz_frontend/lib/pages/User/userregister.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
 
 class UserRegisterAddress extends StatefulWidget with NavigationStates{
+  UserRegisterAddress(this.user);
+  User user;
   @override
-  _UserRegisterAddressState createState() => _UserRegisterAddressState();
+  _UserRegisterAddressState createState() => _UserRegisterAddressState(user);
 }
 class _UserRegisterAddressState extends State<UserRegisterAddress> {
+  _UserRegisterAddressState(this.user);
+
+  User user;
+  UserRepository userRepository = UserRepository();
+
+  TextEditingController number = TextEditingController();
+  TextEditingController street = TextEditingController();
+  TextEditingController zone = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController country = TextEditingController();
+
   Size size;
   @override
   Widget build(BuildContext context) {
@@ -58,6 +73,7 @@ class _UserRegisterAddressState extends State<UserRegisterAddress> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
                   ),
+                  controller: number,
                 ),
               ),
               SizedBox(height: size.height*0.016,),
@@ -83,6 +99,7 @@ class _UserRegisterAddressState extends State<UserRegisterAddress> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
                   ),
+                  controller: street,
                 ),
               ),
               SizedBox(height: size.height*0.016,),
@@ -108,6 +125,7 @@ class _UserRegisterAddressState extends State<UserRegisterAddress> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
                   ),
+                  controller: zone,
                 ),
               ),
               SizedBox(height: size.height*0.016,),
@@ -133,6 +151,7 @@ class _UserRegisterAddressState extends State<UserRegisterAddress> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
                   ),
+                  controller: city,
                 ),
               ),
               SizedBox(height: size.height*0.016,),
@@ -158,12 +177,16 @@ class _UserRegisterAddressState extends State<UserRegisterAddress> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                     ),
                   ),
+                  controller: country,
                 ),
               ),
               SizedBox(height: size.height*0.018,),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (conext)=>UserRegister()));
+                  bool check = Submit();
+                  if(check){
+                    Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
@@ -180,5 +203,20 @@ class _UserRegisterAddressState extends State<UserRegisterAddress> {
         ),
       ),
     );
+  }
+
+  bool Submit(){
+    bool aux = false;
+    if(number.text.isNotEmpty && street.text.isNotEmpty && zone.text.isNotEmpty && city.text.isNotEmpty && country.text.isNotEmpty){
+      aux = true;
+      user.number = number.text;
+      user.street = street.text;
+      user.zone = zone.text;
+      user.city = city.text;
+      user.country = country.text;
+    }else{
+      aux = false;
+    }
+    return aux;
   }
 }
