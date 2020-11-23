@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:transveloz_frontend/pages/registerUserAddress.dart';
+import 'file:///D:/trabajos%20flutter/transveloz/transveloz_frontend/lib/pages/User/userregisteraddress.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
 
-class RegisterUser extends StatefulWidget{
+class UserRegister extends StatefulWidget with NavigationStates {
   @override
-  _RegisterUserState createState() => _RegisterUserState();
+  _UserRegisterState createState() => _UserRegisterState();
 }
-class _RegisterUserState extends State<RegisterUser> with NavigationStates {
+class _UserRegisterState extends State<UserRegister> {
   Size size;
   @override
   Widget build(BuildContext context) {
@@ -235,7 +235,7 @@ class _RegisterUserState extends State<RegisterUser> with NavigationStates {
               SizedBox(height: size.height*0.018,),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (conext)=>RegisterUserAddress()));
+                  Navigator.push(context, MaterialPageRoute(builder: (conext)=>UserRegisterAddress()));
                 },
                 child: Container(
                   margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),

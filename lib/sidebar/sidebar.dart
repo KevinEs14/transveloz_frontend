@@ -177,6 +177,14 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.DriverRegisterClickedEvent);
                                             },
                                           ),
+                                          MenuItem(
+                                            icon: Icons.add_circle_outline_sharp,
+                                            title: "Add User",
+                                            onTap: () {
+                                              onIconPressed();
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.UserRegisterClickedEvent);
+                                            },
+                                          ),
                                           Divider(
                                             height: 50,
                                             thickness: 0.5,
