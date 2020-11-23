@@ -30,7 +30,7 @@ abstract class NavigationStates {}
 
 class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
   @override
-  NavigationStates get initialState => AccountsPage();
+  NavigationStates get initialState => VehicleList();
 
   @override
   Stream<NavigationStates> mapEventToState(NavigationEvents event) async* {

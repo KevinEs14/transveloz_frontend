@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart' as Col;
 import 'package:flutter/cupertino.dart';
+import 'package:transveloz_frontend/pages/Vehicle/vehicleInformationPage.dart';
 import 'package:transveloz_frontend/pages/driver/driverregisteraddress.dart';
 import 'vehicleConstants.dart';
 class VehicleList extends StatefulWidget with NavigationStates{
@@ -79,7 +80,7 @@ class _VehicleList extends State<VehicleList>{
                         ),
                         GestureDetector(
                           onTap: (){
-                            //Navigator.push(context, MaterialPageRoute(builder: (conext)=>DriverRegisterAddress()));
+                            Navigator.push(context, MaterialPageRoute(builder: (conext)=>VehicleInformationPage()));
                           },
                           child: Container(
                             margin: EdgeInsets.only(left: 1,right: 1),
@@ -143,19 +144,16 @@ class _VehicleList extends State<VehicleList>{
             ),
             child: Column(
                 children: <Widget>[
-                  Positioned(
-                      child: Container(
+                  Container(
                         margin: EdgeInsets.only(top: size.height*0.04),
                         child: Center(
                           child: Text("BUSQUEDA DE VEHICULOS",style: TextStyle(color: Colors.white,fontSize: size.height*0.035,fontWeight: FontWeight.bold),),
                         ),
-                      )
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Positioned(
-                    child: Container(
+                  Container(
                       padding: EdgeInsets.only(left:16,right: 16),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 2.0),
@@ -178,7 +176,6 @@ class _VehicleList extends State<VehicleList>{
                             child: Text(newValue, style: TextStyle(color: Col.color1)),);
                         }).toList(),
                       ),
-                    ),
                   ),
                   SizedBox(
                     height: 20,
