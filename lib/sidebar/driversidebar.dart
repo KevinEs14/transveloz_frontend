@@ -197,6 +197,7 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                             onTap: (){
                                               onIconPressed();
                                               // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
+                                              Navigator.pop(context);
                                             },
                                           ),
                                         ],
