@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
-//import 'file:///D:/trabajos%20flutter/transveloz/transveloz_frontend/lib/pages/User/userregister.dart';
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../color.dart';
 
