@@ -1,18 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart' as Col;
 import 'package:flutter/cupertino.dart';
+import 'package:transveloz_frontend/pages/Vehicle/vehicleService.dart';
 import 'package:transveloz_frontend/pages/driver/driverregisteraddress.dart';
 import 'vehicleConstants.dart';
+import 'package:transveloz_frontend/models/VehicleList.dart';
+import 'package:http/http.dart' as http;
+import '../../repository/vehicleList_repository.dart';
+import '../../models/VehicleList.dart';
 class VehicleList extends StatefulWidget with NavigationStates{
   @override
   _VehicleList createState() => _VehicleList();
-
-
 }
 
 class _VehicleList extends State<VehicleList>{
+  VehicleRepository vehicleRepository = VehicleRepository();
   final CategoriesScroller categoriesScroller = CategoriesScroller();
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
@@ -26,12 +32,51 @@ class _VehicleList extends State<VehicleList>{
     "ORDENAR POR TIPO VEHICULO",
     "ORDENAR POR CAPACIDAD"];
   List<Widget> itemsData = [];
-
+  List<VehicleList> itemsVehicle;
   int sizeList=5;
 
+  Future <List<VehicleModel>> getListVehicles() async{
+    try{
+      List<VehicleModel> listVehicle=List();
+      var url="http://192.168.1.7:8070/v1/vehicle";
+      print(url);
+      final response = await http.get(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          }
+      );
+      List resVehicle = jsonDecode(response.body);
+      resVehicle.forEach((element) {
+
+        VehicleModel newVehicle=VehicleModel();
+        newVehicle.vehicleId=element["vehicleId"];
+        newVehicle.vehicleType=element["vehicleType"];
+        newVehicle.vehicleBrand=element["vehicleBrand"];
+        newVehicle.vehicleModel=element["vehicleModel"];
+        newVehicle.personFirstName=element["personFirstName"];
+        newVehicle.personFirstSurname=element["personFirstSurname"];
+        newVehicle.vehicleCapacity=element["vehicleCapacity"];
+        newVehicle.vehicleCompany=element["vehicleCompany"];
+        newVehicle.vehiclePrice=element["vehiclePrice"];
+        listVehicle.add(newVehicle);
+      });
+      print(listVehicle);
+      if(response.statusCode==200){
+        return resVehicle;
+      }
+      else{
+        return null;
+      }
+    }catch(error){
+      print(error);
+      return null;
+    }
+  }
+
   void getPostsData() {
-    List<dynamic> responseList = VEHICLE_DATA;
+    //List<VehicleModel> responseList=VEHICLE_DATA ;
     List<Widget> listItems = [];
+
     responseList.forEach((post) {
       listItems.add(Container(
           height: 180,
@@ -79,7 +124,7 @@ class _VehicleList extends State<VehicleList>{
                         ),
                         GestureDetector(
                           onTap: (){
-                            //Navigator.push(context, MaterialPageRoute(builder: (conext)=>DriverRegisterAddress()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleService()));
                           },
                           child: Container(
                             margin: EdgeInsets.only(left: 1,right: 1),
@@ -110,13 +155,15 @@ class _VehicleList extends State<VehicleList>{
   @override
   void initState() {
     super.initState();
+    //itemsVehicle = vehicleRepository.getListVehicles();
     getPostsData();
-    controller.addListener(() {
 
+    controller.addListener(() {
       double value = controller.offset/119;
 
       setState(() {
         topContainer = value;
+        vehicleRepository.getListVehicles();
         closeTopContainer = controller.offset > 50;
       });
     });

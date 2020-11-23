@@ -1,4 +1,4 @@
-const VEHICLE_DATA =[
+List<Map<String, Object>> VEHICLE_DATA =[
   {
     "vehicleId":1,
     "personFirstName":"Juan",
