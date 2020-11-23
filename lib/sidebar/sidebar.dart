@@ -178,6 +178,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             },
                                           ),
                                           MenuItem(
+                                            icon: Icons.search,
+                                            title: "Search Vehicles",
+                                            onTap: () {
+                                              onIconPressed();
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehicles);
+                                            },
+                                          ),
+                                          MenuItem(
+
                                             icon: Icons.add_circle_outline_sharp,
                                             title: "Add User",
                                             onTap: () {
