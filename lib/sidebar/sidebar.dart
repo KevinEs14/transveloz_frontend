@@ -177,6 +177,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.DriverRegisterClickedEvent);
                                             },
                                           ),
+                                          MenuItem(
+                                            icon: Icons.search,
+                                            title: "Search Vehicles",
+                                            onTap: () {
+                                              onIconPressed();
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehicles);
+                                            },
+                                          ),
+
                                           Divider(
                                             height: 50,
                                             thickness: 0.5,
