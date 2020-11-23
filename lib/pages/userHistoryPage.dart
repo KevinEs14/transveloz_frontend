@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/models/UserHistory.dart';
+import 'package:transveloz_frontend/repository/userhistory_repository.dart';
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../color.dart';
 
@@ -15,6 +16,8 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
 
   List<UserHistory> data = List<UserHistory>();
 
+  UserHistoryRepository userHistoryRepository = UserHistoryRepository();
+/*
   Future<List<UserHistory>> tomar_datos() async{
     try{
       //var url = 'http://192.168.128.11:8070/v1/user/1/payment';
@@ -40,6 +43,9 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
       return null;
     }
   }
+
+ */
+
   /*
   Future<List<UserHistory>> tomar_datos2() async {
     try {
@@ -76,7 +82,8 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
   void initState(){
     // TODO: implement initState
     super.initState();
-    tomar_datos().then((value){
+
+    userHistoryRepository.tomar_datos().then((value){
       setState(() {
         data.addAll(value);
       });
