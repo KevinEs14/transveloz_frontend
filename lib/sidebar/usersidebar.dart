@@ -8,12 +8,12 @@ import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../color.dart';
 import '../sidebar/menu_item.dart';
 
-class SideBar extends StatefulWidget {
+class UserSideBar extends StatefulWidget {
   @override
-  _SideBarState createState() => _SideBarState();
+  _UserSideBarState createState() => _UserSideBarState();
 }
 
-class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<SideBar> {
+class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStateMixin<UserSideBar> {
   AnimationController _animationController;
   StreamController<bool> isSidebarOpenedStreamController;
   Stream<bool> isSidebarOpenedStream;
@@ -71,7 +71,9 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                 child:  GestureDetector(
                   onTap: (){
                     onIconPressed();
+
                   },
+
                 ),
               ),
             ),
@@ -104,15 +106,13 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: size.height*0.08),
                                 child: ListTile(
-
-
                                   title: Text(
-                                    "nombre",
+                                    "Nombre",
                                     style: TextStyle(color: Color(0xFF225957), fontSize: 30, fontWeight: FontWeight.w800),
                                   ),
 
                                   subtitle: Text(
-                                    "email",
+                                    "Email",
                                     style: TextStyle(
                                       height: 2,
                                       color: color1.withOpacity(0.8),
@@ -124,8 +124,9 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                     child: Icon(
                                       Icons.perm_identity,
                                       color: color2,
+                                      size: 35,
                                     ),
-                                    radius: size.width*0.1,
+                                    radius: size.width*0.09,
                                   ),
                                 ),
                               ),
@@ -150,39 +151,31 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             title: "Inicio",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.UserHomePageClickedEvent);
                                             },
                                           ),
                                           MenuItem(
                                             icon: Icons.person,
-                                            title: "Reporte",
+                                            title: "Perfil",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.AccountClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ProfileClickedEvent);
                                             },
                                           ),
                                           MenuItem(
-                                            icon: Icons.shopping_basket,
+                                            icon: Icons.airport_shuttle_outlined,
+                                            title: "Servicio",
+                                            onTap: () {
+                                              onIconPressed();
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.RequestServiceClickedEvent);
+                                            },
+                                          ),
+                                          MenuItem(
+                                            icon: Icons.article_outlined,
                                             title: "Historial",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyOrdersClickedEvent);
-                                            },
-                                          ),
-                                          MenuItem(
-                                            icon: Icons.add_circle_outline_sharp,
-                                            title: "Add Driver",
-                                            onTap: () {
-                                              onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.DriverRegisterClickedEvent);
-                                            },
-                                          ),
-                                          MenuItem(
-                                            icon: Icons.add_circle_outline_sharp,
-                                            title: "Add User",
-                                            onTap: () {
-                                              onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.UserRegisterClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.UserHistoryClickedEvent);
                                             },
                                           ),
                                           Divider(
@@ -202,7 +195,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             title: "Cerrar Sesión",
                                             onTap: (){
                                               onIconPressed();
-                                              //BlocProvider.of<LoginBloc>(context).add(NavigationEvents.M);
+                                              // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
                                             },
                                           ),
                                         ],

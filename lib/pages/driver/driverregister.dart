@@ -394,7 +394,7 @@ class _DriverRegister extends State<DriverRegister>{
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
