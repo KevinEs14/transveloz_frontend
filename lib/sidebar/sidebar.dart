@@ -71,9 +71,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                 child:  GestureDetector(
                   onTap: (){
                     onIconPressed();
-
                   },
-
                 ),
               ),
             ),
@@ -172,11 +170,11 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             },
                                           ),
                                           MenuItem(
-                                            icon: Icons.add_outlined,
-                                            title: "Registro Usuario",
+                                            icon: Icons.add_circle_outline_sharp,
+                                            title: "Add Driver",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.UserRegisterClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.DriverRegisterClickedEvent);
                                             },
                                           ),
                                           Divider(
@@ -196,7 +194,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             title: "Cerrar Sesión",
                                             onTap: (){
                                               onIconPressed();
-                                              // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
+                                              //BlocProvider.of<LoginBloc>(context).add(NavigationEvents.M);
                                             },
                                           ),
                                         ],
