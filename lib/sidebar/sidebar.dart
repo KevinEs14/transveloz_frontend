@@ -153,22 +153,22 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
                                             },
                                           ),
-                                          MenuItem(
-                                            icon: Icons.person,
-                                            title: "Reporte",
-                                            onTap: () {
-                                              onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.AccountClickedEvent);
-                                            },
-                                          ),
-                                          MenuItem(
-                                            icon: Icons.shopping_basket,
-                                            title: "Historial",
-                                            onTap: () {
-                                              onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyOrdersClickedEvent);
-                                            },
-                                          ),
+                                          // MenuItem(
+                                          //   icon: Icons.person,
+                                          //   title: "Reporte",
+                                          //   onTap: () {
+                                          //     onIconPressed();
+                                          //     BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.AccountClickedEvent);
+                                          //   },
+                                          // ),
+                                          // MenuItem(
+                                          //   icon: Icons.shopping_basket,
+                                          //   title: "Historial",
+                                          //   onTap: () {
+                                          //     onIconPressed();
+                                          //     BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyOrdersClickedEvent);
+                                          //   },
+                                          // ),
                                           MenuItem(
                                             icon: Icons.add_circle_outline_sharp,
                                             title: "Add Driver",
