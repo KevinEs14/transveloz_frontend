@@ -253,7 +253,7 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                     ),
                   ),
                 ],
-              )
+              ) 
             ],
           ),
         ),
