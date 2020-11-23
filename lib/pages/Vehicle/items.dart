@@ -55,19 +55,16 @@ class _VehicleList extends State<VehicleList>{
                 ),
                 Column(
                   children: [
-                    Positioned(
-                        child: Container(
+                    Container(
                           margin: EdgeInsets.only(top: size.height*0.08),
                           child: Center(
                             child: Text("BUSQUEDA DE VEHICULOS",style: TextStyle(color: Colors.white,fontSize: size.height*0.035,fontWeight: FontWeight.bold),),
                           ),
-                        )
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    Positioned(
-                      child: Container(
+                    Container(
                         padding: EdgeInsets.only(left:16,right: 16),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2.0),
@@ -91,7 +88,7 @@ class _VehicleList extends State<VehicleList>{
                           }).toList(),
                         ),
                       ),
-                    ),
+                    // ),
                     SizedBox(
                       height: 20,
                     ),
