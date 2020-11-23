@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart';
+import 'package:transveloz_frontend/models/Driver.dart';
 import 'package:transveloz_frontend/pages/homepage.dart';
+import 'package:transveloz_frontend/repository/driver_repository.dart';
 import 'package:transveloz_frontend/sidebar/sidebar.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
 
 class DriverRegisterAddress extends StatefulWidget with NavigationStates {
+  DriverRegisterAddress(this.driver);
+  Driver driver;
   @override
-  _DriverRegisterAddress createState() => _DriverRegisterAddress();
+  _DriverRegisterAddress createState() => _DriverRegisterAddress(driver);
 }
 
 class _DriverRegisterAddress extends State<DriverRegisterAddress>{
+  _DriverRegisterAddress(this.driver);
+
+  Driver driver;
+  DriverRepository driverRepository = DriverRepository();
+
+  TextEditingController number = TextEditingController();
+  TextEditingController street = TextEditingController();
+  TextEditingController zone = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController country = TextEditingController();
+
   Size size;
   @override
   Widget build(BuildContext context) {
@@ -32,13 +47,11 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
               ),
               Column(
                 children: [
-                  Positioned(
-                      child: Container(
+                  Container(
                         margin: EdgeInsets.only(top: size.height*0.08),
                         child: Center(
                           child: Text("Dirección de domicilio",style: TextStyle(color: Colors.white,fontSize: size.height*0.035,fontWeight: FontWeight.bold),),
                         ),
-                      )
                   ),
                   SizedBox(height: size.height*0.05,),
                   Container(
@@ -72,6 +85,7 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         style: TextStyle(
                             color: color1
                         ),
+                        controller: number,
                       ),
                     ),
                   ),
@@ -107,6 +121,7 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         style: TextStyle(
                             color: color1
                         ),
+                        controller: street,
                       ),
                     ),
                   ),
@@ -142,6 +157,7 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         style: TextStyle(
                             color: color1
                         ),
+                        controller: zone,
                       ),
                     ),
                   ),
@@ -177,6 +193,7 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         style: TextStyle(
                             color: color1
                         ),
+                        controller: city,
                       ),
                     ),
                   ),
@@ -212,13 +229,18 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                         style: TextStyle(
                             color: color1
                         ),
+                        controller: country,
                       ),
                     ),
                   ),
                   SizedBox(height: size.height*0.02,),
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
+                      bool verificacion = Submit();
+                      if(verificacion){
+                        driverRepository.createDriver(driver);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SideBarLayout()));
+                      }
                     },
                     child: Container(
                       margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
@@ -238,5 +260,21 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
       ),
     );
   }
+
+  bool Submit(){
+    bool x = false;
+    if( number.text.isNotEmpty && street.text.isNotEmpty && zone.text.isNotEmpty && city.text.isNotEmpty && country.text.isNotEmpty){
+      x = true;
+      driver.number=number.text;
+      driver.street=street.text;
+      driver.zone=zone.text;
+      driver.city=city.text;
+      driver.country=country.text;
+    }else{
+      x = false;
+    }
+    return x;
+  }
+
 }
 
