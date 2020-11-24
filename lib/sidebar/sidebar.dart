@@ -212,6 +212,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             onTap: (){
                                               onIconPressed();
                                               //BlocProvider.of<LoginBloc>(context).add(NavigationEvents.M);
+                                              Navigator.pop(context);
                                             },
                                           ),
                                         ],

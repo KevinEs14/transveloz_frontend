@@ -195,6 +195,7 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                             onTap: (){
                                               onIconPressed();
                                               // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
+                                              Navigator.pop(context);
                                             },
                                           ),
                                         ],

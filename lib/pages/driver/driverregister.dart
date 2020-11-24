@@ -95,16 +95,19 @@ class _DriverRegister extends State<DriverRegister>{
                             )
                           ]
                       ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Nombres",
-                          hintStyle: TextStyle(color: color1),
+                      child: Container(
+
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Nombres",
+                            hintStyle: TextStyle(color: color1),
+                          ),
+                          style: TextStyle(
+                              color: color1
+                          ),
+                          controller: firstname,
                         ),
-                        style: TextStyle(
-                            color: color1
-                        ),
-                        controller: firstname,
                       ),
                     ),
                   SizedBox(height: size.height*0.02,),
