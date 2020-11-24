@@ -1,17 +1,33 @@
+import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
-import '../bloc.navigation_bloc/navigation_bloc.dart';
-import '../color.dart';
+import 'package:transveloz_frontend/models/UserHistory.dart';
+import 'package:transveloz_frontend/repository/userhistory_repository.dart';
+import '../../color.dart';
 
 class UserHistoryPage extends StatefulWidget with NavigationStates {
   @override
   _UserHistoryPageState createState() => _UserHistoryPageState();
 }
 class _UserHistoryPageState extends State<UserHistoryPage> {
+
+  List<UserHistory> data = List<UserHistory>();
+
+  UserHistoryRepository userHistoryRepository = UserHistoryRepository();
+
+  @override
+  void initState(){
+    // TODO: implement initState
+    super.initState();
+      userHistoryRepository.tomar_datos().then((value){
+      setState(() {
+        data.addAll(value);
+      });
+    });
+  }
+
   Size size;
-  List nam = ["Jorge","Juan Carlos","Antonio","Kebin","Joel","Jorge","Juan Carlos","Antonio","Kebin","Joel"];
-  List des = ["Programador","Administrador","Programador","Analista","Registrador","Programador","Administrador","Programador","Analista","Registrador"];
-  List pres = ["123.53","2343.22","212.543","212.21","423.23","434.56","645.53","323.34","323.98","321.33"];
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -68,7 +84,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: nam.length,
+                itemCount: data.length,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) => Container(
                   width: MediaQuery.of(context).size.width,
@@ -96,7 +112,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                 child: CircleAvatar(
                                   //backgroundColor: Colors.green,
                                   //foregroundColor: Colors.green,
-                                  backgroundImage: NetworkImage('assets/images/fondoRegistro.jpg'),
+                                  backgroundImage: NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
                                 ),
                               ),
                               SizedBox(width: 10.0),
@@ -108,25 +124,25 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                     children: [
                                       Text("Conductor:  ", style: TextStyle(color: color1,
                                           fontSize: 18.0, fontWeight: FontWeight.bold),),
-                                      Text(nam[index], style: TextStyle(color: color5,
+                                      Text(data[index].driverFirstName, style: TextStyle(color: color5,
                                           fontSize: 17.0, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Tipo:   ", style: TextStyle(color: color1,
+                                      Text("Direccion:   ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
-                                      Text(des[index], style: TextStyle(color: color5,
+                                      Text(data[index].deliveryStreet, style: TextStyle(color: color5,
                                           fontSize: 16.0),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Precio:   ", style: TextStyle(color: color1,
+                                      Text("Estado de Entrega:   ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
-                                      Text(pres[index]+" Bs.", style: TextStyle(color: color5,
+                                      Text(data[index].travelStatus, style: TextStyle(color: color5,
                                           fontSize: 16.0),),
                                     ],
                                   ),
