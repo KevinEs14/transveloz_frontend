@@ -243,7 +243,7 @@ final String imperfil = "https://cdnmd.lavoz.com.ar/sites/default/files/styles/w
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
 
   @override
-  Size get preferredSize => Size(double.infinity, 270);
+  Size get preferredSize => Size(double.infinity, 275);
 
   @override
   Widget build(BuildContext context) {
