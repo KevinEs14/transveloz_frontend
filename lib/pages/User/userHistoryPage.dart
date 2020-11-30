@@ -122,7 +122,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                   SizedBox(height: 3.0),
                                   Row(
                                     children: [
-                                      Text("Conductor:  ", style: TextStyle(color: color1,
+                                      Text("Conductor: ", style: TextStyle(color: color1,
                                           fontSize: 18.0, fontWeight: FontWeight.bold),),
                                       Text(data[index].driverFirstName, style: TextStyle(color: color5,
                                           fontSize: 17.0, fontWeight: FontWeight.bold),),
@@ -131,7 +131,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Direccion:   ", style: TextStyle(color: color1,
+                                      Text("Direccion:  ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
                                       Text(data[index].deliveryStreet, style: TextStyle(color: color5,
                                           fontSize: 16.0),),
@@ -140,10 +140,10 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Estado de Entrega:   ", style: TextStyle(color: color1,
-                                          fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                      Text("Estado Entrega: ", style: TextStyle(color: color1,
+                                          fontSize: 15.0, fontWeight: FontWeight.bold),),
                                       Text(data[index].travelStatus, style: TextStyle(color: color5,
-                                          fontSize: 16.0),),
+                                          fontSize: 15.0),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),

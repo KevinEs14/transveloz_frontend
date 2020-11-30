@@ -8,7 +8,8 @@ class VehicleRepository{
   Future <List<VehicleModel>> getListVehicles() async{
     try{
       List<VehicleModel> listVehicle=List();
-      var url="http://192.168.1.7:8070/v1/vehicle";
+      //var url="http://192.168.1.7:8070/v1/vehicle";
+      var url="http://10.0.2.2:8070/v1/vehicle";
       print(url);
       final response = await http.get(url,
           headers: <String, String>{
