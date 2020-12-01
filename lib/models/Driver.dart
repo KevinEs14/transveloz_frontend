@@ -14,6 +14,7 @@ class Driver{
   String _zone;
   String _city;
   String _country;
+  int _companyId;
 
   Driver();
 
@@ -95,6 +96,13 @@ class Driver{
     _ci = value;
   }
 
+
+  int get companyId => _companyId;
+
+  set companyId(int value) {
+    _companyId = value;
+  }
+
   Map toJson()=>{
     "ci":ci,
     "firstName": firstname,
@@ -108,6 +116,7 @@ class Driver{
     "street":street,
     "zone":zone,
     "city":city,
-    "country":country
+    "country":country,
+    "companyId":companyId
   };
 }

@@ -293,6 +293,7 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
       driver.zone=zone.text;
       driver.city=city.text;
       driver.country=country.text;
+      driver.companyId=_value.companyId;
     }else{
       x = false;
     }
