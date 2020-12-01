@@ -57,7 +57,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         yield UserHomePage();
         break;
       case NavigationEvents.ProfileClickedEvent:
-        yield ProfilePage();
+        yield ProfilePageDesign();
         break;
       case NavigationEvents.RequestServiceClickedEvent:
         yield RequestServicePage();

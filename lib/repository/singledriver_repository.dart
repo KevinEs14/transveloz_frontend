@@ -11,6 +11,8 @@ class SingleDriverRepository{
       // var res = await http.post("http://192.168.0.18:8070/v1/driver",
       //String url="http://10.0.2.2:8070/v1/vehicle/"+singleDriver.vehicleId.toString();
       String url="http://192.168.1.12:8070/v1/vehicle/"+singleDriver.vehicleId.toString();
+      //String url="http://10.0.2.2:8070/v1/vehicle/"+singleDriver.vehicleId.toString();
+
       var res = await http.get(url, //ip for virtualized devices
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
