@@ -5,6 +5,11 @@ import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 
 import '../../color.dart';
 class VehicleInformationPage extends StatefulWidget {
+
+  final int vehicleId;
+  VehicleInformationPage(this.vehicleId);
+
+
   @override
   _VehicleInformationPageState createState() => _VehicleInformationPageState();
 }

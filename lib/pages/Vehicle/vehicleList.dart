@@ -3,25 +3,16 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:transveloz_frontend/color.dart' as Col;
-import 'package:flutter/cupertino.dart';
-import 'package:transveloz_frontend/pages/Vehicle/vehicleService.dart';
+import 'package:transveloz_frontend/color.dart';
+import 'package:transveloz_frontend/models/VehicleModel.dart';
 import 'package:transveloz_frontend/pages/Vehicle/vehicleInformationPage.dart';
-import 'package:transveloz_frontend/pages/driver/driverregisteraddress.dart';
-import 'vehicleConstants.dart';
-import 'package:transveloz_frontend/models/VehicleList.dart';
-import 'package:http/http.dart' as http;
 import '../../repository/vehicleList_repository.dart';
-import '../../models/VehicleList.dart';
 class VehicleList extends StatefulWidget with NavigationStates{
   @override
   _VehicleList createState() => _VehicleList();
 }
 
 class _VehicleList extends State<VehicleList>{
-  VehicleRepository vehicleRepository = VehicleRepository();
-  final CategoriesScroller categoriesScroller = CategoriesScroller();
-  ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
   Size size;
@@ -32,144 +23,19 @@ class _VehicleList extends State<VehicleList>{
     "ORDENAR POR COMPAÑIA",
     "ORDENAR POR TIPO VEHICULO",
     "ORDENAR POR CAPACIDAD"];
-  List<Widget> itemsData = [];
-  List<VehicleList> itemsVehicle;
-  int sizeList=5;
-
-  Future <List<VehicleModel>> getListVehicles() async{
-    try{
-      List<VehicleModel> listVehicle=List();
-      var url="http://192.168.1.7:8070/v1/vehicle";
-      print(url);
-      final response = await http.get(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          }
-      );
-      List resVehicle = jsonDecode(response.body);
-      resVehicle.forEach((element) {
-
-        VehicleModel newVehicle=VehicleModel();
-        newVehicle.vehicleId=element["vehicleId"];
-        newVehicle.vehicleType=element["vehicleType"];
-        newVehicle.vehicleBrand=element["vehicleBrand"];
-        newVehicle.vehicleModel=element["vehicleModel"];
-        newVehicle.personFirstName=element["personFirstName"];
-        newVehicle.personFirstSurname=element["personFirstSurname"];
-        newVehicle.vehicleCapacity=element["vehicleCapacity"];
-        newVehicle.vehicleCompany=element["vehicleCompany"];
-        newVehicle.vehiclePrice=element["vehiclePrice"];
-        listVehicle.add(newVehicle);
-      });
-      print(listVehicle);
-      if(response.statusCode==200){
-        return resVehicle;
-      }
-      else{
-        return null;
-      }
-    }catch(error){
-      print(error);
-      return null;
-    }
-  }
-
-  void getPostsData() {
-    List<dynamic> responseList=VEHICLE_DATA ;
-    List<Widget> listItems = [];
-
-    responseList.forEach((post) {
-      listItems.add(Container(
-          height: 180,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0)), color: Col.color4, boxShadow: [
-            BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-          ]),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: Column(
-              children: [
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "\ ${post["vehicleType"]} - ${post["vehicleBrand"]} ${post["vehicleModel"]}",
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ]
-                ),
-
-                Row(
-                  children: <Widget>[
-                    Image.asset(
-                      "assets/images/${post["images"]}",
-                      height: 100,
-                      width: 100,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "\ Conductor: ${post["personFirstName"]} ${post["personFirstSurname"]}",
-                          style: const TextStyle(fontSize: 13, color: Colors.black),
-                        ),
-                        Text(
-                          "\ PLACA: ${post["vehicleLicensePlate"]}",
-                          style: const TextStyle(fontSize: 13, color: Colors.black),
-                        ),
-                        Text(
-                          "\ PRECIO: \$ ${post["vehiclePrice"]}",
-                          style: const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (conext)=>VehicleInformationPage()));
-
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: 1,right: 1),
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Col.color1
-                            ),
-                            child: Center(
-                                child: Text("VER MAS",style: TextStyle(fontSize:15,color: Colors.white,fontWeight: FontWeight.bold),)),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                  ],
-                ),
-              ],
-            ),
-
-          )));
-    });
-    setState(() {
-      itemsData = listItems;
-    });
-  }
+  List<VehicleModel> data = List<VehicleModel>();
+  VehicleRepository vehicleRepository = VehicleRepository();
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    //itemsVehicle = vehicleRepository.getListVehicles();
-    getPostsData();
-
-    controller.addListener(() {
-      double value = controller.offset/119;
-
+    vehicleRepository.getData().then((value){
       setState(() {
-        topContainer = value;
-        vehicleRepository.getListVehicles();
-        closeTopContainer = controller.offset > 50;
+        data.addAll(value);
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -209,10 +75,10 @@ class _VehicleList extends State<VehicleList>{
                       ),
                       child: DropdownButton(
 
-                        dropdownColor: Col.color4,
+                        dropdownColor: color4,
                         elevation: 5,
                         iconEnabledColor: Colors.white,
-                        hint: Text(_nameFilter, style: TextStyle(color: Colors.white),),
+                        hint: Text(_nameFilter, style: TextStyle(color: Colors.white)),
                         onChanged: (newValue){
                           setState(() {
                             _nameFilter = newValue;
@@ -221,7 +87,7 @@ class _VehicleList extends State<VehicleList>{
                         items: _filterList.map((newValue){
                           return DropdownMenuItem(
                             value: newValue,
-                            child: Text(newValue, style: TextStyle(color: Col.color1)),);
+                            child: Text(newValue, style: TextStyle(color: color1)));
                         }).toList(),
                       ),
                   ),
@@ -231,137 +97,91 @@ class _VehicleList extends State<VehicleList>{
 
                   Expanded(
                       child: ListView.builder(
-                          controller: controller,
-                          itemCount: itemsData.length,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            double scale = 1.0;
-                            if (topContainer > 0.5) {
-                              scale = index + 0.5 - topContainer;
-                              if (scale < 0) {
-                                scale = 0;
-                              } else if (scale > 1) {
-                                scale = 1;
-                              }
-                            }
-                            return Opacity(
-                              opacity: scale,
-                              child: Transform(
-                                transform:  Matrix4.identity()..scale(scale,scale),
-                                alignment: Alignment.bottomCenter,
-                                child: Align(
-                                    heightFactor: 0.7,
-                                    alignment: Alignment.topCenter,
-                                    child: itemsData[index]),
-                              ),
+                        padding: EdgeInsets.all(5),
+                          itemCount: data == null ?0:data.length,
+                          itemBuilder: (BuildContext context, int index){
+                            return Container(
+                                height: 180,
+                                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0)), color: color4, boxShadow: [
+                                  BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                                ]),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 20),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                          children: <Widget>[
+                                            Text(
+                                              "\ ${data[index].vehicleType} - ${data[index].vehicleBrand} ${data[index].vehicleModel}",
+                                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                            ),
+                                          ]
+                                      ),
+
+                                      Row(
+                                        children: <Widget>[
+                                          Image.asset(
+                                            "assets/images/3cf0d408681a5b28ddbb099e9bcfb8a5.jpg",
+                                            height: 110,
+                                            width: 100,
+                                          ),
+                                          SizedBox(
+                                            width: 1,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                "\ Conductor: ${data[index].personFirstName} ${data[index].personFirstSurname}",
+                                                style: const TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "\ Capacidad: ${data[index].vehicleCapacity} Toneladas",
+                                                style: const TextStyle(fontSize: 11, color: Colors.black),
+                                              ),
+                                              Text(
+                                                "\ Compañia: ${data[index].vehicleCompany}",
+                                                style: const TextStyle(fontSize: 15, color: Colors.black),
+                                              ),
+                                              Text(
+                                                "\ Precio: \$ ${data[index].vehiclePrice}",
+                                                style: const TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 10,),
+                                              GestureDetector(
+                                                onTap: (){
+                                                  Navigator.push(context, MaterialPageRoute(builder: (conext)=>VehicleInformationPage(data[index].vehicleId)));
+
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(left: 1,right: 1),
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.0),
+                                                      color: color1
+                                                  ),
+                                                  child: Center(
+                                                      child: Text("VER MAS",style: TextStyle(fontSize:15,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                             );
-                          })),
+                          }
+                          ),
+                  ),
                 ]
 
             ),
           ),
 
-
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-class CategoriesScroller extends StatelessWidget {
-  const CategoriesScroller();
-
-  @override
-  Widget build(BuildContext context) {
-    final double categoryHeight = MediaQuery.of(context).size.height * 0.30 - 50;
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: FittedBox(
-          fit: BoxFit.fill,
-          alignment: Alignment.topCenter,
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 150,
-                margin: EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(color: Colors.orange.shade400, borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Most\nFavorites",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "20 Items",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: 150,
-                margin: EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(color: Colors.blue.shade400, borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Newest",
-                          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "20 Items",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: 150,
-                margin: EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(color: Colors.lightBlueAccent.shade400, borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Super\nSaving",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "20 Items",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),
