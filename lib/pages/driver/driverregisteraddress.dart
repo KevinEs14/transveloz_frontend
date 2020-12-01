@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart';
+import 'package:transveloz_frontend/models/CompanyRequest.dart';
 import 'package:transveloz_frontend/models/Driver.dart';
 import 'package:transveloz_frontend/pages/homepage.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
@@ -17,14 +18,39 @@ class DriverRegisterAddress extends StatefulWidget with NavigationStates {
 class _DriverRegisterAddress extends State<DriverRegisterAddress>{
   _DriverRegisterAddress(this.driver);
 
+  CompanyRequest _value = CompanyRequest();
+  List<String>_List=[
+    "SELECCIONAR FILTRO",
+    "ORDENAR POR MARCA",
+    "ORDENAR POR COMPAÑIA",
+    "ORDENAR POR TIPO VEHICULO",
+    "ORDENAR POR CAPACIDAD"];
+
   Driver driver;
   DriverRepository driverRepository = DriverRepository();
+  List<CompanyRequest> companies = List();
 
   TextEditingController number = TextEditingController();
   TextEditingController street = TextEditingController();
   TextEditingController zone = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController country = TextEditingController();
+
+  _loadCompanies() async{
+    var compAux=await driverRepository.getCompanies();
+   setState(() {
+     companies = compAux;
+   });
+    print('Companies');
+    print(companies);
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCompanies();
+  }
 
   Size size;
   @override
@@ -194,6 +220,43 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                       ),
                     ),
                   SizedBox(height: size.height*0.02,),
+                  Container(
+                    padding: EdgeInsets.only(left:16,right: 16),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 2.0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: DropdownButton(
+
+                      dropdownColor: color1,
+                      elevation: 5,
+                      value: _value.companyId,
+                      iconEnabledColor: Colors.white,
+
+                      hint: Text("Seleccione un opción", style: TextStyle(color: Colors.white),),
+                      onChanged: (newValue){
+                        setState(() {
+                          _value = companies.firstWhere((element) {
+                            if(element.companyId==newValue){
+                              return true;
+                            }
+                            else{
+                              return false;
+                            }
+                          });
+
+                        });
+                        print(_value.companyId);
+                      },
+                      items: companies.map((newValue){
+                        return DropdownMenuItem(
+                          value: newValue.companyId,
+
+                          child: Text(newValue.name, style: TextStyle(color: Colors.white)),);
+                      }).toList(),
+                    ),
+                  ),
+                  SizedBox(height: size.height*0.02,),
                   GestureDetector(
                     onTap: (){
                       bool verificacion = Submit();
@@ -230,6 +293,7 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
       driver.zone=zone.text;
       driver.city=city.text;
       driver.country=country.text;
+      driver.companyId=_value.companyId;
     }else{
       x = false;
     }
