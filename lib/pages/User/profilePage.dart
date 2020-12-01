@@ -38,6 +38,31 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text("CI", style: TextStyle(
+                fontStyle: FontStyle.italic,
+                shadows: [
+                  Shadow(
+                    color: color5,
+                    offset: Offset(0.3,0.5),
+                    blurRadius: 1,
+                  ),
+                ]
+            ),),
+            SizedBox(height: 3.0),
+            Text("6953432", style: TextStyle(
+                color: color5,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                shadows: [
+                  Shadow(
+                    color: color5,
+                    offset: Offset(0.5,0.5),
+                    blurRadius: 0,
+                  ),
+                ]
+            ),),
+            SizedBox(height: 10.0),
             Text("Nombre", style: TextStyle(
                 fontStyle: FontStyle.italic,
                 shadows: [
@@ -262,12 +287,8 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
         ),
         child: Column(
           children: [
-            //SizedBox(height: 10.0),
-            //Text("Profile", style: TextStyle(color: Colors.white, fontSize: 20,),),
-            //SizedBox(height: 6.0),
             SizedBox(height: 30.0),
             Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(width: 26.0),
                 Container(
@@ -286,7 +307,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //SizedBox(height: 10.0),
                     Text("Gorge Luis Alejo Gutierrez", style: TextStyle(
                       color: color2,
                       fontSize: 19,
@@ -312,7 +332,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //SizedBox(width: 64.0),
                 Text("Fecha de Nacimiento:", style: TextStyle(
                   color: color2,
                   fontSize: 19,
@@ -404,7 +423,290 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
                   angle: (math.pi*0.045),
                   child: FlatButton(
                     color: color2,
-                    onPressed: (){},
+                    onPressed: (){
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Center(
+                                child: Text("Actualizar Perfil"),
+                              ),
+                              content: SingleChildScrollView(
+                                 child: Container(
+                                   width: 300,
+                                   child: Column(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                       SizedBox(height: 9.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           decoration: InputDecoration(
+                                             hintText: "CI",
+                                             labelText: "CI",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       SizedBox(height: 9.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           decoration: InputDecoration(
+                                             hintText: "Nombre",
+                                             labelText: "Nombre",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       SizedBox(height: 6.0),
+                                       Container(
+                                         child: Text("Apellidos:", style: TextStyle(fontStyle: FontStyle.italic,),),
+                                       ),
+                                       SizedBox(height: 6.0),
+                                       Row(
+                                         children: [
+                                           Container(
+                                             width: 130,
+                                             height: 48,
+                                             child: TextField(
+                                               cursorColor: color1,
+                                               decoration: InputDecoration(
+                                                 hintText: "Ap. Paterno",
+                                                 labelText: "Ap. Paterno",
+                                                 labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                 enabledBorder: OutlineInputBorder(
+                                                     borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                     borderSide: BorderSide(
+                                                         color: color1,
+                                                         width: 2
+                                                     )
+                                                 ),
+                                                 focusedBorder: OutlineInputBorder(
+                                                   borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 ),
+                                               ),
+                                             ),
+                                           ),
+                                           SizedBox(width: 4.0),
+                                           Container(
+                                             width: 130,
+                                             height: 48,
+                                             child: TextField(
+                                               cursorColor: color1,
+                                               decoration: InputDecoration(
+                                                 hintText: "Ap. Materno",
+                                                 labelText: "Ap. Materno",
+                                                 labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                 enabledBorder: OutlineInputBorder(
+                                                     borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                     borderSide: BorderSide(
+                                                         color: color1,
+                                                         width: 2
+                                                     )
+                                                 ),
+                                                 focusedBorder: OutlineInputBorder(
+                                                   borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 ),
+                                               ),
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                       SizedBox(height: 9.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           keyboardType: TextInputType.datetime,
+                                           decoration: InputDecoration(
+                                             suffixIcon: Icon(Icons.date_range_sharp, color: color5,),
+                                             hintText: "yyyy-mm-dd",
+                                             labelText: "Fecha de Nacimiento",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       SizedBox(height: 9.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           decoration: InputDecoration(
+                                             hintText: "Celular",
+                                             labelText: "Celular",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       SizedBox(height: 8.0),
+                                       Row(
+                                         mainAxisAlignment: MainAxisAlignment.center,
+                                         children: [
+                                           Text("Direccion",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),
+                                         ],
+                                       ),
+                                       SizedBox(height: 5.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           decoration: InputDecoration(
+                                             hintText: "Calle",
+                                             labelText: "Calle",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       SizedBox(height: 9.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           decoration: InputDecoration(
+                                             hintText: "Zona",
+                                             labelText: "Zona",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       SizedBox(height: 9.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           decoration: InputDecoration(
+                                             hintText: "Ciudad",
+                                             labelText: "Ciudad",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                       SizedBox(height: 9.0),
+                                       Container(
+                                         width: 290,
+                                         height: 48,
+                                         child: TextField(
+                                           cursorColor: color1,
+                                           decoration: InputDecoration(
+                                             hintText: "Pais",
+                                             labelText: "Pais",
+                                             labelStyle: TextStyle(color: color1, fontSize: 16),
+                                             enabledBorder: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                 borderSide: BorderSide(
+                                                     color: color1,
+                                                     width: 2
+                                                 )
+                                             ),
+                                             focusedBorder: OutlineInputBorder(
+                                               borderRadius: BorderRadius.all(Radius.circular(7)),
+                                             ),
+                                           ),
+                                         ),
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                              ),
+                              actions: [
+                                FlatButton(
+                                  child: Text("Aceptar", style: TextStyle(color: color1),),
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text("Cancelar"),
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          }
+                      );
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
