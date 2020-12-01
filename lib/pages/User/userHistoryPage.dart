@@ -13,7 +13,6 @@ class UserHistoryPage extends StatefulWidget with NavigationStates {
 class _UserHistoryPageState extends State<UserHistoryPage> {
 
   List<UserHistory> data = List<UserHistory>();
-
   UserHistoryRepository userHistoryRepository = UserHistoryRepository();
 
   @override

@@ -9,7 +9,7 @@ class UserRepository{
   Future<bool> createUser(User user) async{
     try{
       //var res = await http.post("http://192.168.128.11:8070/v1/user",
-      var res = await http.post("http://192.168.0.18:8070/v1/user",
+      var res = await http.post("http://192.168.1.7:8070/v1/user",
       // var res = await http.post("http://192.168.128.11:8070/v1/user",
       //var res = await http.post("http://10.0.2.2:8070/v1/user",
         headers: <String, String>{
