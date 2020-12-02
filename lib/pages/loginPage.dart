@@ -6,6 +6,7 @@ import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/models/LogIn.dart';
 import 'package:transveloz_frontend/pages/homepage.dart';
 import 'package:transveloz_frontend/repository/administrator_repository.dart';
+import 'package:transveloz_frontend/repository/driver_repository.dart';
 import 'package:transveloz_frontend/sidebar/driversidebar_layout.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
   List<LogIn> list = List();
 
   AdministratorRepository administratorRepository = AdministratorRepository();
+  DriverRepository driverRepository = DriverRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -223,10 +225,31 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
               ),
               SizedBox(height: size.height*0.01,),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (conext)=>DriverSideBarLayout()));
-                  //Navigator.push(context, MaterialPageRoute(builder: (conext)=>RegisterUser()));
-
+                onTap: () async{
+                  list = await driverRepository.getDriverLogList();
+                  bool flag = Confirm();
+                  if(flag){
+                    Fluttertoast.showToast(
+                        msg: "Bienvenido",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: color3,
+                        textColor: color1,
+                        fontSize: 16.0
+                    );
+                    Navigator.push(context, MaterialPageRoute(builder: (conext)=>DriverSideBarLayout()));
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: "No encontrado",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: color3,
+                        textColor: color1,
+                        fontSize: 16.0
+                    );
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),

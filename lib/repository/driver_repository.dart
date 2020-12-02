@@ -96,7 +96,7 @@ class DriverRepository{
   Future<List<LogIn>> getDriverLogList() async{
     try{
       List<LogIn> list=List();
-      var res = await http.get(directionUrl+"v1/administration/sesion",
+      var res = await http.get(directionUrl+"v1/driver/sesion",
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           }
