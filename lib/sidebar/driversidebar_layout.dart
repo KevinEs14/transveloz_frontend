@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
+import 'driversidebar.dart';
 import 'sidebar.dart';
 
 class DriverSideBarLayout extends StatelessWidget {
@@ -18,7 +19,7 @@ class DriverSideBarLayout extends StatelessWidget {
                 return navigationState as Widget;
               },
             ),
-            UserSideBar(),
+            DriverSideBar(),
           ],
         ),
       ),
