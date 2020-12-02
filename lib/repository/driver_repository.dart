@@ -77,6 +77,9 @@ class DriverRepository{
         newDriver.firstSurname=element["firstSurname"];
         newDriver.secondSurname=element["secondSurname"];
         newDriver.companyName=element["companyName"];
+        if(newDriver.companyName==null){
+          newDriver.companyName="Independiente";
+        }
         drivers.add(newDriver);
       });
       if(res.statusCode==200){

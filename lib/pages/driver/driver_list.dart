@@ -110,7 +110,7 @@ class _DriverList extends State<DriverList> {
                 ],
               ),
             ),
-            /*Expanded(
+            Expanded(
               child: ListView.builder(
                 itemCount: data.length,
                 shrinkWrap: true,
@@ -150,28 +150,28 @@ class _DriverList extends State<DriverList> {
                                   SizedBox(height: 3.0),
                                   Row(
                                     children: [
-                                      Text("Conductor: ", style: TextStyle(color: color1,
+                                      Text("CI: ", style: TextStyle(color: color1,
+                                          fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                      Text(data[index].ci, style: TextStyle(color: color5,
+                                          fontSize: 15.0),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  Row(
+                                    children: [
+                                      Text("Nombre: ", style: TextStyle(color: color1,
                                           fontSize: 18.0, fontWeight: FontWeight.bold),),
-                                      Text(data[index].driverFirstName, style: TextStyle(color: color5,
+                                      Text(data[index].firstName + " " + data[index].firstSurname, style: TextStyle(color: color5,
                                           fontSize: 17.0, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Direccion:  ", style: TextStyle(color: color1,
+                                      Text("Compañía:  ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
-                                      Text(data[index].deliveryStreet, style: TextStyle(color: color5,
+                                      Text(data[index].companyName, style: TextStyle(color: color5,
                                           fontSize: 16.0),),
-                                    ],
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Row(
-                                    children: [
-                                      Text("Estado Entrega: ", style: TextStyle(color: color1,
-                                          fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                      Text(data[index].travelStatus, style: TextStyle(color: color5,
-                                          fontSize: 15.0),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
@@ -197,7 +197,7 @@ class _DriverList extends State<DriverList> {
                   ),
                 ),
               ),
-            ),*/
+            ),
             //HistoryList(),
           ],
         ),
