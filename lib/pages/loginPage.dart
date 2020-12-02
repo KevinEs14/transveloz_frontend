@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                   child: TextField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Nombre de usuario",
+                        hintText: "email",
                         hintStyle: TextStyle(color: Colors.grey)
                     ),
                   ),
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                           Color(0xff121212)]
                     ),
                   ),
-                  child: Center(child: Text("Login",style: TextStyle(fontSize:size.width*0.05,color: Colors.white,fontWeight: FontWeight.bold),)),
+                  child: Center(child: Text("Administrator",style: TextStyle(fontSize:size.width*0.05,color: Colors.white,fontWeight: FontWeight.bold),)),
                 ),
               ),
               SizedBox(height: size.height*0.01,),
