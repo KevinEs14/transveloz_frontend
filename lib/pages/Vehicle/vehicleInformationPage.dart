@@ -8,8 +8,6 @@ class VehicleInformationPage extends StatefulWidget {
 
   int vehicleId;
   VehicleInformationPage(this.vehicleId);
-  // SingleDriver singleDriver;
-
   @override
   _VehicleInformationPageState createState() => _VehicleInformationPageState(vehicleId);
 }
@@ -17,12 +15,10 @@ class VehicleInformationPage extends StatefulWidget {
 class _VehicleInformationPageState extends State<VehicleInformationPage> {
   int vehicleId;
   _VehicleInformationPageState(this.vehicleId);
-
   // TextEditingController idVehicle=new TextEditingController();
   SingleDriver singleDriver=SingleDriver();
   SingleDriver singleDriver2=SingleDriver();
   SingleDriver singleDriver3=SingleDriver();
-  // var idVehice=this.vehicleId;
   var estado="";var nombre="";var apellido="";var capacidad=""; var tipo=""; var marca=""; var modelo="";var precio="";
   SingleDriverRepository vehiclerepository=SingleDriverRepository();
   Size size;
@@ -30,7 +26,6 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   ObtenerDatos()async{
     singleDriver.vehicleId=vehicleId;
     singleDriver3=await vehiclerepository.obtainVehicle(singleDriver);
-    // SingleDriver singleDriver2=SingleDriver();
     setState(()  {
       singleDriver2=singleDriver3;
       nombre=singleDriver2.personFirstName.toString();
