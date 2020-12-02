@@ -8,9 +8,6 @@ import 'package:transveloz_frontend/repository/url.dart';
 class VehicleRepository{
   Future<List<VehicleModel>>getData() async{
     try{
-      // var url = "http://192.168.1.12:8070/v1/vehicle";
-      List<VehicleModel> listVehicle=List();
-      //var url="http://192.168.1.7:8070/v1/vehicle";
       var url=directionUrl+"v1/vehicle";
       print(url);
       final response = await http.get(url,

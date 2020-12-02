@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../color.dart';
@@ -20,6 +21,14 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 500);
 
+  SharedPreferences user;
+
+  _initSharedPreferences() async{
+    user = await SharedPreferences.getInstance();
+    print("Sidebar");
+    print(user.getInt("id").toString());
+  }
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +36,7 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
     isSidebarOpenedStreamController = PublishSubject<bool>();
     isSidebarOpenedStream = isSidebarOpenedStreamController.stream;
     isSidebarOpenedSink = isSidebarOpenedStreamController.sink;
+    _initSharedPreferences();
   }
 
   @override

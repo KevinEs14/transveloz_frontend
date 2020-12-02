@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
@@ -21,6 +22,14 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 500);
 
+  SharedPreferences user;
+
+  _initSharedPreferences() async{
+    user = await SharedPreferences.getInstance();
+    print("Sidebar");
+    print(user.getInt("id").toString());
+  }
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +37,7 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
     isSidebarOpenedStreamController = PublishSubject<bool>();
     isSidebarOpenedStream = isSidebarOpenedStreamController.stream;
     isSidebarOpenedSink = isSidebarOpenedStreamController.sink;
+    _initSharedPreferences();
   }
 
   @override
