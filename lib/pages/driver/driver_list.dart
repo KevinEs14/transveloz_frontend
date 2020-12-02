@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/models/DriverContact.dart';
+import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
 
 class DriverList extends StatefulWidget with NavigationStates {
@@ -91,7 +93,7 @@ class _DriverList extends State<DriverList> {
                         //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                         child: FlatButton(
                           onPressed: () {
-                            print("Hola");
+                            Navigator.push(context, MaterialPageRoute(builder: (conext)=>DriverRegister()));
                           },
                           color: color3,
                           shape: RoundedRectangleBorder(
