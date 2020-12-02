@@ -153,7 +153,7 @@ class _VehicleList extends State<VehicleList>{
                                                 onTap: (){
                                                   Navigator.push(context, MaterialPageRoute(builder: (conext)=>VehicleInformationPage(data[index].vehicleId)));
 
-                                                },
+                                                 },
                                                 child: Container(
                                                   margin: EdgeInsets.only(left: 5,right: 5),
                                                   padding: EdgeInsets.all(5),

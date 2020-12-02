@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-var directionUrl="http://192.168.0.18:8070/";
+var directionUrl="http://192.168.128.4:8070/";

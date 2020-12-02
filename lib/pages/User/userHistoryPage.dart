@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/models/UserHistory.dart';
+import 'package:transveloz_frontend/repository/user_repository.dart';
 import 'package:transveloz_frontend/repository/userhistory_repository.dart';
 import '../../color.dart';
 
@@ -11,19 +13,33 @@ class UserHistoryPage extends StatefulWidget with NavigationStates {
   _UserHistoryPageState createState() => _UserHistoryPageState();
 }
 class _UserHistoryPageState extends State<UserHistoryPage> {
+  int _id;
+  int finid;
+  SharedPreferences user;
 
+  _initSharedPreferences() async{
+    user = await SharedPreferences.getInstance();
+    print("Sidebar");
+    print(user.getInt("id").toString());
+    _id = user.getInt("id");
+    print("dato obbbb  "+_id.toString());
+    finid = _id;
+  }
   List<UserHistory> data = List<UserHistory>();
-  UserHistoryRepository userHistoryRepository = UserHistoryRepository();
-
+  //UserHistoryRepository userHistoryRepository = UserHistoryRepository();
+  UserRepository userRepository = UserRepository();
   @override
   void initState(){
     // TODO: implement initState
     super.initState();
-      userHistoryRepository.tomar_datos().then((value){
+    _initSharedPreferences();
+      userRepository.tomar_datos(finid).then((value){
       setState(() {
         data.addAll(value);
+        print("es esto el aidi del USUARIO "+finid.toString());
       });
     });
+
   }
 
   Size size;
