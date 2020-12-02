@@ -171,10 +171,10 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                           // ),
                                           MenuItem(
                                             icon: Icons.add_circle_outline_sharp,
-                                            title: "Add Driver",
+                                            title: "Drivers",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.DriverRegisterClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.DriverListClickedEvent);
                                             },
                                           ),
                                           MenuItem(

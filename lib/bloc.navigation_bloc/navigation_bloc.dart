@@ -4,6 +4,7 @@ import 'package:transveloz_frontend/pages/User/requestServicePage.dart';
 import 'package:transveloz_frontend/pages/User/userHistoryPage.dart';
 import 'package:transveloz_frontend/pages/User/userHomePage.dart';
 import 'package:transveloz_frontend/pages/Vehicle/vehicleList.dart';
+import 'package:transveloz_frontend/pages/driver/driver_list.dart';
 import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/pages/loginPage.dart';
 import '../pages/accountspage.dart';
@@ -23,6 +24,7 @@ enum NavigationEvents {
   ProfileClickedEvent,
   RequestServiceClickedEvent,
   UserHistoryClickedEvent,
+  DriverListClickedEvent
 
 }
 
@@ -64,7 +66,10 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         break;
       case NavigationEvents.UserHistoryClickedEvent:
         yield UserHistoryPage();
-
+        break;
+      case NavigationEvents.DriverListClickedEvent:
+        yield DriverList();
+        break;
     }
   }
 }
