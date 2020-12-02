@@ -17,12 +17,6 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
   _DriverRegisterAddress(this.driver);
 
   CompanyRequest _value = CompanyRequest();
-  List<String>_List=[
-    "SELECCIONAR FILTRO",
-    "ORDENAR POR MARCA",
-    "ORDENAR POR COMPAÑIA",
-    "ORDENAR POR TIPO VEHICULO",
-    "ORDENAR POR CAPACIDAD"];
 
   Driver driver;
   DriverRepository driverRepository = DriverRepository();

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:transveloz_frontend/color.dart';
+import 'package:transveloz_frontend/models/LogIn.dart';
 import 'package:transveloz_frontend/pages/homepage.dart';
+import 'package:transveloz_frontend/repository/administrator_repository.dart';
 import 'package:transveloz_frontend/sidebar/driversidebar_layout.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
@@ -12,6 +16,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> with NavigationStates {
   Size size;
+
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  List<LogIn> list = List();
+
+  AdministratorRepository administratorRepository = AdministratorRepository();
+
   @override
   Widget build(BuildContext context) {
     size=MediaQuery.of(context).size;
@@ -106,9 +118,10 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                   child: TextField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "email",
+                        hintText: "Email",
                         hintStyle: TextStyle(color: Colors.grey)
                     ),
+                    controller: email,
                   ),
                 ),
               ),
@@ -141,13 +154,37 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                         hintText: "Password",
                         hintStyle: TextStyle(color: Colors.grey)
                     ),
+                    controller: password,
                   ),
                 ),
               ),
               SizedBox(height: size.height*0.05,),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
+                onTap: () async{
+                  list = await administratorRepository.getAdmiLogList();
+                  bool flag = Confirm();
+                  if(flag){
+                    Fluttertoast.showToast(
+                        msg: "Bienvenido",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: color3,
+                        textColor: color1,
+                        fontSize: 16.0
+                    );
+                    Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
+                  }else{
+                    Fluttertoast.showToast(
+                        msg: "No encontrado",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: color3,
+                        textColor: color1,
+                        fontSize: 16.0
+                    );
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
@@ -210,5 +247,30 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
         ),
       ),
     );
+  }
+
+  bool Confirm(){
+    int length = list.length;
+    print(length);
+    bool compare = false;
+    if(email.text.isNotEmpty && password.text.isNotEmpty){
+      for(int i=0;i<length;i++){
+        if(list[i].email==email.text && list[i].password==password.text){
+          print(list[i]);
+          compare = true;
+        }
+      }
+    }else{
+      Fluttertoast.showToast(
+          msg: "Llene todos los campos",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: color3,
+          textColor: color1,
+          fontSize: 16.0
+      );
+    }
+    return compare;
   }
 }
