@@ -3,9 +3,7 @@ import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/models/CompanyRequest.dart';
 import 'package:transveloz_frontend/models/Driver.dart';
-import 'package:transveloz_frontend/pages/homepage.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
-import 'package:transveloz_frontend/sidebar/sidebar.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
 
 class DriverRegisterAddress extends StatefulWidget with NavigationStates {
@@ -19,12 +17,6 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
   _DriverRegisterAddress(this.driver);
 
   CompanyRequest _value = CompanyRequest();
-  List<String>_List=[
-    "SELECCIONAR FILTRO",
-    "ORDENAR POR MARCA",
-    "ORDENAR POR COMPAÑIA",
-    "ORDENAR POR TIPO VEHICULO",
-    "ORDENAR POR CAPACIDAD"];
 
   Driver driver;
   DriverRepository driverRepository = DriverRepository();
