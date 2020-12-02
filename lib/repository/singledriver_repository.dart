@@ -3,17 +3,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:transveloz_frontend/models/Driver.dart';
 import 'package:transveloz_frontend/models/SingleDriver.dart';
+import 'package:transveloz_frontend/repository/url.dart';
 
 class SingleDriverRepository{
   
   Future<SingleDriver> obtainVehicle(SingleDriver singleDriver) async{
     try{
-      var res = await http.post("http://192.168.0.18:8070/v1/driver",
-      //String url="http://10.0.2.2:8070/v1/vehicle/"+singleDriver.vehicleId.toString();
-      //String url="http://192.168.1.12:8070/v1/vehicle/"+singleDriver.vehicleId.toString();
-      //String url="http://10.0.2.2:8070/v1/vehicle/"+singleDriver.vehicleId.toString();
 
-      //var res = await http.get(url, //ip for virtualized devices
+      String url=directionUrl+"v1/vehicle/"+singleDriver.vehicleId.toString();
+
+      var res = await http.get(url, //ip for virtualized devices
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           });
