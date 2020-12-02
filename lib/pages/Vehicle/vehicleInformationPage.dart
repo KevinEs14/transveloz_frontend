@@ -6,20 +6,49 @@ import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 import '../../color.dart';
 class VehicleInformationPage extends StatefulWidget {
 
-  final int vehicleId;
+  int vehicleId;
   VehicleInformationPage(this.vehicleId);
-
+  // SingleDriver singleDriver;
 
   @override
-  _VehicleInformationPageState createState() => _VehicleInformationPageState();
+  _VehicleInformationPageState createState() => _VehicleInformationPageState(vehicleId);
 }
 
 class _VehicleInformationPageState extends State<VehicleInformationPage> {
-  TextEditingController idVehicle=new TextEditingController();
+  int vehicleId;
+  _VehicleInformationPageState(this.vehicleId);
+
+  // TextEditingController idVehicle=new TextEditingController();
   SingleDriver singleDriver=SingleDriver();
+  SingleDriver singleDriver2=SingleDriver();
+  SingleDriver singleDriver3=SingleDriver();
+  // var idVehice=this.vehicleId;
   var estado="";var nombre="";var apellido="";var capacidad=""; var tipo=""; var marca=""; var modelo="";var precio="";
   SingleDriverRepository vehiclerepository=SingleDriverRepository();
   Size size;
+  // singleDriver.vehicleId=vehicleId;
+  ObtenerDatos()async{
+    singleDriver.vehicleId=vehicleId;
+    singleDriver3=await vehiclerepository.obtainVehicle(singleDriver);
+    // SingleDriver singleDriver2=SingleDriver();
+    setState(()  {
+      singleDriver2=singleDriver3;
+      nombre=singleDriver2.personFirstName.toString();
+      apellido=singleDriver2.personFirstSurname.toString();
+      capacidad=singleDriver2.vehicleCapacity.toString();
+      tipo=singleDriver2.vehicleType.toString();
+      marca=singleDriver2.vehicleBrand.toString();
+      modelo=singleDriver2.vehicleModel.toString();
+      estado=singleDriver2.vehicleStatus.toString();
+      precio=singleDriver2.vehiclePrice.toString();
+    });
+
+  }
+ @override
+ void initState() {
+   ObtenerDatos();
+  super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     size=MediaQuery.of(context).size;
@@ -167,72 +196,72 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 60,
-                      width: size.width*0.2,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: color4,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.6),
-                              blurRadius: 20,
-                              offset: Offset(0,10),
-                            )
-                          ]
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "IdVehicle",
-                          hintStyle: TextStyle(color: color1),
-                        ),
-                        style: TextStyle(
-                            color: color1
-                        ),
-                        controller: idVehicle,
-                      ),
-                    ),
-                    SizedBox(width: 20,),
-                    RaisedButton(
-                        onPressed: ()async{
-                          if(idVehicle.text.isNotEmpty){
-                            singleDriver.vehicleId=int.parse(idVehicle.text);
-                            SingleDriver singleDriver2= await vehiclerepository.obtainVehicle(singleDriver) ;
-                            if(singleDriver2!=null){
-                              print(singleDriver2);
-                              setState(() {
-                                nombre=singleDriver2.personFirstName.toString();
-                                apellido=singleDriver2.personFirstSurname.toString();
-                                capacidad=singleDriver2.vehicleCapacity.toString();
-                                tipo=singleDriver2.vehicleType.toString();
-                                marca=singleDriver2.vehicleBrand.toString();
-                                modelo=singleDriver2.vehicleModel.toString();
-                                estado=singleDriver2.vehicleStatus.toString();
-                                precio=singleDriver2.vehiclePrice.toString();
-                              });
-                            }else{
-                              setState(() {
-                                nombre="";
-                                apellido="";
-                                capacidad="";
-                                tipo="";
-                                marca="";
-                                modelo="";
-                                estado="";
-                                precio="";
-                              });
-                            }
-                          }
-                        },
-                        child: Text("obtener"),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Container(
+                //       height: 60,
+                //       width: size.width*0.2,
+                //       padding: EdgeInsets.all(10),
+                //       decoration: BoxDecoration(
+                //           color: color4,
+                //           borderRadius: BorderRadius.circular(20),
+                //           boxShadow: [
+                //             BoxShadow(
+                //               color: Colors.grey.withOpacity(0.6),
+                //               blurRadius: 20,
+                //               offset: Offset(0,10),
+                //             )
+                //           ]
+                //       ),
+                //       child: TextField(
+                //         decoration: InputDecoration(
+                //           border: InputBorder.none,
+                //           hintText: "IdVehicle",
+                //           hintStyle: TextStyle(color: color1),
+                //         ),
+                //         style: TextStyle(
+                //             color: color1
+                //         ),
+                //         controller: idVehicle,
+                //       ),
+                //     ),
+                //     SizedBox(width: 20,),
+                //     RaisedButton(
+                //         onPressed: ()async{
+                //           if(idVehicle.text.isNotEmpty){
+                //             singleDriver.vehicleId=int.parse(idVehicle.text);
+                //             SingleDriver singleDriver2= await vehiclerepository.obtainVehicle(singleDriver) ;
+                //             if(singleDriver2!=null){
+                //               print(singleDriver2);
+                //               setState(() {
+                //                 nombre=singleDriver2.personFirstName.toString();
+                //                 apellido=singleDriver2.personFirstSurname.toString();
+                //                 capacidad=singleDriver2.vehicleCapacity.toString();
+                //                 tipo=singleDriver2.vehicleType.toString();
+                //                 marca=singleDriver2.vehicleBrand.toString();
+                //                 modelo=singleDriver2.vehicleModel.toString();
+                //                 estado=singleDriver2.vehicleStatus.toString();
+                //                 precio=singleDriver2.vehiclePrice.toString();
+                //               });
+                //             }else{
+                //               setState(() {
+                //                 nombre="";
+                //                 apellido="";
+                //                 capacidad="";
+                //                 tipo="";
+                //                 marca="";
+                //                 modelo="";
+                //                 estado="";
+                //                 precio="";
+                //               });
+                //             }
+                //           }
+                //         },
+                //         child: Text("obtener"),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ],

@@ -1,3 +1,4 @@
+
 class CompanyRequest{
   int _companyId;
   String _name;

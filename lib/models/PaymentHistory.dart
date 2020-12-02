@@ -7,6 +7,15 @@ class PaymentHistory{
   double _amount;
   String _driverFirstName;
   String _driverFirstSurname;
+  String _startStreet;
+
+  String get startStreet => _startStreet;
+
+  set startStreet(String value) {
+    _startStreet = value;
+  }
+
+  String _deliveryStreet;
 
   PaymentHistory();
   String get datePayment => _datePayment;
@@ -52,5 +61,13 @@ class PaymentHistory{
     amount=json["amount"];
     driverFirstName=json["driverFirstName"];
     driverFirstSurname=json["driverFirstSurname"];
+    startStreet=json["startStreet"];
+    deliveryStreet=json["deliveryStreet"];
+  }
+
+  String get deliveryStreet => _deliveryStreet;
+
+  set deliveryStreet(String value) {
+    _deliveryStreet = value;
   }
 }
