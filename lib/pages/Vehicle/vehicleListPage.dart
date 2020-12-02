@@ -155,14 +155,15 @@ class _VehicleListPage extends State<VehicleListPage>{
 
                                                 },
                                                 child: Container(
-                                                  margin: EdgeInsets.only(left: 1,right: 1),
+                                                  margin: EdgeInsets.only(left: 5,right: 5),
+                                                  padding: EdgeInsets.all(5),
                                                   height: 30,
                                                   decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(10.0),
                                                       color: color1
                                                   ),
                                                   child: Center(
-                                                      child: Text("VER MAS",style: TextStyle(fontSize:15,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                                      child: Text("VER MAS",style: TextStyle(fontSize:size.height*0.018,color: Colors.white,fontWeight: FontWeight.bold),)),
                                                 ),
                                               ),
                                             ],
