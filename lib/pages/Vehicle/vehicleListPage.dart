@@ -7,12 +7,12 @@ import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/models/VehicleModel.dart';
 import 'package:transveloz_frontend/pages/Vehicle/vehicleInformationPage.dart';
 import '../../repository/vehicleList_repository.dart';
-class VehicleList extends StatefulWidget with NavigationStates{
+class VehicleListPage extends StatefulWidget with NavigationStates{
   @override
-  _VehicleList createState() => _VehicleList();
+  _VehicleListPage createState() => _VehicleListPage();
 }
 
-class _VehicleList extends State<VehicleList>{
+class _VehicleListPage extends State<VehicleListPage>{
   bool closeTopContainer = false;
   double topContainer = 0;
   Size size;
