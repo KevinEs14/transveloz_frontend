@@ -12,7 +12,8 @@ class UserHistoryRepository{
       //var url = 'http://192.168.128.11:8070/v1/user/1/payment';
       //var response = await http.post(url).timeout(Duration(seconds: 90));
       //var url = 'http://192.168.128.11:8070/v1/user/2/payment';
-      var url = 'http://192.168.1.12:8070/v1/user/1/payment';
+      //var url = 'http://192.168.1.12:8070/v1/user/1/payment';
+      var url = 'http://192.168.0.18:8070/v1/user/1/payment';
       //var response = await http.post(url).timeout(Duration(seconds: 90));=
       //var url = 'http://192.168.128.11:8070/v1/user/2/payment';
       //var url = 'http://10.0.2.2:8070/v1/user/1/payment';
