@@ -51,31 +51,60 @@ class _DriverList extends State<DriverList> {
                     ),
                   ),
                   SizedBox(height: size.height*0.04,),
-                  Container(
-                    width: size.width*0.55,
-                    padding: EdgeInsets.all(1),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        fillColor: color3,
-                        filled: true,
-                        prefixText: "    ",
-                        border: InputBorder.none,
-                        hintText: "Search hint",
-                        hintStyle: TextStyle(color: color5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                          borderSide: BorderSide(
-                              color: color3,
-                              width: 3
+                  Row(
+                    children: [
+                      Container(
+                        width: size.width*0.1
+                      ),
+                      Container(
+                        width: size.width*0.6,
+                        padding: EdgeInsets.all(1),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            fillColor: color3,
+                            filled: true,
+                            prefixText: "    ",
+                            border: InputBorder.none,
+                            hintText: "Search hint",
+                            hintStyle: TextStyle(color: Colors.white),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                              borderSide: BorderSide(
+                                  color: color3,
+                                  width: 3
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                            ),
+                            prefixIcon: Icon(Icons.search, color: Colors.white, size: 34,),
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                        ),
-                        prefixIcon: Icon(Icons.search, color: Colors.white, size: 34,),
                       ),
-                    ),
-                  ),
+                      Container(
+                        width: size.width*0.05,
+                      ),
+                      Container(
+                        width: size.width*0.2,
+                        padding: EdgeInsets.all(1),
+                        //alignment: Alignment.bottomRight,
+                        //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
+                        child: FlatButton(
+                          onPressed: () {
+                            print("Hola");
+                          },
+                          color: color3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(90.0),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
