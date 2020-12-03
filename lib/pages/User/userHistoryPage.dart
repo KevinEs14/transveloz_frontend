@@ -13,32 +13,33 @@ class UserHistoryPage extends StatefulWidget with NavigationStates {
   _UserHistoryPageState createState() => _UserHistoryPageState();
 }
 class _UserHistoryPageState extends State<UserHistoryPage> {
-  int _id;
-  int finid;
+  int user_id;
   SharedPreferences user;
+  List<UserHistory> data = List<UserHistory>();
+  UserRepository userRepository = UserRepository();
 
   _initSharedPreferences() async{
     user = await SharedPreferences.getInstance();
     print("Sidebar");
     print(user.getInt("id").toString());
-    _id = user.getInt("id");
-    print("dato obbbb  "+_id.toString());
-    finid = _id;
+    user_id = user.getInt("id");
+    userRepository.tomar_datos(user_id).then((value){
+      setState(() {
+        data.addAll(value);
+      });
+    });
   }
-  List<UserHistory> data = List<UserHistory>();
-  UserRepository userRepository = UserRepository();
+// <<<<<<< HEAD
+//   List<UserHistory> data = List<UserHistory>();
+//   UserRepository userRepository = UserRepository();
+// =======
+//
+// >>>>>>> 40715effa7b3e2e84ae14ef2d9cf164f1a4a7fc3
   @override
   void initState(){
     // TODO: implement initState
     super.initState();
     _initSharedPreferences();
-      userRepository.tomar_datos(finid).then((value){
-      setState(() {
-        data.addAll(value);
-        print("es esto el aidi del USUARIO "+finid.toString());
-      });
-    });
-
   }
 
   Size size;

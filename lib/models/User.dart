@@ -2,6 +2,14 @@
 import 'package:flutter/material.dart';
 
 class User{
+  int _userId;
+
+  int get userId => _userId;
+
+  set userId(int value) {
+    _userId = value;
+  }
+
   String _ci;
   String _firstname;
   String _firstsurname;
@@ -97,6 +105,22 @@ class User{
   }
 
   Map toJson() => {
+    "ci":ci,
+    "firstName": firstname,
+    "firstSurname": firstsurname,
+    "secondSurname": secondsurname,
+    "birthDate":birthdate,
+    "phone": phone,
+    "email": email,
+    "password": password,
+    "number":number,
+    "street":street,
+    "zone":zone,
+    "city":city,
+    "country":country
+  };
+  Map toJsonUp() => {
+    "userId":userId,
     "ci":ci,
     "firstName": firstname,
     "firstSurname": firstsurname,
