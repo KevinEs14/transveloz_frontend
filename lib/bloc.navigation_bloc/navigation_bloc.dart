@@ -69,7 +69,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         yield UserHistoryPage();
         break;
       case NavigationEvents.VehicleRegisterClickedEvent:
-        yield VehicleRegister();
+        yield VehicleRegisterPage();
         break;
       case NavigationEvents.DriverListClickedEvent:
         yield DriverList();
