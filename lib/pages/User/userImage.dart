@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
+import 'package:transveloz_frontend/sidebar/usersidebar.dart';
 class UserImage extends StatefulWidget{
   @override
   _UserImage createState() => _UserImage();
@@ -143,31 +144,75 @@ class _UserImage extends State<UserImage>{
               SizedBox(
                   height: size.height*0.05
               ),
-              Container(
-                alignment: Alignment.center,
-                width: size.width*0.2,
-                height: size.height*0.1,
-                //color: color5,
-                child: FlatButton(
-                  onPressed: ()async{
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>UserImage()));
-                    print('guarda');
-                    bool flag = await Check();
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    width: size.width*0.2,
+                    height: size.height*0.1,
+                    //color: color5,
+                    child: FlatButton(
+                      onPressed: ()async{
+
+                        print('guarda');
+                        bool flag = await Check();
+                        if(flag){
+                          //Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSideBar()));
+                          Fluttertoast.showToast(
+                              msg: "Imagen Subida",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: color3,
+                              textColor: color1,
+                              fontSize: 16.0
+                          );
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        color: color4,
+                      ),
+                      highlightColor: color1,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color9,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    ),
                   ),
-                  child: Icon(
-                    Icons.add,
-                    color: color4,
+                  SizedBox(
+                      width: size.width*0.1
                   ),
-                  highlightColor: color1,
-                ),
-                decoration: BoxDecoration(
-                  color: color9,
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                ),
-              ),
+                  Container(
+                    width: size.width*0.2,
+                    height: size.height*0.1,
+                    //color: color5,
+                    child: FlatButton(
+                      onPressed: (){
+                        Navigator.of(context).pop();
+                        print('salir');
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Icon(
+                        Icons.subdirectory_arrow_left,
+                        color: color2,
+                      ),
+                      highlightColor: color1,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color9,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    ),
+                  ),
+                ],
+              )
+
             ],
           )
         ],

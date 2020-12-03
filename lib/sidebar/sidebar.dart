@@ -180,7 +180,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                           //   },
                                           // ),
                                           MenuItem(
-                                            icon: Icons.add_circle_outline_sharp,
+                                            icon: Icons.drive_eta_outlined,
                                             title: "Drivers",
                                             onTap: () {
                                               onIconPressed();
