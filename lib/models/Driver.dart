@@ -1,6 +1,16 @@
 import 'package:intl/intl.dart';
 
 class Driver{
+
+  int _driverid;
+
+
+  int get driverid => _driverid;
+
+  set driverid(int value) {
+    _driverid = value;
+  }
+
   String _ci;
   String _firstname;
   String _firstsurname;
@@ -104,6 +114,24 @@ class Driver{
   }
 
   Map toJson()=>{
+    "ci":ci,
+    "firstName": firstname,
+    "firstSurname": firstsurname,
+    "secondSurname": secondsurname,
+    "birthDate":birthdate,
+    "phone": phone,
+    "email": email,
+    "password": password,
+    "number":number,
+    "street":street,
+    "zone":zone,
+    "city":city,
+    "country":country,
+    "companyId":companyId
+  };
+
+  Map toJsonUp()=>{
+    "driverId":driverid,
     "ci":ci,
     "firstName": firstname,
     "firstSurname": firstsurname,

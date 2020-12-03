@@ -30,6 +30,27 @@ class DriverRepository{
     }
   }
 
+  Future<bool> updateDriver(Driver driver) async{
+    try{
+
+      var res = await http.put(directionUrl+"v1/driver",
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(driver.toJsonUp()));
+      if(res.statusCode == 200){
+        print("Done");
+        return true;
+      }else{
+        return false;
+      }
+    }
+    catch(error){
+      print(error);
+      return false;
+    }
+  }
+
 
   Future<List<CompanyRequest>> getCompanies() async{
     try{
