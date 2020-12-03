@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:transveloz_frontend/models/LogIn.dart';
 import 'package:transveloz_frontend/models/User.dart';
-import 'package:transveloz_frontend/models/UserHistory.dart';
+import 'package:transveloz_frontend/models/UserHistoryPayment.dart';
 import 'package:transveloz_frontend/repository/url.dart';
 
 class UserRepository{
@@ -59,10 +59,10 @@ class UserRepository{
     }
   }
 
-  Future<List<UserHistory>> tomar_datos(int id) async{
+  Future<List<UserHistoryPayment>> tomar_datos(int id) async{
     try{
       print("UserId: "+id.toString());
-      var url = directionUrl+"v1/user/"+id.toString()+"/payment";
+      var url = directionUrl+"v1/payment/historypayment/"+id.toString();
       print(url);
       var response = await   http.get(url,
           headers: <String, String>{
@@ -70,10 +70,10 @@ class UserRepository{
           }
       );
       var datos = jsonDecode(response.body);
-      var registros = List<UserHistory>();
+      var registros = List<UserHistoryPayment>();
 
       for(datos in datos){
-        registros.add(UserHistory.fromJson(datos));
+        registros.add(UserHistoryPayment.fromJson(datos));
       }
 
       return registros;
