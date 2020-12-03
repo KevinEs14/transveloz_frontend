@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transveloz_frontend/models/Card.dart' as CardObject ;
 import 'package:transveloz_frontend/models/CardCollection.dart';
+// import 'package:transveloz_frontend/models/Card.dart';
 import 'package:transveloz_frontend/models/SingleDriver.dart';
+import 'package:transveloz_frontend/pages/Vehicle/vehicleListPage.dart';
 import 'package:transveloz_frontend/repository/card_collection_repository.dart';
+import 'package:transveloz_frontend/repository/card_repository.dart';
 import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 
 import '../../color.dart';
@@ -21,13 +25,19 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   int vehicleId;
 
   _VehicleInformationPageState(this.vehicleId);
-
+  TextEditingController accountNumber=TextEditingController();
+  TextEditingController pin=TextEditingController();
+  TextEditingController bank=TextEditingController();
+  TextEditingController typeAccount=TextEditingController();
+  TextEditingController cvvCode=TextEditingController();
   // TextEditingController idVehicle=new TextEditingController();
   SingleDriver singleDriver=SingleDriver();
   SingleDriver singleDriver2=SingleDriver();
   SingleDriver singleDriver3=SingleDriver();
   CardCollection cardCollection=CardCollection();
+  CardObject.Card card=CardObject.Card();
   CardCollection _value=CardCollection();
+  CardRepository cardRepository=CardRepository();
   List<CardCollection> cardCollection2=List<CardCollection>();
   List<CardCollection> listaCard=List<CardCollection>();
   var estado="";var nombre="";var apellido="";var capacidad=""; var tipo=""; var marca=""; var modelo="";var precio="";
@@ -229,6 +239,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
+                                        controller: accountNumber,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -249,6 +260,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
+                                        controller: pin,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -269,6 +281,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
+                                        controller: bank,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -289,6 +302,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
+                                        controller: typeAccount,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -309,6 +323,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
+                                        controller: cvvCode,
                                       ),
 
                                     ],
@@ -320,7 +335,15 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                     children: <Widget>[
                                       GestureDetector(
                                         onTap: () {
-                                          Navigator.pop(context);
+                                          card=Submit();
+                                          if(card!=null){
+                                            cardRepository.createCard(card);
+                                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleListPage()));
+                                          }else{
+                                            Navigator.pop(context);
+                                          }
+
                                         },
                                         child: Container(
                                           // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
@@ -418,7 +441,14 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                     children: <Widget>[
                                       GestureDetector(
                                         onTap: () {
+                                          // card=Submit();
+                                          // if(card!=null){
+                                          //
+                                          // }else{
+                                          //   Navigator.pop(context);
+                                          // }
                                           Navigator.pop(context);
+
                                         },
                                         child: Container(
                                           // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
@@ -552,6 +582,26 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
         ),
       ),
     );
+  }
+  CardObject.Card Submit(){
+
+    CardObject.Card card2=CardObject.Card();
+    // bool x = false;
+    if( accountNumber.text.isNotEmpty && pin.text.isNotEmpty && bank.text.isNotEmpty && typeAccount.text.isNotEmpty && cvvCode.text.isNotEmpty){
+      // x = true;
+      print(userId.toString());
+      card2.userId=int.parse(userId);
+      card2.accountNumber=accountNumber.text;
+      card2.pin=pin.text;
+      card2.bank=bank.text;
+      card2.typeAccount=typeAccount.text;
+      card2.cvvCode=cvvCode.text;
+      card2.status=1;
+      return card2;
+    }else{
+      print("cardfail");
+      return null;
+    }
   }
 }
 class AlertPago extends StatefulWidget {
