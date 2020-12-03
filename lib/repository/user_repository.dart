@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:transveloz_frontend/models/LogIn.dart';
 import 'package:transveloz_frontend/models/User.dart';
