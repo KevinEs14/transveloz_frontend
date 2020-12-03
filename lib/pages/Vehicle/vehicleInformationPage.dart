@@ -33,6 +33,18 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   TextEditingController bank=TextEditingController();
   TextEditingController typeAccount=TextEditingController();
   TextEditingController cvvCode=TextEditingController();
+  TextEditingController travelDateDelivery=TextEditingController();
+  TextEditingController startAddressNumber=TextEditingController();
+  TextEditingController startAddressStreet=TextEditingController();
+  TextEditingController startAddressZone=TextEditingController();
+  TextEditingController startAddressCity=TextEditingController();
+  TextEditingController startAddressCountry=TextEditingController();
+  TextEditingController deliveryAddressNumber=TextEditingController();
+  TextEditingController deliveryAddressStreet=TextEditingController();
+  TextEditingController deliveryAddressZone=TextEditingController();
+  TextEditingController deliveryAddressCity=TextEditingController();
+  TextEditingController deliveryAddressCountry=TextEditingController();
+  String travelStatus="Confirmado";
   // TextEditingController idVehicle=new TextEditingController();
   SingleDriver singleDriver=SingleDriver();
   SingleDriver singleDriver2=SingleDriver();
@@ -422,7 +434,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                           filled: true,
                                           prefixText: "    ",
                                           border: InputBorder.none,
-                                          hintText: "Numero de cuenta",
+                                          hintText: "Fecha de Delivery (2020-12-02)",
                                           hintStyle: TextStyle(color: color1.withOpacity(0.7)),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
@@ -435,7 +447,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
-                                        controller: accountNumber,
+                                        controller: travelDateDelivery,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -443,7 +455,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                           filled: true,
                                           prefixText: "    ",
                                           border: InputBorder.none,
-                                          hintText: "Pin",
+                                          hintText: "Número de puerta de inicio",
                                           hintStyle: TextStyle(color: color1.withOpacity(0.7)),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
@@ -456,7 +468,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
-                                        controller: pin,
+                                        controller: startAddressNumber,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -464,7 +476,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                           filled: true,
                                           prefixText: "    ",
                                           border: InputBorder.none,
-                                          hintText: "Banco",
+                                          hintText: "Calle de inicio",
                                           hintStyle: TextStyle(color: color1.withOpacity(0.7)),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
@@ -477,7 +489,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
-                                        controller: bank,
+                                        controller: startAddressStreet,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -485,7 +497,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                           filled: true,
                                           prefixText: "    ",
                                           border: InputBorder.none,
-                                          hintText: "Tipo de cuenta",
+                                          hintText: "Zona de inicio",
                                           hintStyle: TextStyle(color: color1.withOpacity(0.7)),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
@@ -498,7 +510,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
-                                        controller: typeAccount,
+                                        controller: startAddressZone,
                                       ),
                                       TextField(
                                         decoration: InputDecoration(
@@ -506,7 +518,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                           filled: true,
                                           prefixText: "    ",
                                           border: InputBorder.none,
-                                          hintText: "Codigo CVV",
+                                          hintText: "Ciudad de inicio",
                                           hintStyle: TextStyle(color: color1.withOpacity(0.7)),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
@@ -519,7 +531,133 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             borderRadius: BorderRadius.all(Radius.circular(24)),
                                           ),
                                         ),
-                                        controller: cvvCode,
+                                        controller: startAddressCity,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Pais de inicio",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: startAddressCountry,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Número de puerta de entrega",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: deliveryAddressNumber,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Calle de entrega",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: deliveryAddressStreet,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Zona de entrega",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: deliveryAddressZone,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Ciudad de entrega",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: deliveryAddressCity,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Pais de entrega",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: deliveryAddressCountry,
                                       ),
 
                                     ],
