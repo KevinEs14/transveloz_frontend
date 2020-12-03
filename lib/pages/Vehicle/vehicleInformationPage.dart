@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/Card.dart' as CardObject ;
 import 'package:transveloz_frontend/models/CardCollection.dart';
+import 'package:transveloz_frontend/models/Payment.dart';
 // import 'package:transveloz_frontend/models/Card.dart';
 import 'package:transveloz_frontend/models/SingleDriver.dart';
 import 'package:transveloz_frontend/models/Travel.dart';
@@ -12,6 +13,7 @@ import 'package:transveloz_frontend/models/TravelId.dart';
 import 'package:transveloz_frontend/pages/Vehicle/vehicleListPage.dart';
 import 'package:transveloz_frontend/repository/card_collection_repository.dart';
 import 'package:transveloz_frontend/repository/card_repository.dart';
+import 'package:transveloz_frontend/repository/payment_repository.dart';
 import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 import 'package:transveloz_frontend/repository/travel_id_repository.dart';
 import 'package:transveloz_frontend/repository/travel_repository.dart';
@@ -47,6 +49,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   TextEditingController deliveryAddressCity=TextEditingController();
   TextEditingController deliveryAddressCountry=TextEditingController();
   String travelStatus="Confirmado";
+  String pagoStatus="Confirmado";
   // TextEditingController idVehicle=new TextEditingController();
   SingleDriver singleDriver=SingleDriver();
   SingleDriver singleDriver2=SingleDriver();
@@ -55,8 +58,10 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   CardObject.Card card=CardObject.Card();
   CardCollection _value=CardCollection();
   CardRepository cardRepository=CardRepository();
+  PaymentRepository paymentRepository=PaymentRepository();
   TravelRepository travelRepository=TravelRepository();
   TravelIdRepository travelIdRepository=TravelIdRepository();
+  Payment creationPayment=Payment();
   Travel travel=Travel();
   Travel creationTravel=Travel();
   List<TravelId> travelList=List<TravelId>();
@@ -67,20 +72,28 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   SingleDriverRepository vehiclerepository=SingleDriverRepository();
   CardCollectionRepository cardCollectionRepository=CardCollectionRepository();
   Size size;
-  int tam;
+  int tam=1;
+  String formattedDate="";
   var userId="";var tipoAdmi="";
   // singleDriver.vehicleId=vehicleId;
+  ObtenerTravel()async{
+    travel.travelUserId=int.parse(userId);travel.travelDriverId=vehicleId;
+    // print(travel.userId);
+    // print(travel.driverId);
+    travelList= await travelIdRepository.obtainTravelId(travel);
+    tam=travelList.length;
+  }
   ObtenerDatos()async{
     // travelList=await travelIdRepository.obtainTravelId(int.parse(userId), vehicleId);
     singleDriver.vehicleId=vehicleId;
     singleDriver3=await vehiclerepository.obtainVehicle(singleDriver);
     cardCollection.userId=int.parse(userId);
     cardCollection2=await cardCollectionRepository.obtainListCard(cardCollection);
-    travel.travelUserId=int.parse(userId);travel.travelDriverId=vehicleId;
-    // print(travel.userId);
-    // print(travel.driverId);
-    travelList= await travelIdRepository.obtainTravelId(travel);
-    tam=travelList.length;
+    // travel.travelUserId=int.parse(userId);travel.travelDriverId=vehicleId;
+    // // print(travel.userId);
+    // // print(travel.driverId);
+    // travelList= await travelIdRepository.obtainTravelId(travel);
+    // tam=travelList.length;
     // print(tam);
     // print("travel ");
     // print(travelList[0].travelId);
@@ -124,7 +137,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   Widget build(BuildContext context) {
     var now = new DateTime.now();
     var formatter = new DateFormat("yyyy-MM-dd");
-    String formattedDate = formatter.format(now);
+    formattedDate = formatter.format(now);
     size=MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -253,585 +266,619 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                     SizedBox(width: size.width*0.15,),
                     RaisedButton(
                       onPressed: (){
-                        if(cardCollection2.isEmpty){
-                          showDialog(context: context,barrierDismissible: false,builder: (context){
-                            return AlertDialog(
-                              content: SingleChildScrollView(
-                                  child:ListBody(
-                                    children: [
-                                      Text('Necesitas registrar una tarjeta '),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Numero de cuenta",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
+                        if(tipoAdmi=="Usuario"){
+                          if(cardCollection2.isEmpty){
+                            showDialog(context: context,barrierDismissible: false,builder: (context){
+                              return AlertDialog(
+                                content: SingleChildScrollView(
+                                    child:ListBody(
+                                      children: [
+                                        Text('Necesitas registrar una tarjeta '),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Numero de cuenta",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
+                                          controller: accountNumber,
                                         ),
-                                        controller: accountNumber,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Pin",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Pin",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
+                                          controller: pin,
                                         ),
-                                        controller: pin,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Banco",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Banco",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
+                                          controller: bank,
                                         ),
-                                        controller: bank,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Tipo de cuenta",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Tipo de cuenta",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
+                                          controller: typeAccount,
                                         ),
-                                        controller: typeAccount,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Codigo CVV",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Codigo CVV",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
+                                          controller: cvvCode,
                                         ),
-                                        controller: cvvCode,
-                                      ),
 
-                                    ],
-                                  )
-                              ),
-                              actions: <Widget>[
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          card=Submit();
-                                          if(card!=null){
-                                            cardRepository.createCard(card);
-                                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSideBar()));
-                                          }else{
+                                      ],
+                                    )
+                                ),
+                                actions: <Widget>[
+                                  Container(
+                                    child: Row(
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap: () {
+                                            card=Submit();
+                                            if(card!=null){
+                                              cardRepository.createCard(card);
+                                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSideBar()));
+                                            }else{
+                                              Navigator.pop(context);
+                                            }
+
+                                          },
+                                          child: Container(
+                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                            height: size.height*0.05,
+                                            width: size.width*0.2,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xff121212),color6,
+                                                    Color(0xff121212)]
+                                              ),
+                                            ),
+                                            child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                          ),
+                                        ),
+                                        SizedBox(width: size.width*0.04,),
+                                        GestureDetector(
+                                          onTap: () {
                                             Navigator.pop(context);
-                                          }
-
-                                        },
-                                        child: Container(
-                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                          height: size.height*0.05,
-                                          width: size.width*0.2,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            gradient: LinearGradient(
-                                                colors: [
-                                                  Color(0xff121212),color6,
-                                                  Color(0xff121212)]
+                                          },
+                                          child: Container(
+                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                            height: size.height*0.05,
+                                            width: size.width*0.2,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xff121212),color1,
+                                                    Color(0xff121212)]
+                                              ),
                                             ),
+                                            child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
                                           ),
-                                          child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
                                         ),
-                                      ),
-                                      SizedBox(width: size.width*0.04,),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                          height: size.height*0.05,
-                                          width: size.width*0.2,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            gradient: LinearGradient(
-                                                colors: [
-                                                  Color(0xff121212),color1,
-                                                  Color(0xff121212)]
-                                            ),
-                                          ),
-                                          child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
                             );
+                          }else{
+                            showDialog(context: context,barrierDismissible: false,builder: (context){
+                              return AlertDialog(
+                                content: SingleChildScrollView(
+                                    child:ListBody(
+                                      children: [
+                                        Text('Ingrese la ruta'),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Fecha de Delivery (2020-12-02)",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: travelDateDelivery,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Número de puerta de inicio",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: startAddressNumber,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Calle de inicio",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: startAddressStreet,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Zona de inicio",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: startAddressZone,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Ciudad de inicio",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: startAddressCity,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Pais de inicio",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: startAddressCountry,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Número de puerta de entrega",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: deliveryAddressNumber,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Calle de entrega",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: deliveryAddressStreet,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Zona de entrega",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: deliveryAddressZone,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Ciudad de entrega",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: deliveryAddressCity,
+                                        ),
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            fillColor: Color(0xFFEEEBD3),
+                                            filled: true,
+                                            prefixText: "    ",
+                                            border: InputBorder.none,
+                                            hintText: "Pais de entrega",
+                                            hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(24)),
+                                                borderSide: BorderSide(
+                                                    color: color2,
+                                                    width: 5
+                                                )
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            ),
+                                          ),
+                                          controller: deliveryAddressCountry,
+                                        ),
+
+                                      ],
+                                    )
+                                ),
+                                actions: <Widget>[
+                                  Container(
+                                    child: Row(
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap: () {
+                                            creationTravel=SubmiTravel();
+                                            if(creationTravel!=null){
+                                              travelRepository.createTravel(creationTravel);
+                                              ObtenerTravel();
+                                              showDialog(context: context,barrierDismissible: false,builder: (context){
+                                                return AlertDialog(
+                                                  content: SingleChildScrollView(
+                                                      child:ListBody(
+                                                        children: [
+                                                          Text("¿Está seguro de realizar el pago por $precio bs?"),
+                                                          Container(
+                                                            padding: EdgeInsets.only(left:16,right: 16),
+                                                            decoration: BoxDecoration(
+                                                              color: color4,
+                                                              border: Border.all(color: color4, width: 2.0),
+                                                              borderRadius: BorderRadius.circular(10),
+                                                            ),
+                                                            child: DropdownButton(
+
+                                                              dropdownColor: color4,
+                                                              elevation: 5,
+                                                              value: _value.accountNumber,
+                                                              iconEnabledColor: color1,
+
+                                                              hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
+                                                              onChanged: (newValue){
+                                                                setState(() {
+                                                                  _value = cardCollection2.firstWhere((element) {
+                                                                    if(element.accountNumber==newValue){
+                                                                      return true;
+                                                                    }
+                                                                    else{
+                                                                      return false;
+                                                                    }
+                                                                  });
+
+                                                                });
+                                                                print(_value.accountNumber);
+                                                              },
+                                                              items: cardCollection2.map((newValue){
+                                                                return DropdownMenuItem(
+                                                                  value: newValue.accountNumber,
+
+                                                                  child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
+                                                              }).toList(),
+                                                            ),
+                                                          ),
+
+                                                        ],
+                                                      )
+                                                  ),
+                                                  actions: <Widget>[
+                                                    Container(
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              ObtenerTravel();
+                                                              creationPayment=SubmiPayment(formattedDate);
+                                                              // card=Submit();
+                                                              if(creationPayment!=null){
+                                                                paymentRepository.createPayment(creationPayment);
+                                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleListPage()));
+                                                              }else{
+                                                                // Navigator.pop(context);
+                                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
+                                                              }
+                                                              // Navigator.pop(context);
+
+                                                            },
+                                                            child: Container(
+                                                              // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                                              height: size.height*0.05,
+                                                              width: size.width*0.2,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10.0),
+                                                                gradient: LinearGradient(
+                                                                    colors: [
+                                                                      Color(0xff121212),color6,
+                                                                      Color(0xff121212)]
+                                                                ),
+                                                              ),
+                                                              child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: size.width*0.04,),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.pop(context);
+                                                            },
+                                                            child: Container(
+                                                              // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                                              height: size.height*0.05,
+                                                              width: size.width*0.2,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10.0),
+                                                                gradient: LinearGradient(
+                                                                    colors: [
+                                                                      Color(0xff121212),color1,
+                                                                      Color(0xff121212)]
+                                                                ),
+                                                              ),
+                                                              child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              }
+                                              );
+                                            }else{
+                                              Navigator.pop(context);
+                                            }
+
+                                          },
+                                          child: Container(
+                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                            height: size.height*0.05,
+                                            width: size.width*0.2,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xff121212),color6,
+                                                    Color(0xff121212)]
+                                              ),
+                                            ),
+                                            child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                          ),
+                                        ),
+                                        SizedBox(width: size.width*0.04,),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Container(
+                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                            height: size.height*0.05,
+                                            width: size.width*0.2,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xff121212),color1,
+                                                    Color(0xff121212)]
+                                              ),
+                                            ),
+                                            child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
+                            );
+
                           }
-                          );
+                          // Navigator.pop(context);
                         }else{
                           showDialog(context: context,barrierDismissible: false,builder: (context){
                             return AlertDialog(
-                              content: SingleChildScrollView(
-                                  child:ListBody(
-                                    children: [
-                                      Text('Ingrese la ruta'),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Fecha de Delivery (2020-12-02)",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: travelDateDelivery,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Número de puerta de inicio",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: startAddressNumber,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Calle de inicio",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: startAddressStreet,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Zona de inicio",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: startAddressZone,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Ciudad de inicio",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: startAddressCity,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Pais de inicio",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: startAddressCountry,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Número de puerta de entrega",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: deliveryAddressNumber,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Calle de entrega",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: deliveryAddressStreet,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Zona de entrega",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: deliveryAddressZone,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Ciudad de entrega",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: deliveryAddressCity,
-                                      ),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          fillColor: Color(0xFFEEEBD3),
-                                          filled: true,
-                                          prefixText: "    ",
-                                          border: InputBorder.none,
-                                          hintText: "Pais de entrega",
-                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(24)),
-                                              borderSide: BorderSide(
-                                                  color: color2,
-                                                  width: 5
-                                              )
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                          ),
-                                        ),
-                                        controller: deliveryAddressCountry,
-                                      ),
-
-                                    ],
-                                  )
-                              ),
+                              title: Text('Como administrador o conductor no puede realizar un pago'),
                               actions: <Widget>[
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          creationTravel=SubmiTravel();
-                                          if(creationTravel!=null){
-                                            travelRepository.createTravel(creationTravel);
-                                            showDialog(context: context,barrierDismissible: false,builder: (context){
-                                              return AlertDialog(
-                                                content: SingleChildScrollView(
-                                                    child:ListBody(
-                                                      children: [
-                                                        Text("¿Está seguro de realizar el pago por $precio bs?"),
-                                                        Container(
-                                                          padding: EdgeInsets.only(left:16,right: 16),
-                                                          decoration: BoxDecoration(
-                                                            color: color4,
-                                                            border: Border.all(color: color4, width: 2.0),
-                                                            borderRadius: BorderRadius.circular(10),
-                                                          ),
-                                                          child: DropdownButton(
-
-                                                            dropdownColor: color4,
-                                                            elevation: 5,
-                                                            value: _value.accountNumber,
-                                                            iconEnabledColor: color1,
-
-                                                            hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
-                                                            onChanged: (newValue){
-                                                              setState(() {
-                                                                _value = cardCollection2.firstWhere((element) {
-                                                                  if(element.accountNumber==newValue){
-                                                                    return true;
-                                                                  }
-                                                                  else{
-                                                                    return false;
-                                                                  }
-                                                                });
-
-                                                              });
-                                                              print(_value.accountNumber);
-                                                            },
-                                                            items: cardCollection2.map((newValue){
-                                                              return DropdownMenuItem(
-                                                                value: newValue.accountNumber,
-
-                                                                child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
-                                                            }).toList(),
-                                                          ),
-                                                        ),
-
-                                                      ],
-                                                    )
-                                                ),
-                                                actions: <Widget>[
-                                                  Container(
-                                                    child: Row(
-                                                      children: <Widget>[
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            // card=Submit();
-                                                            // if(card!=null){
-                                                            //
-                                                            // }else{
-                                                            //   Navigator.pop(context);
-                                                            // }
-                                                            Navigator.pop(context);
-
-                                                          },
-                                                          child: Container(
-                                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                                            height: size.height*0.05,
-                                                            width: size.width*0.2,
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(10.0),
-                                                              gradient: LinearGradient(
-                                                                  colors: [
-                                                                    Color(0xff121212),color6,
-                                                                    Color(0xff121212)]
-                                                              ),
-                                                            ),
-                                                            child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                                                          ),
-                                                        ),
-                                                        SizedBox(width: size.width*0.04,),
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.pop(context);
-                                                          },
-                                                          child: Container(
-                                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                                            height: size.height*0.05,
-                                                            width: size.width*0.2,
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(10.0),
-                                                              gradient: LinearGradient(
-                                                                  colors: [
-                                                                    Color(0xff121212),color1,
-                                                                    Color(0xff121212)]
-                                                              ),
-                                                            ),
-                                                            child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                            }
-                                            );
-                                          }else{
-                                            Navigator.pop(context);
-                                          }
-
-                                        },
-                                        child: Container(
-                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                          height: size.height*0.05,
-                                          width: size.width*0.2,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            gradient: LinearGradient(
-                                                colors: [
-                                                  Color(0xff121212),color6,
-                                                  Color(0xff121212)]
-                                            ),
-                                          ),
-                                          child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                                        ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                    height: size.height*0.05,
+                                    width: size.width*0.2,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xff121212),color1,
+                                            Color(0xff121212)]
                                       ),
-                                      SizedBox(width: size.width*0.04,),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                          height: size.height*0.05,
-                                          width: size.width*0.2,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            gradient: LinearGradient(
-                                                colors: [
-                                                  Color(0xff121212),color1,
-                                                  Color(0xff121212)]
-                                            ),
-                                          ),
-                                          child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
+                                    child: Center(child: Text("Acpetar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
                                   ),
-                                )
+                                ),
                               ],
                             );
-                          }
-                          );
-
+                          });
                         }
-                        // Navigator.pop(context);
                       },
                       color: color6,
                       padding: EdgeInsets.only(top: 10,bottom: 10,left: 15,right: 15),
@@ -965,6 +1012,24 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
       print("cardfail");
       return null;
     }
+  }
+  Payment SubmiPayment(String date){
+    Payment creationPayment2=Payment();
+    // if( travelDateDelivery.text.isNotEmpty && startAddressNumber.text.isNotEmpty && startAddressStreet.text.isNotEmpty && startAddressZone.text.isNotEmpty && startAddressCity.text.isNotEmpty && startAddressCountry.text.isNotEmpty && deliveryAddressNumber.text.isNotEmpty && deliveryAddressStreet.text.isNotEmpty && deliveryAddressZone.text.isNotEmpty && deliveryAddressCity.text.isNotEmpty && deliveryAddressCountry.text.isNotEmpty){
+      // x = true;
+      // print(userId.toString());
+    print(tam);
+      creationPayment2.travelId=travelList[tam-1].travelId;
+      creationPayment2.administrationId=1;
+      creationPayment2.datePayment=date;
+      creationPayment2.paymentStatus="Confirmado";
+      creationPayment2.amount=double.parse(precio);
+      creationPayment2.status=1;
+      return creationPayment2;
+    // }else{
+    //   print("cardfail");
+    //   return null;
+    // }
   }
 }
 class AlertPago extends StatefulWidget {

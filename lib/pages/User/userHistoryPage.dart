@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/models/UserHistoryPayment.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
-import 'package:transveloz_frontend/repository/userhistory_repository.dart';
 import '../../color.dart';
 
 class UserHistoryPage extends StatefulWidget with NavigationStates {
