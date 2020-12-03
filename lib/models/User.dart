@@ -111,4 +111,22 @@ class User{
     "city":city,
     "country":country
   };
+
+  User.fromJson(Map<String, dynamic> json){
+    ci = json['ci'];
+    firstname = json['firstName'];
+    firstsurname = json['firstSurname'];
+    secondsurname = json['secondSurname'];
+    birthdate = json['birthDate'];
+    phone = json['phone'];
+    email = json['email'];
+    password = json['password'];
+    number = json['number'];
+    street = json['street'];
+    zone = json['zone'];
+    city = json['city'];
+    country = json['country'];
+  }
+
+
 }

@@ -3,7 +3,8 @@ import 'package:transveloz_frontend/pages/User/profilePage.dart';
 import 'package:transveloz_frontend/pages/User/requestServicePage.dart';
 import 'package:transveloz_frontend/pages/User/userHistoryPage.dart';
 import 'package:transveloz_frontend/pages/User/userHomePage.dart';
-import 'package:transveloz_frontend/pages/Vehicle/vehicleList.dart';
+import 'package:transveloz_frontend/pages/Vehicle/VehicleRegisterPage.dart';
+import 'package:transveloz_frontend/pages/Vehicle/vehicleListPage.dart';
 import 'package:transveloz_frontend/pages/driver/driver_list.dart';
 import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/pages/loginPage.dart';
@@ -18,21 +19,21 @@ enum NavigationEvents {
   AccountClickedEvent,
   MyOrdersClickedEvent,
   DriverRegisterClickedEvent,
-  SearchVehicles,
+  SearchVehiclesEvent,
   UserRegisterClickedEvent,
   UserHomePageClickedEvent,
   ProfileClickedEvent,
   RequestServiceClickedEvent,
   UserHistoryClickedEvent,
+  VehicleRegisterClickedEvent,
   DriverListClickedEvent
-
 }
 
 abstract class NavigationStates {}
 
 class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
   @override
-  NavigationStates get initialState => VehicleList();
+  NavigationStates get initialState => VehicleListPage();
 
   @override
   Stream<NavigationStates> mapEventToState(NavigationEvents event) async* {
@@ -49,8 +50,8 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.DriverRegisterClickedEvent:
         yield DriverRegister();
         break;
-      case NavigationEvents.SearchVehicles:
-        yield VehicleList();
+      case NavigationEvents.SearchVehiclesEvent:
+        yield VehicleListPage();
         break;
       case NavigationEvents.UserRegisterClickedEvent:
         yield UserRegister();
@@ -66,6 +67,9 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         break;
       case NavigationEvents.UserHistoryClickedEvent:
         yield UserHistoryPage();
+        break;
+      case NavigationEvents.VehicleRegisterClickedEvent:
+        yield VehicleRegisterPage();
         break;
       case NavigationEvents.DriverListClickedEvent:
         yield DriverList();

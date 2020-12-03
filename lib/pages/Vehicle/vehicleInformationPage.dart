@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/SingleDriver.dart';
 import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 
@@ -14,7 +17,9 @@ class VehicleInformationPage extends StatefulWidget {
 
 class _VehicleInformationPageState extends State<VehicleInformationPage> {
   int vehicleId;
+
   _VehicleInformationPageState(this.vehicleId);
+
   // TextEditingController idVehicle=new TextEditingController();
   SingleDriver singleDriver=SingleDriver();
   SingleDriver singleDriver2=SingleDriver();
@@ -22,11 +27,13 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   var estado="";var nombre="";var apellido="";var capacidad=""; var tipo=""; var marca=""; var modelo="";var precio="";
   SingleDriverRepository vehiclerepository=SingleDriverRepository();
   Size size;
+  var userId="";
   // singleDriver.vehicleId=vehicleId;
   ObtenerDatos()async{
     singleDriver.vehicleId=vehicleId;
     singleDriver3=await vehiclerepository.obtainVehicle(singleDriver);
     setState(()  {
+      userId=user.getInt("id").toString();
       singleDriver2=singleDriver3;
       nombre=singleDriver2.personFirstName.toString();
       apellido=singleDriver2.personFirstSurname.toString();
@@ -36,16 +43,26 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
       modelo=singleDriver2.vehicleModel.toString();
       estado=singleDriver2.vehicleStatus.toString();
       precio=singleDriver2.vehiclePrice.toString();
+      // userId=user.getInt("id").toString();
     });
-
+  }
+  SharedPreferences user;
+  _initSharedPreferences() async{
+    user = await SharedPreferences.getInstance();
+    // print("Sidebar");
+    // print(user.getInt("id").toString());
   }
  @override
  void initState() {
    ObtenerDatos();
+   _initSharedPreferences();
   super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    var now = new DateTime.now();
+    var formatter = new DateFormat("yyyy-MM-dd");
+    String formattedDate = formatter.format(now);
     size=MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -174,9 +191,331 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                     SizedBox(width: size.width*0.15,),
                     RaisedButton(
                       onPressed: (){
-                        Navigator.pop(context);
+                        // showDialog(context: context,barrierDismissible: false,builder: (context){
+                        //   return AlertDialog(
+                        //     content: SingleChildScrollView(
+                        //         child:ListBody(
+                        //           children: [
+                        //             Text('Ganaste!! Vuelve pronto. Tu score fue de '),
+                        //             TextField(
+                        //               decoration: InputDecoration(
+                        //                 fillColor: Color(0xFFEEEBD3),
+                        //                 filled: true,
+                        //                 prefixText: "    ",
+                        //                 border: InputBorder.none,
+                        //                 hintText: "Numero de cuenta",
+                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                        //                 enabledBorder: OutlineInputBorder(
+                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                     borderSide: BorderSide(
+                        //                         color: color2,
+                        //                         width: 5
+                        //                     )
+                        //                 ),
+                        //                 focusedBorder: OutlineInputBorder(
+                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             TextField(
+                        //               decoration: InputDecoration(
+                        //                 fillColor: Color(0xFFEEEBD3),
+                        //                 filled: true,
+                        //                 prefixText: "    ",
+                        //                 border: InputBorder.none,
+                        //                 hintText: "Pin",
+                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                        //                 enabledBorder: OutlineInputBorder(
+                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                     borderSide: BorderSide(
+                        //                         color: color2,
+                        //                         width: 5
+                        //                     )
+                        //                 ),
+                        //                 focusedBorder: OutlineInputBorder(
+                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             TextField(
+                        //               decoration: InputDecoration(
+                        //                 fillColor: Color(0xFFEEEBD3),
+                        //                 filled: true,
+                        //                 prefixText: "    ",
+                        //                 border: InputBorder.none,
+                        //                 hintText: "Banco",
+                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                        //                 enabledBorder: OutlineInputBorder(
+                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                     borderSide: BorderSide(
+                        //                         color: color2,
+                        //                         width: 5
+                        //                     )
+                        //                 ),
+                        //                 focusedBorder: OutlineInputBorder(
+                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             TextField(
+                        //               decoration: InputDecoration(
+                        //                 fillColor: Color(0xFFEEEBD3),
+                        //                 filled: true,
+                        //                 prefixText: "    ",
+                        //                 border: InputBorder.none,
+                        //                 hintText: "Tipo de cuenta",
+                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                        //                 enabledBorder: OutlineInputBorder(
+                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                     borderSide: BorderSide(
+                        //                         color: color2,
+                        //                         width: 5
+                        //                     )
+                        //                 ),
+                        //                 focusedBorder: OutlineInputBorder(
+                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             TextField(
+                        //               decoration: InputDecoration(
+                        //                 fillColor: Color(0xFFEEEBD3),
+                        //                 filled: true,
+                        //                 prefixText: "    ",
+                        //                 border: InputBorder.none,
+                        //                 hintText: "Codigo CVV",
+                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                        //                 enabledBorder: OutlineInputBorder(
+                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                     borderSide: BorderSide(
+                        //                         color: color2,
+                        //                         width: 5
+                        //                     )
+                        //                 ),
+                        //                 focusedBorder: OutlineInputBorder(
+                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //
+                        //           ],
+                        //         )
+                        //     ),
+                        //     actions: <Widget>[
+                        //       Container(
+                        //         child: Row(
+                        //           children: <Widget>[
+                        //             GestureDetector(
+                        //               onTap: () {
+                        //                 Navigator.pop(context);
+                        //               },
+                        //               child: Container(
+                        //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                        //                 height: size.height*0.05,
+                        //                 width: size.width*0.2,
+                        //                 decoration: BoxDecoration(
+                        //                   borderRadius: BorderRadius.circular(10.0),
+                        //                   gradient: LinearGradient(
+                        //                       colors: [
+                        //                         Color(0xff121212),color6,
+                        //                         Color(0xff121212)]
+                        //                   ),
+                        //                 ),
+                        //                 child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                        //               ),
+                        //             ),
+                        //             SizedBox(width: size.width*0.04,),
+                        //             GestureDetector(
+                        //               onTap: () {
+                        //                 Navigator.pop(context);
+                        //               },
+                        //               child: Container(
+                        //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                        //                 height: size.height*0.05,
+                        //                 width: size.width*0.2,
+                        //                 decoration: BoxDecoration(
+                        //                   borderRadius: BorderRadius.circular(10.0),
+                        //                   gradient: LinearGradient(
+                        //                       colors: [
+                        //                         Color(0xff121212),color1,
+                        //                         Color(0xff121212)]
+                        //                   ),
+                        //                 ),
+                        //                 child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       )
+                        //     ],
+                        //   );
+                        // }
+
+                        showDialog(context: context,barrierDismissible: false,builder: (context){
+                          return AlertDialog(
+                            content: SingleChildScrollView(
+                                child:ListBody(
+                                  children: [
+                                    Text("Llene los siguientes datos para realizar el pago"),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xFFEEEBD3),
+                                        filled: true,
+                                        prefixText: "    ",
+                                        border: InputBorder.none,
+                                        hintText: "Fecha",
+                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            borderSide: BorderSide(
+                                                color: color2,
+                                                width: 5
+                                            )
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(24)),
+                                        ),
+                                      ),
+                                    ),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xFFEEEBD3),
+                                        filled: true,
+                                        prefixText: "    ",
+                                        border: InputBorder.none,
+                                        hintText: "Pin",
+                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            borderSide: BorderSide(
+                                                color: color2,
+                                                width: 5
+                                            )
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(24)),
+                                        ),
+                                      ),
+                                    ),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xFFEEEBD3),
+                                        filled: true,
+                                        prefixText: "    ",
+                                        border: InputBorder.none,
+                                        hintText: "Banco",
+                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            borderSide: BorderSide(
+                                                color: color2,
+                                                width: 5
+                                            )
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(24)),
+                                        ),
+                                      ),
+                                    ),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xFFEEEBD3),
+                                        filled: true,
+                                        prefixText: "    ",
+                                        border: InputBorder.none,
+                                        hintText: "Tipo de cuenta",
+                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            borderSide: BorderSide(
+                                                color: color2,
+                                                width: 5
+                                            )
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(24)),
+                                        ),
+                                      ),
+                                    ),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        fillColor: Color(0xFFEEEBD3),
+                                        filled: true,
+                                        prefixText: "    ",
+                                        border: InputBorder.none,
+                                        hintText: "Codigo CVV",
+                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                            borderSide: BorderSide(
+                                                color: color2,
+                                                width: 5
+                                            )
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(24)),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                )
+                            ),
+                            actions: <Widget>[
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                        height: size.height*0.05,
+                                        width: size.width*0.2,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          gradient: LinearGradient(
+                                              colors: [
+                                                Color(0xff121212),color6,
+                                                Color(0xff121212)]
+                                          ),
+                                        ),
+                                        child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                      ),
+                                    ),
+                                    SizedBox(width: size.width*0.04,),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                        height: size.height*0.05,
+                                        width: size.width*0.2,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          gradient: LinearGradient(
+                                              colors: [
+                                                Color(0xff121212),color1,
+                                                Color(0xff121212)]
+                                          ),
+                                        ),
+                                        child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          );
+                        }
+                        );
+
+                        // Navigator.pop(context);
+
                       },
-                      color: Color(0xff6FB98E),
+                      color: color6,
                       padding: EdgeInsets.only(top: 10,bottom: 10,left: 15,right: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(18.0),

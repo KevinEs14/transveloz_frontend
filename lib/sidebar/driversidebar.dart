@@ -162,7 +162,7 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                             title: "Inicio",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehicles);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehiclesEvent);
                                             },
                                           ),
                                           MenuItem(
@@ -174,21 +174,14 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                             },
                                           ),
                                           MenuItem(
-                                            icon: Icons.airport_shuttle_outlined,
-                                            title: "Servicio",
+                                            icon: Icons.add,
+                                            title: "Añadir Vehiculo",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.RequestServiceClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.VehicleRegisterClickedEvent);
                                             },
                                           ),
-                                          MenuItem(
-                                            icon: Icons.article_outlined,
-                                            title: "Historial",
-                                            onTap: () {
-                                              onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.UserHistoryClickedEvent);
-                                            },
-                                          ),
+
                                           Divider(
                                             height: 50,
                                             thickness: 0.5,

@@ -265,6 +265,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
               SizedBox(height: size.height*0.01,),
               GestureDetector(
                 onTap: () async{
+
                   list = await driverRepository.getDriverLogList();
                   bool flag = await Confirm();
                   if(flag){
