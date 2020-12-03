@@ -151,18 +151,18 @@ class _DriverList extends State<DriverList> {
                                   Row(
                                     children: [
                                       Text("CI: ", style: TextStyle(color: color1,
-                                          fontSize: 15.0, fontWeight: FontWeight.bold),),
+                                          fontSize: 18.0, fontWeight: FontWeight.bold),),
                                       Text(data[index].ci, style: TextStyle(color: color5,
-                                          fontSize: 15.0),),
+                                          fontSize: 17.0, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
                                       Text("Nombre: ", style: TextStyle(color: color1,
-                                          fontSize: 18.0, fontWeight: FontWeight.bold),),
+                                          fontSize: 15.0, fontWeight: FontWeight.bold),),
                                       Text(data[index].firstName + " " + data[index].firstSurname, style: TextStyle(color: color5,
-                                          fontSize: 17.0, fontWeight: FontWeight.bold),),
+                                          fontSize: 15.0),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
@@ -179,18 +179,67 @@ class _DriverList extends State<DriverList> {
                               ),
                             ],
                           ),
-                          Container(
-                            alignment: Alignment.bottomRight,
-                            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
-                            child: FlatButton(
-                              onPressed: () {},
-                              color: color1,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                          Row(
+                            children: [
+                              Container(
+                                width: size.width*0.1,
                               ),
-                              child: Text("   Ver  ➜  ", style: TextStyle(color: color2, fontSize: 20.0),),
-                            ),
-                          ),
+                              Container(
+                                // alignment: Alignment.bottomRight,
+                                //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
+                                width: size.width*0.2,
+                                child: FlatButton(
+                                  onPressed: () {},
+                                  color: color1,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: size.width*0.05,
+                              ),
+                              Container(
+                                // alignment: Alignment.bottomRight,
+                                //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
+                                width: size.width*0.2,
+                                child: FlatButton(
+                                  onPressed: () {},
+                                  color: color6,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Icon(
+                                    Icons.create,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: size.width*0.05,
+                              ),
+                              Container(
+                                // alignment: Alignment.bottomRight,
+                                //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
+                                width: size.width*0.2,
+                                child: FlatButton(
+                                  onPressed: () {},
+                                  color: color7,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
