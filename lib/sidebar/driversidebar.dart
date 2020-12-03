@@ -121,7 +121,6 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                     "Nombre",
                                     style: TextStyle(color: Color(0xFF225957), fontSize: 30, fontWeight: FontWeight.w800),
                                   ),
-
                                   subtitle: Text(
                                     "Email",
                                     style: TextStyle(
@@ -170,7 +169,7 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                             title: "Perfil",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ProfileClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ProfileDriverClickedEvent);
                                             },
                                           ),
                                           MenuItem(

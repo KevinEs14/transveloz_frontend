@@ -130,4 +130,60 @@ class DriverRepository{
       return null;
     }
   }
+
+  Future<Driver> obtener_datos_conductor(Driver driver,int driverId) async{
+    try{
+      print("DriverId Profile: "+driverId.toString());
+      String url=directionUrl+"v1/driver/"+driverId.toString();
+      var response = await http.get(url, //ip for virtualized devices
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+      var user2=jsonDecode(response.body);
+      // print(singleDriver2);
+      driver.ci=(user2["ci"]);
+      driver.firstname=(user2["firstName"]);
+      driver.firstsurname=(user2["firstSurname"]);
+      driver.secondsurname=(user2["secondSurname"]);
+      driver.birthdate=(user2["birthDate"]);
+      driver.phone=(user2["phone"]);
+      driver.email=(user2["email"]);
+      driver.password=(user2["password"]);
+      driver.number=(user2["number"]);
+      driver.street=(user2["street"]);
+      driver.zone=(user2["zone"]);
+      driver.city=(user2["city"]);
+      driver.country=(user2["country"]);
+
+      if(response.statusCode == 200){
+        print("Done Profile Driver");
+        return driver;
+      }else{
+        return null;
+      }
+    }
+    catch(error){
+      print(error);
+      return null;
+    }
+  }
+  Future<bool> updateDriver(Driver driver) async{
+    try{
+      var res = await http.put(directionUrl+"v1/driver",
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(driver.toJsonUp()));
+      if(res.statusCode == 200){
+        print("Done Update");
+        return true;
+      }else{
+        return false;
+      }
+    }
+    catch(error){
+      print(error);
+      return false;
+    }
+  }
 }
