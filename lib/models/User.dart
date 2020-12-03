@@ -23,6 +23,7 @@ class User{
   String _zone;
   String _city;
   String _country;
+  String _picture;
 
   User();
 
@@ -102,6 +103,12 @@ class User{
 
   set ci(String value) {
     _ci = value;
+  }
+
+  String get picture => _picture;
+
+  set picture(String value) {
+    _picture = value;
   }
 
   Map toJson() => {

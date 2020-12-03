@@ -814,7 +814,7 @@ class _DriverList extends State<DriverList> {
                                                 onPressed: ()async{
                                                   bool check = Check();
                                                   if(check){
-                                                    driver2.driverid=data[index].driverId;
+                                                    driver2.driverId=data[index].driverId;
                                                     bool aux = await driverRepository.updateDriver(driver2);
                                                     if(aux){
                                                       print("Actualización");

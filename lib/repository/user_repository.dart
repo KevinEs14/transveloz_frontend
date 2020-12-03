@@ -147,45 +147,7 @@ class UserRepository{
       user.zone=(user2["zone"]);
       user.city=(user2["city"]);
       user.country=(user2["country"]);
-
-      if(response.statusCode == 200){
-        print("Done Profile");
-        return user;
-      }else{
-        return null;
-      }
-    }
-    catch(error){
-      print(error);
-      return null;
-    }
-  }
-}
-
-class UserProfileRepository{
-  Future<User> obtener_datos_usuario(User user,int userId) async{
-    try{
-      print("UserId Profile: "+userId.toString());
-      String url=directionUrl+"v1/user/"+userId.toString();
-      var response = await http.get(url, //ip for virtualized devices
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          });
-      var user2=jsonDecode(response.body);
-      // print(singleDriver2);
-      user.ci=(user2["ci"]);
-      user.firstname=(user2["firstName"]);
-      user.firstsurname=(user2["firstSurname"]);
-      user.secondsurname=(user2["secondSurname"]);
-      user.birthdate=(user2["birthDate"]);
-      user.phone=(user2["phone"]);
-      user.email=(user2["email"]);
-      user.password=(user2["password"]);
-      user.number=(user2["number"]);
-      user.street=(user2["street"]);
-      user.zone=(user2["zone"]);
-      user.city=(user2["city"]);
-      user.country=(user2["country"]);
+      user.picture=(user2["picture"]);
 
       if(response.statusCode == 200){
         print("Done Profile");

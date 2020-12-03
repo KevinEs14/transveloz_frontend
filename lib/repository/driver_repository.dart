@@ -213,4 +213,42 @@ class DriverRepository{
       return false;
     }
   }
+
+  Future<Driver> obtener_datos_conductor(Driver driver,int driverId) async{
+    try{
+      print("DriverId Profile: "+driverId.toString());
+      String url=directionUrl+"v1/driver/"+driverId.toString();
+      var response = await http.get(url, //ip for virtualized devices
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+      var driver2=jsonDecode(response.body);
+      // print(singleDriver2);
+      driver.ci=(driver2["ci"]);
+      driver.firstname=(driver2["firstName"]);
+      driver.firstsurname=(driver2["firstSurname"]);
+      driver.secondsurname=(driver2["secondSurname"]);
+      driver.birthdate=(driver2["birthDate"]);
+      driver.phone=(driver2["phone"]);
+      driver.email=(driver2["email"]);
+      driver.password=(driver2["password"]);
+      driver.number=(driver2["number"]);
+      driver.street=(driver2["street"]);
+      driver.zone=(driver2["zone"]);
+      driver.city=(driver2["city"]);
+      driver.country=(driver2["country"]);
+      driver.picture=(driver2["picture"]);
+
+      if(response.statusCode == 200){
+        print("Done Profile Driver");
+        return driver;
+      }else{
+        return null;
+      }
+    }
+    catch(error){
+      print(error);
+      return null;
+    }
+  }
 }
