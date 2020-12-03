@@ -77,13 +77,17 @@ class DriverRepository{
         newDriver.firstSurname=element["firstSurname"];
         newDriver.secondSurname=element["secondSurname"];
         newDriver.companyName=element["companyName"];
+        newDriver.pathImage=element["pathImage"];
         if(newDriver.companyName==null){
           newDriver.companyName="Independiente";
+        }
+        if(newDriver.pathImage==null){
+          newDriver.pathImage="nulo";
         }
         drivers.add(newDriver);
       });
       if(res.statusCode==200){
-        print(drivers[0].firstSurname);
+        print(drivers[0].pathImage);
         return drivers;
       }
       else{

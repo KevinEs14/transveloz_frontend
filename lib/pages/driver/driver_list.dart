@@ -5,6 +5,7 @@ import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/models/DriverContact.dart';
 import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
+import 'package:transveloz_frontend/repository/url.dart';
 
 class DriverList extends StatefulWidget with NavigationStates {
   @override
@@ -79,7 +80,7 @@ class _DriverList extends State<DriverList> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(24)),
                             ),
-                            prefixIcon: Icon(Icons.search, color: Colors.white, size: 34,),
+                            prefixIcon: Icon(Icons.search, color: Colors.white, size: 34, ),
                           ),
                         ),
                       ),
@@ -137,10 +138,16 @@ class _DriverList extends State<DriverList> {
                               Container(
                                 width: 76.0,
                                 height: 76.0,
-                                child: CircleAvatar(
+                                child: /*Image(
+                                  //image: AssetImage("assets/images/fotoperfil.png"),
+                                  image: data[index].pathImage=="nulo"?(AssetImage("assets/images/fotoperfil.png")):/*(NetworkImage(directionUrl+"driver/image/"+data[index].pathImage))*/(AssetImage("assets/images/fondoRegistro.jpg")),
+                                  fit: BoxFit.fill,
+                                )*/CircleAvatar(
                                   //backgroundColor: Colors.green,
                                   //foregroundColor: Colors.green,
-                                  backgroundImage: NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
+                                  backgroundImage: data[index].pathImage=="nulo"?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/driver/image/"+data[index].pathImage)),
+                                  //backgroundImage: AssetImage("assets/images/fotoperfil.png"),
+                                  //backgroundImage: NetworkImage(directionUrl+"driver/image/"+data[index].pathImage),
                                 ),
                               ),
                               SizedBox(width: 10.0),
