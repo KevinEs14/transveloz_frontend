@@ -178,14 +178,6 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                             },
                                           ),
                                           MenuItem(
-                                            icon: Icons.airport_shuttle_outlined,
-                                            title: "Servicio",
-                                            onTap: () {
-                                              onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.RequestServiceClickedEvent);
-                                            },
-                                          ),
-                                          MenuItem(
                                             icon: Icons.article_outlined,
                                             title: "Historial",
                                             onTap: () {

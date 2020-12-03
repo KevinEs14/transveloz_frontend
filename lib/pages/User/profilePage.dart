@@ -76,7 +76,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
     print("Sidebar");
 
   }
-
+  //bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
   print("EL Id user es correcot: "+user.userId.toString());
@@ -565,6 +565,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                                 child: TextField(
                                                   controller: email,
                                                   cursorColor: color1,
+                                                  keyboardType: TextInputType.emailAddress,
                                                   decoration: InputDecoration(
                                                     hintText: "Email",
                                                     labelText: "Email",
@@ -587,7 +588,8 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                                 width: 290,
                                                 height: 48,
                                                 child: TextField(
-                                                  controller: password,
+                                                  //obscureText: _obscureText,
+                                                  keyboardType: TextInputType.text,
                                                   cursorColor: color1,
                                                   decoration: InputDecoration(
                                                     hintText: "Password",
@@ -604,6 +606,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                                       borderRadius: BorderRadius.all(Radius.circular(7)),
                                                     ),
                                                   ),
+                                                  controller: password,
                                                 ),
                                               ),
                                             ],
