@@ -856,11 +856,24 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                             return AlertDialog(
                               title: Text('Como administrador o conductor no puede realizar un pago'),
                               actions: <Widget>[
-                                TextButton(
-                                  child: Text('Aceptar'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
                                   },
+                                  child: Container(
+                                    // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                    height: size.height*0.05,
+                                    width: size.width*0.2,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xff121212),color1,
+                                            Color(0xff121212)]
+                                      ),
+                                    ),
+                                    child: Center(child: Text("Acpetar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                  ),
                                 ),
                               ],
                             );
