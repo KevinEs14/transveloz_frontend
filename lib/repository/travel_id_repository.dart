@@ -12,7 +12,7 @@ class TravelIdRepository{
   Future <List<TravelId>> obtainTravelId(Travel travel) async{
     try{
 
-      String url=directionUrl+"v1/travel/"+travel.userId.toString()+"/"+travel.driverId.toString();
+      String url=directionUrl+"v1/travel/"+travel.travelUserId.toString()+"/"+travel.travelDriverId.toString();
 
       var res = await http.get(url, //ip for virtualized devices
           headers: <String, String>{

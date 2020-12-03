@@ -14,6 +14,8 @@ import 'package:transveloz_frontend/repository/card_collection_repository.dart';
 import 'package:transveloz_frontend/repository/card_repository.dart';
 import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 import 'package:transveloz_frontend/repository/travel_id_repository.dart';
+import 'package:transveloz_frontend/repository/travel_repository.dart';
+import 'package:transveloz_frontend/sidebar/usersidebar.dart';
 
 import '../../color.dart';
 class VehicleInformationPage extends StatefulWidget {
@@ -53,8 +55,10 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   CardObject.Card card=CardObject.Card();
   CardCollection _value=CardCollection();
   CardRepository cardRepository=CardRepository();
+  TravelRepository travelRepository=TravelRepository();
   TravelIdRepository travelIdRepository=TravelIdRepository();
   Travel travel=Travel();
+  Travel creationTravel=Travel();
   List<TravelId> travelList=List<TravelId>();
   // TravelId travelId=TravelId();
   List<CardCollection> cardCollection2=List<CardCollection>();
@@ -64,7 +68,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   CardCollectionRepository cardCollectionRepository=CardCollectionRepository();
   Size size;
   int tam;
-  var userId="";
+  var userId="";var tipoAdmi="";
   // singleDriver.vehicleId=vehicleId;
   ObtenerDatos()async{
     // travelList=await travelIdRepository.obtainTravelId(int.parse(userId), vehicleId);
@@ -72,7 +76,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
     singleDriver3=await vehiclerepository.obtainVehicle(singleDriver);
     cardCollection.userId=int.parse(userId);
     cardCollection2=await cardCollectionRepository.obtainListCard(cardCollection);
-    travel.userId=int.parse(userId);travel.driverId=vehicleId;
+    travel.travelUserId=int.parse(userId);travel.travelDriverId=vehicleId;
     // print(travel.userId);
     // print(travel.driverId);
     travelList= await travelIdRepository.obtainTravelId(travel);
@@ -105,6 +109,8 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   _initSharedPreferences() async{
     user = await SharedPreferences.getInstance();
     userId=user.getInt("id").toString();
+    tipoAdmi=user.getString("tipo");
+    // print(tipoAdmi);
     // print("Sidebar");
     // print(user.getInt("id").toString());
   }
@@ -373,7 +379,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                           if(card!=null){
                                             cardRepository.createCard(card);
                                             // Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleListPage()));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSideBar()));
                                           }else{
                                             Navigator.pop(context);
                                           }
@@ -669,11 +675,113 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                     children: <Widget>[
                                       GestureDetector(
                                         onTap: () {
-                                          card=Submit();
-                                          if(card!=null){
-                                            cardRepository.createCard(card);
-                                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleListPage()));
+                                          creationTravel=SubmiTravel();
+                                          if(creationTravel!=null){
+                                            travelRepository.createTravel(creationTravel);
+                                            showDialog(context: context,barrierDismissible: false,builder: (context){
+                                              return AlertDialog(
+                                                content: SingleChildScrollView(
+                                                    child:ListBody(
+                                                      children: [
+                                                        Text("¿Está seguro de realizar el pago por $precio bs?"),
+                                                        Container(
+                                                          padding: EdgeInsets.only(left:16,right: 16),
+                                                          decoration: BoxDecoration(
+                                                            color: color4,
+                                                            border: Border.all(color: color4, width: 2.0),
+                                                            borderRadius: BorderRadius.circular(10),
+                                                          ),
+                                                          child: DropdownButton(
+
+                                                            dropdownColor: color4,
+                                                            elevation: 5,
+                                                            value: _value.accountNumber,
+                                                            iconEnabledColor: color1,
+
+                                                            hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
+                                                            onChanged: (newValue){
+                                                              setState(() {
+                                                                _value = cardCollection2.firstWhere((element) {
+                                                                  if(element.accountNumber==newValue){
+                                                                    return true;
+                                                                  }
+                                                                  else{
+                                                                    return false;
+                                                                  }
+                                                                });
+
+                                                              });
+                                                              print(_value.accountNumber);
+                                                            },
+                                                            items: cardCollection2.map((newValue){
+                                                              return DropdownMenuItem(
+                                                                value: newValue.accountNumber,
+
+                                                                child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
+                                                            }).toList(),
+                                                          ),
+                                                        ),
+
+                                                      ],
+                                                    )
+                                                ),
+                                                actions: <Widget>[
+                                                  Container(
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            // card=Submit();
+                                                            // if(card!=null){
+                                                            //
+                                                            // }else{
+                                                            //   Navigator.pop(context);
+                                                            // }
+                                                            Navigator.pop(context);
+
+                                                          },
+                                                          child: Container(
+                                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                                            height: size.height*0.05,
+                                                            width: size.width*0.2,
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10.0),
+                                                              gradient: LinearGradient(
+                                                                  colors: [
+                                                                    Color(0xff121212),color6,
+                                                                    Color(0xff121212)]
+                                                              ),
+                                                            ),
+                                                            child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: size.width*0.04,),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: Container(
+                                                            // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                                            height: size.height*0.05,
+                                                            width: size.width*0.2,
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10.0),
+                                                              gradient: LinearGradient(
+                                                                  colors: [
+                                                                    Color(0xff121212),color1,
+                                                                    Color(0xff121212)]
+                                                              ),
+                                                            ),
+                                                            child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              );
+                                            }
+                                            );
                                           }else{
                                             Navigator.pop(context);
                                           }
@@ -721,110 +829,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                             );
                           }
                           );
-                          // showDialog(context: context,barrierDismissible: false,builder: (context){
-                          //   return AlertDialog(
-                          //     content: SingleChildScrollView(
-                          //         child:ListBody(
-                          //           children: [
-                          //             Text("¿Está seguro de realizar el pago por $precio bs?"),
-                          //             Container(
-                          //               padding: EdgeInsets.only(left:16,right: 16),
-                          //               decoration: BoxDecoration(
-                          //                 color: color4,
-                          //                 border: Border.all(color: color4, width: 2.0),
-                          //                 borderRadius: BorderRadius.circular(10),
-                          //               ),
-                          //               child: DropdownButton(
-                          //
-                          //                 dropdownColor: color4,
-                          //                 elevation: 5,
-                          //                 value: _value.accountNumber,
-                          //                 iconEnabledColor: color1,
-                          //
-                          //                 hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
-                          //                 onChanged: (newValue){
-                          //                   setState(() {
-                          //                     _value = cardCollection2.firstWhere((element) {
-                          //                       if(element.accountNumber==newValue){
-                          //                         return true;
-                          //                       }
-                          //                       else{
-                          //                         return false;
-                          //                       }
-                          //                     });
-                          //
-                          //                   });
-                          //                   print(_value.accountNumber);
-                          //                 },
-                          //                 items: cardCollection2.map((newValue){
-                          //                   return DropdownMenuItem(
-                          //                     value: newValue.accountNumber,
-                          //
-                          //                     child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
-                          //                 }).toList(),
-                          //               ),
-                          //             ),
-                          //
-                          //           ],
-                          //         )
-                          //     ),
-                          //     actions: <Widget>[
-                          //       Container(
-                          //         child: Row(
-                          //           children: <Widget>[
-                          //             GestureDetector(
-                          //               onTap: () {
-                          //                 // card=Submit();
-                          //                 // if(card!=null){
-                          //                 //
-                          //                 // }else{
-                          //                 //   Navigator.pop(context);
-                          //                 // }
-                          //                 Navigator.pop(context);
-                          //
-                          //               },
-                          //               child: Container(
-                          //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                          //                 height: size.height*0.05,
-                          //                 width: size.width*0.2,
-                          //                 decoration: BoxDecoration(
-                          //                   borderRadius: BorderRadius.circular(10.0),
-                          //                   gradient: LinearGradient(
-                          //                       colors: [
-                          //                         Color(0xff121212),color6,
-                          //                         Color(0xff121212)]
-                          //                   ),
-                          //                 ),
-                          //                 child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                          //               ),
-                          //             ),
-                          //             SizedBox(width: size.width*0.04,),
-                          //             GestureDetector(
-                          //               onTap: () {
-                          //                 Navigator.pop(context);
-                          //               },
-                          //               child: Container(
-                          //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                          //                 height: size.height*0.05,
-                          //                 width: size.width*0.2,
-                          //                 decoration: BoxDecoration(
-                          //                   borderRadius: BorderRadius.circular(10.0),
-                          //                   gradient: LinearGradient(
-                          //                       colors: [
-                          //                         Color(0xff121212),color1,
-                          //                         Color(0xff121212)]
-                          //                   ),
-                          //                 ),
-                          //                 child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       )
-                          //     ],
-                          //   );
-                          // }
-                          // );
+
                         }
                         // Navigator.pop(context);
                       },
@@ -931,6 +936,31 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
       card2.cvvCode=cvvCode.text;
       card2.status=1;
       return card2;
+    }else{
+      print("cardfail");
+      return null;
+    }
+  }
+  Travel SubmiTravel(){
+    Travel creationtravel2=Travel();
+    if( travelDateDelivery.text.isNotEmpty && startAddressNumber.text.isNotEmpty && startAddressStreet.text.isNotEmpty && startAddressZone.text.isNotEmpty && startAddressCity.text.isNotEmpty && startAddressCountry.text.isNotEmpty && deliveryAddressNumber.text.isNotEmpty && deliveryAddressStreet.text.isNotEmpty && deliveryAddressZone.text.isNotEmpty && deliveryAddressCity.text.isNotEmpty && deliveryAddressCountry.text.isNotEmpty){
+      // x = true;
+      // print(userId.toString());
+      creationtravel2.travelUserId=int.parse(userId);
+      creationtravel2.travelDriverId=vehicleId;
+      creationtravel2.travelStatus=travelStatus;
+      creationtravel2.travelDateDelivery=travelDateDelivery.text;
+      creationtravel2.startAddressNumber=startAddressNumber.text;
+      creationtravel2.startAddressStreet=startAddressStreet.text;
+      creationtravel2.startAddressZone=startAddressZone.text;
+      creationtravel2.startAddressCity=startAddressCity.text;
+      creationtravel2.startAddressCountry=startAddressCountry.text;
+      creationtravel2.deliveryAddressNumber=deliveryAddressNumber.text;
+      creationtravel2.deliveryAddressStreet=deliveryAddressStreet.text;
+      creationtravel2.deliveryAddressZone=deliveryAddressZone.text;
+      creationtravel2.deliveryAddressCity=deliveryAddressCity.text;
+      creationtravel2.deliveryAddressCountry=deliveryAddressCountry.text;
+      return creationtravel2;
     }else{
       print("cardfail");
       return null;

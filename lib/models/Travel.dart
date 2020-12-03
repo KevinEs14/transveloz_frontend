@@ -2,37 +2,33 @@
 import 'package:flutter/material.dart';
 
 class Travel{
-  int _userId;
+  int _travelUserId;
 
-  int get userId => _userId;
+  int get travelUserId => _travelUserId;
 
-  set userId(int value) {
-    _userId = value;
+  set travelUserId(int value) {
+    _travelUserId = value;
   }
 
-  int _driverId;
-  int _startAddressId;
-  int _deliveryAddressId;
+  int _travelDriverId;
   String _travelStatus;
-  String _dateDelivery;
-  int _status;
+  String _travelDateDelivery;
+  String _startAddressNumber;
+  String _startAddressStreet;
+  String _startAddressZone;
+  String _startAddressCity;
+  String _startAddressCountry;
+  String _deliveryAddressNumber;
+  String _deliveryAddressStreet;
+  String _deliveryAddressZone;
+  String _deliveryAddressCity;
+  String _deliveryAddressCountry;
+  Travel();
 
-  int get driverId => _driverId;
+  int get travelDriverId => _travelDriverId;
 
-  set driverId(int value) {
-    _driverId = value;
-  }
-
-  int get startAddressId => _startAddressId;
-
-  set startAddressId(int value) {
-    _startAddressId = value;
-  }
-
-  int get deliveryAddressId => _deliveryAddressId;
-
-  set deliveryAddressId(int value) {
-    _deliveryAddressId = value;
+  set travelDriverId(int value) {
+    _travelDriverId = value;
   }
 
   String get travelStatus => _travelStatus;
@@ -41,25 +37,85 @@ class Travel{
     _travelStatus = value;
   }
 
-  String get dateDelivery => _dateDelivery;
+  String get travelDateDelivery => _travelDateDelivery;
 
-  set dateDelivery(String value) {
-    _dateDelivery = value;
+  set travelDateDelivery(String value) {
+    _travelDateDelivery = value;
   }
 
-  int get status => _status;
+  String get startAddressNumber => _startAddressNumber;
 
-  set status(int value) {
-    _status = value;
+  set startAddressNumber(String value) {
+    _startAddressNumber = value;
+  }
+
+  String get startAddressStreet => _startAddressStreet;
+
+  set startAddressStreet(String value) {
+    _startAddressStreet = value;
+  }
+
+  String get startAddressZone => _startAddressZone;
+
+  set startAddressZone(String value) {
+    _startAddressZone = value;
+  }
+
+  String get startAddressCity => _startAddressCity;
+
+  set startAddressCity(String value) {
+    _startAddressCity = value;
+  }
+
+  String get startAddressCountry => _startAddressCountry;
+
+  set startAddressCountry(String value) {
+    _startAddressCountry = value;
+  }
+
+  String get deliveryAddressNumber => _deliveryAddressNumber;
+
+  set deliveryAddressNumber(String value) {
+    _deliveryAddressNumber = value;
+  }
+
+  String get deliveryAddressStreet => _deliveryAddressStreet;
+
+  set deliveryAddressStreet(String value) {
+    _deliveryAddressStreet = value;
+  }
+
+  String get deliveryAddressZone => _deliveryAddressZone;
+
+  set deliveryAddressZone(String value) {
+    _deliveryAddressZone = value;
+  }
+
+  String get deliveryAddressCity => _deliveryAddressCity;
+
+  set deliveryAddressCity(String value) {
+    _deliveryAddressCity = value;
+  }
+
+  String get deliveryAddressCountry => _deliveryAddressCountry;
+
+  set deliveryAddressCountry(String value) {
+    _deliveryAddressCountry = value;
   }
   Map toJson() => {
-    "userId":_userId,
-    "driverId": _driverId,
-    "startAddressId": _startAddressId,
-    "deliveryAddressId": _deliveryAddressId,
-    "travelStatus":_travelStatus,
-    "dateDelivery":_dateDelivery,
-    "status": _status
+    "travelUserId":_travelUserId,
+    "travelDriverId": _travelDriverId,
+    "travelStatus": _travelStatus,
+    "travelDateDelivery": _travelDateDelivery,
+    "startAddressNumber":_startAddressNumber,
+    "startAddressStreet":_startAddressStreet,
+    "startAddressZone":_startAddressZone,
+    "startAddressCity":_startAddressCity,
+    "startAddressCountry":_startAddressCountry,
+    "deliveryAddressNumber":_deliveryAddressNumber,
+    "deliveryAddressStreet":_deliveryAddressStreet,
+    "deliveryAddressZone":_deliveryAddressZone,
+    "deliveryAddressCity":_deliveryAddressCity,
+    "deliveryAddressCountry":_deliveryAddressCountry
   };
-
 }
