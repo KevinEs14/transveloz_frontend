@@ -172,6 +172,14 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                             },
                                           ),*/
                                           MenuItem(
+                                            icon: Icons.search,
+                                            title: "Search Vehicles",
+                                            onTap: () {
+                                              onIconPressed();
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehiclesEvent);
+                                            },
+                                          ),
+                                          MenuItem(
                                             icon: Icons.person,
                                             title: "Perfil",
                                             onTap: () {
