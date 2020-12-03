@@ -5,6 +5,7 @@ class DriverContact{
   String _secondSurname;
   String _companyName;
   String _ci;
+  String _pathImage;
 
   DriverContact();
 
@@ -42,5 +43,11 @@ class DriverContact{
 
   set driverId(int value) {
     _driverId = value;
+  }
+
+  String get pathImage => _pathImage;
+
+  set pathImage(String value) {
+    _pathImage = value;
   }
 }

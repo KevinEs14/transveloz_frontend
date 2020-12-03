@@ -5,3 +5,5 @@ var color3=Color(0xFFC4A77D);
 var color4=Color(0xFFEEEBD3);
 var color5=Color(0xFf000000);
 var color6=Color(0xff6FB98E);
+var color7=Color(0xFFD16666);
+
