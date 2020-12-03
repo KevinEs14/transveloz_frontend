@@ -50,4 +50,16 @@ class DriverContact{
   set pathImage(String value) {
     _pathImage = value;
   }
+  DriverContact.fromJson(Map<String, dynamic> json){
+    driverId = json['driverId'];
+    firstName = json['firstName'];
+    firstSurname = json['firstSurname'];
+    secondSurname = json['secondSurname'];
+    companyName=json['companyName'];
+    ci = json['ci'];
+    pathImage = json['pathImage'];
+
+  }
+  
+
 }

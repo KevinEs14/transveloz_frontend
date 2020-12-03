@@ -141,7 +141,7 @@ class _VehicleListPage extends State<VehicleListPage>{
                               filled: true,
                               prefixText: "    ",
                               border: InputBorder.none,
-                              hintText: "Ingrese nombre",
+                              hintText: "Buscar Vehiculo",
                               hintStyle: TextStyle(color: Color(0xFF0F4C5C)),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(10)),

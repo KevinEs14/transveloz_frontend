@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:transveloz_frontend/models/VehicleModel.dart';
 import 'package:transveloz_frontend/repository/url.dart';
 class VehicleRepository{
-
-
   var url=directionUrl;
   var auxUrl;
 
@@ -52,27 +49,6 @@ class VehicleRepository{
     }
   }
 
-
-  /*Future<List<VehicleModel>>getDatabyCompany(String company) async{
-    try{
-      auxUrl = directionUrl+"v1/vehicle/company/"+company;
-      print(url);
-      final response = await http.get(auxUrl,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      );
-      var datos = jsonDecode(response.body);
-      var registros = List<VehicleModel>();
-      debugPrint(datos);
-      for(datos in datos){
-        registros.add(VehicleModel.fromJson(datos));
-      }
-      return registros;
-    }catch(error){
-      debugPrint(error);
-    }
-  }*/
   Future<List<VehicleModel>>getDatabyBrand(String brand) async{
     try{
       auxUrl = directionUrl+"v1/vehicle/brand/"+brand;
