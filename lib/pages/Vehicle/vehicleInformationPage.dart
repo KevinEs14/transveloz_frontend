@@ -7,10 +7,13 @@ import 'package:transveloz_frontend/models/Card.dart' as CardObject ;
 import 'package:transveloz_frontend/models/CardCollection.dart';
 // import 'package:transveloz_frontend/models/Card.dart';
 import 'package:transveloz_frontend/models/SingleDriver.dart';
+import 'package:transveloz_frontend/models/Travel.dart';
+import 'package:transveloz_frontend/models/TravelId.dart';
 import 'package:transveloz_frontend/pages/Vehicle/vehicleListPage.dart';
 import 'package:transveloz_frontend/repository/card_collection_repository.dart';
 import 'package:transveloz_frontend/repository/card_repository.dart';
 import 'package:transveloz_frontend/repository/singledriver_repository.dart';
+import 'package:transveloz_frontend/repository/travel_id_repository.dart';
 
 import '../../color.dart';
 class VehicleInformationPage extends StatefulWidget {
@@ -38,19 +41,33 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   CardObject.Card card=CardObject.Card();
   CardCollection _value=CardCollection();
   CardRepository cardRepository=CardRepository();
+  TravelIdRepository travelIdRepository=TravelIdRepository();
+  Travel travel=Travel();
+  List<TravelId> travelList=List<TravelId>();
+  // TravelId travelId=TravelId();
   List<CardCollection> cardCollection2=List<CardCollection>();
   List<CardCollection> listaCard=List<CardCollection>();
   var estado="";var nombre="";var apellido="";var capacidad=""; var tipo=""; var marca=""; var modelo="";var precio="";
   SingleDriverRepository vehiclerepository=SingleDriverRepository();
   CardCollectionRepository cardCollectionRepository=CardCollectionRepository();
   Size size;
+  int tam;
   var userId="";
   // singleDriver.vehicleId=vehicleId;
   ObtenerDatos()async{
+    // travelList=await travelIdRepository.obtainTravelId(int.parse(userId), vehicleId);
     singleDriver.vehicleId=vehicleId;
     singleDriver3=await vehiclerepository.obtainVehicle(singleDriver);
     cardCollection.userId=int.parse(userId);
     cardCollection2=await cardCollectionRepository.obtainListCard(cardCollection);
+    travel.userId=int.parse(userId);travel.driverId=vehicleId;
+    // print(travel.userId);
+    // print(travel.driverId);
+    travelList= await travelIdRepository.obtainTravelId(travel);
+    tam=travelList.length;
+    // print(tam);
+    // print("travel ");
+    // print(travelList[0].travelId);
     // print(cardCollection2[0].accountNumber);
     // print(cardCollection2[1].accountNumber);
     setState(()  {
@@ -67,6 +84,11 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
       // userId=user.getInt("id").toString();
     });
   }
+  // ObtenerTravel()async{
+  //   travelList=await travelIdRepository.obtainTravelId(int.parse(userId), vehicleId);
+  //   int tam=travelList.length;
+  //   print(travelList[tam-1].travelId);
+  // }
   SharedPreferences user;
   _initSharedPreferences() async{
     user = await SharedPreferences.getInstance();
@@ -393,43 +415,111 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                               content: SingleChildScrollView(
                                   child:ListBody(
                                     children: [
-                                      Text("¿Está seguro de realizar el pago por $precio bs?"),
-                                      Container(
-                                        padding: EdgeInsets.only(left:16,right: 16),
-                                        decoration: BoxDecoration(
-                                          color: color4,
-                                          border: Border.all(color: color4, width: 2.0),
-                                          borderRadius: BorderRadius.circular(10),
+                                      Text('Ingrese la ruta'),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Numero de cuenta",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
                                         ),
-                                        child: DropdownButton(
-
-                                          dropdownColor: color4,
-                                          elevation: 5,
-                                          value: _value.accountNumber,
-                                          iconEnabledColor: color1,
-
-                                          hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
-                                          onChanged: (newValue){
-                                            setState(() {
-                                              _value = cardCollection2.firstWhere((element) {
-                                                if(element.accountNumber==newValue){
-                                                  return true;
-                                                }
-                                                else{
-                                                  return false;
-                                                }
-                                              });
-
-                                            });
-                                            print(_value.accountNumber);
-                                          },
-                                          items: cardCollection2.map((newValue){
-                                            return DropdownMenuItem(
-                                              value: newValue.accountNumber,
-
-                                              child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
-                                          }).toList(),
+                                        controller: accountNumber,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Pin",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
                                         ),
+                                        controller: pin,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Banco",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: bank,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Tipo de cuenta",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: typeAccount,
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Codigo CVV",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                        controller: cvvCode,
                                       ),
 
                                     ],
@@ -441,13 +531,14 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                     children: <Widget>[
                                       GestureDetector(
                                         onTap: () {
-                                          // card=Submit();
-                                          // if(card!=null){
-                                          //
-                                          // }else{
-                                          //   Navigator.pop(context);
-                                          // }
-                                          Navigator.pop(context);
+                                          card=Submit();
+                                          if(card!=null){
+                                            cardRepository.createCard(card);
+                                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleListPage()));
+                                          }else{
+                                            Navigator.pop(context);
+                                          }
 
                                         },
                                         child: Container(
@@ -462,7 +553,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                                   Color(0xff121212)]
                                             ),
                                           ),
-                                          child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                          child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
                                         ),
                                       ),
                                       SizedBox(width: size.width*0.04,),
@@ -492,6 +583,110 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                             );
                           }
                           );
+                          // showDialog(context: context,barrierDismissible: false,builder: (context){
+                          //   return AlertDialog(
+                          //     content: SingleChildScrollView(
+                          //         child:ListBody(
+                          //           children: [
+                          //             Text("¿Está seguro de realizar el pago por $precio bs?"),
+                          //             Container(
+                          //               padding: EdgeInsets.only(left:16,right: 16),
+                          //               decoration: BoxDecoration(
+                          //                 color: color4,
+                          //                 border: Border.all(color: color4, width: 2.0),
+                          //                 borderRadius: BorderRadius.circular(10),
+                          //               ),
+                          //               child: DropdownButton(
+                          //
+                          //                 dropdownColor: color4,
+                          //                 elevation: 5,
+                          //                 value: _value.accountNumber,
+                          //                 iconEnabledColor: color1,
+                          //
+                          //                 hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
+                          //                 onChanged: (newValue){
+                          //                   setState(() {
+                          //                     _value = cardCollection2.firstWhere((element) {
+                          //                       if(element.accountNumber==newValue){
+                          //                         return true;
+                          //                       }
+                          //                       else{
+                          //                         return false;
+                          //                       }
+                          //                     });
+                          //
+                          //                   });
+                          //                   print(_value.accountNumber);
+                          //                 },
+                          //                 items: cardCollection2.map((newValue){
+                          //                   return DropdownMenuItem(
+                          //                     value: newValue.accountNumber,
+                          //
+                          //                     child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
+                          //                 }).toList(),
+                          //               ),
+                          //             ),
+                          //
+                          //           ],
+                          //         )
+                          //     ),
+                          //     actions: <Widget>[
+                          //       Container(
+                          //         child: Row(
+                          //           children: <Widget>[
+                          //             GestureDetector(
+                          //               onTap: () {
+                          //                 // card=Submit();
+                          //                 // if(card!=null){
+                          //                 //
+                          //                 // }else{
+                          //                 //   Navigator.pop(context);
+                          //                 // }
+                          //                 Navigator.pop(context);
+                          //
+                          //               },
+                          //               child: Container(
+                          //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                          //                 height: size.height*0.05,
+                          //                 width: size.width*0.2,
+                          //                 decoration: BoxDecoration(
+                          //                   borderRadius: BorderRadius.circular(10.0),
+                          //                   gradient: LinearGradient(
+                          //                       colors: [
+                          //                         Color(0xff121212),color6,
+                          //                         Color(0xff121212)]
+                          //                   ),
+                          //                 ),
+                          //                 child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                          //               ),
+                          //             ),
+                          //             SizedBox(width: size.width*0.04,),
+                          //             GestureDetector(
+                          //               onTap: () {
+                          //                 Navigator.pop(context);
+                          //               },
+                          //               child: Container(
+                          //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                          //                 height: size.height*0.05,
+                          //                 width: size.width*0.2,
+                          //                 decoration: BoxDecoration(
+                          //                   borderRadius: BorderRadius.circular(10.0),
+                          //                   gradient: LinearGradient(
+                          //                       colors: [
+                          //                         Color(0xff121212),color1,
+                          //                         Color(0xff121212)]
+                          //                   ),
+                          //                 ),
+                          //                 child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       )
+                          //     ],
+                          //   );
+                          // }
+                          // );
                         }
                         // Navigator.pop(context);
                       },
