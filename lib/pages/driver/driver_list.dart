@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart';
+import 'package:transveloz_frontend/models/Driver.dart';
 import 'package:transveloz_frontend/models/DriverContact.dart';
 import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
@@ -15,7 +16,23 @@ class _DriverList extends State<DriverList> {
 
   List<DriverContact> data = List<DriverContact>();
   DriverRepository driverRepository = DriverRepository();
+  Driver driver = Driver();
 
+  // TextEditingController ci = TextEditingController();
+  // TextEditingController firstName = TextEditingController();
+  // TextEditingController firstSurname = TextEditingController();
+  // TextEditingController secondSurname = TextEditingController();
+  // TextEditingController birthDate = TextEditingController();
+  // TextEditingController phone = TextEditingController();
+  // TextEditingController email = TextEditingController();
+  // TextEditingController number = TextEditingController();
+  // TextEditingController street = TextEditingController();
+  // TextEditingController zone = TextEditingController();
+  // TextEditingController city = TextEditingController();
+  // TextEditingController country = TextEditingController();
+
+  var ci="";var firstName="";var firstSurname="";var secondSurname=""; var birthDate=""; var phone=""; var email="";var number="";var street="";
+  var zone=""; var city=""; var country="";
   @override
   void initState(){
     // TODO: implement initState
@@ -196,7 +213,57 @@ class _DriverList extends State<DriverList> {
                                 //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                                 width: size.width*0.2,
                                 child: FlatButton(
-                                  onPressed: () {},
+                                  onPressed: () async{
+                                    driver = await driverRepository.getDriver(data[index].driverId);
+                                    setState(() {
+                                      firstName=driver.firstname;
+                                      // apellido=singleDriver2.personFirstSurname.toString();
+                                      // capacidad=singleDriver2.vehicleCapacity.toString();
+                                      // tipo=singleDriver2.vehicleType.toString();
+                                      // marca=singleDriver2.vehicleBrand.toString();
+                                      // modelo=singleDriver2.vehicleModel.toString();
+                                      // estado=singleDriver2.vehicleStatus.toString();
+                                      // precio=singleDriver2.vehiclePrice.toString();
+                                    });
+                                    showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context){
+                                          return AlertDialog(
+                                            title: Center(
+                                              child: Text("Información"),
+                                            ),
+                                            content: SingleChildScrollView(
+                                              child: Container(
+                                                width: 300,
+                                                decoration: BoxDecoration(
+                                                  color: color4
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text("Nombre: ",style: TextStyle(color: color1,fontSize: size.height*0.025),),
+                                                        Text("$firstName",style: TextStyle(color: color3,fontSize: size.height*0.025),),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            actions: [
+                                              FlatButton(
+                                                child: Text("Aceptar", style: TextStyle(color: Colors.green, fontSize: 18),),
+                                                onPressed: (){
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                    );
+                                  },
                                   color: color1,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
