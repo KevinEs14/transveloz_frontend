@@ -169,4 +169,27 @@ class DriverRepository{
       return null;
     }
   }
+  Future<bool> deleteDriver(int id) async{
+    try{
+      print(id);
+      String url=directionUrl+"v1/driver/"+id.toString();
+      var res = await http.delete(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          }
+      );
+
+      if(res.statusCode==200){
+        print("Conductor borrado");
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    catch(error){
+      print(error);
+      return false;
+    }
+  }
 }

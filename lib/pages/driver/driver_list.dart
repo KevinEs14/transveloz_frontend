@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/models/Driver.dart';
@@ -7,6 +8,7 @@ import 'package:transveloz_frontend/models/DriverContact.dart';
 import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
 import 'package:transveloz_frontend/repository/url.dart';
+import 'package:transveloz_frontend/sidebar/sidebar.dart';
 
 class DriverList extends StatefulWidget with NavigationStates {
   @override
@@ -37,6 +39,10 @@ class _DriverList extends State<DriverList> {
   void initState(){
     // TODO: implement initState
     super.initState();
+    _loadList();
+  }
+
+  _loadList() async{
     driverRepository.getDriverList().then((value){
       setState(() {
         data.addAll(value);
@@ -217,13 +223,20 @@ class _DriverList extends State<DriverList> {
                                     driver = await driverRepository.getDriver(data[index].driverId);
                                     setState(() {
                                       firstName=driver.firstname;
-                                      // apellido=singleDriver2.personFirstSurname.toString();
-                                      // capacidad=singleDriver2.vehicleCapacity.toString();
-                                      // tipo=singleDriver2.vehicleType.toString();
-                                      // marca=singleDriver2.vehicleBrand.toString();
-                                      // modelo=singleDriver2.vehicleModel.toString();
-                                      // estado=singleDriver2.vehicleStatus.toString();
-                                      // precio=singleDriver2.vehiclePrice.toString();
+                                      firstSurname=driver.firstsurname;
+                                      secondSurname=driver.secondsurname;
+                                      ci=driver.ci;
+                                      birthDate="";
+                                      for(int i=0;i<10;i++){
+                                        birthDate+=driver.birthdate[i];
+                                      }
+                                      phone=driver.phone;
+                                      email=driver.email;
+                                      number=driver.number;
+                                      street= driver.street;
+                                      zone=driver.zone;
+                                      city=driver.city;
+                                      country=driver.country;
                                     });
                                     showDialog(
                                         context: context,
@@ -231,8 +244,9 @@ class _DriverList extends State<DriverList> {
                                         builder: (BuildContext context){
                                           return AlertDialog(
                                             title: Center(
-                                              child: Text("Información"),
+                                              child: Text("Información", style: TextStyle(color: color1),),
                                             ),
+                                            backgroundColor: color4,
                                             content: SingleChildScrollView(
                                               child: Container(
                                                 width: 300,
@@ -244,10 +258,97 @@ class _DriverList extends State<DriverList> {
                                                   children: [
                                                     Row(
                                                       children: [
-                                                        Text("Nombre: ",style: TextStyle(color: color1,fontSize: size.height*0.025),),
-                                                        Text("$firstName",style: TextStyle(color: color3,fontSize: size.height*0.025),),
+                                                        Text("Nombre: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$firstName"+" "+"$firstSurname"+" "+"$secondSurname",style: TextStyle(color: color3,fontSize: size.height*0.018),),
                                                       ],
-                                                    )
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Ci: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$ci",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Nacimiento: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$birthDate",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Telefono: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$phone",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Email: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$email",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Center(
+                                                      child: Text("Dirección ",style: TextStyle(color: color1,fontSize: size.height*0.022),),
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Numero de Casa: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$number",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Calle: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$street",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Zona: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$zone",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Ciudad: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$city",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height*0.01,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("País: ",style: TextStyle(color: color1,fontSize: size.height*0.02),),
+                                                        Text("$country",style: TextStyle(color: color3,fontSize: size.height*0.018),),
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -282,7 +383,9 @@ class _DriverList extends State<DriverList> {
                                 //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                                 width: size.width*0.2,
                                 child: FlatButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+
+                                  },
                                   color: color6,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
@@ -301,7 +404,49 @@ class _DriverList extends State<DriverList> {
                                 //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                                 width: size.width*0.2,
                                 child: FlatButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context){
+                                          return AlertDialog(
+                                            title: Center(
+                                              child: Text("Confirmar eliminación", style: TextStyle(color: color1),),
+                                            ),
+                                            backgroundColor: color4,
+                                            actions: [
+                                              FlatButton(
+                                                child: Text("Aceptar", style: TextStyle(color: color6, fontSize: 18),),
+                                                onPressed: ()async{
+                                                  bool flag = await driverRepository.deleteDriver(data[index].driverId);
+                                                  if(flag){
+                                                    print("Eliminado");
+                                                    data.clear();
+                                                    _loadList();
+                                                    Fluttertoast.showToast(
+                                                        msg: "Conductor Eliminaddo",
+                                                        toastLength: Toast.LENGTH_SHORT,
+                                                        gravity: ToastGravity.CENTER,
+                                                        timeInSecForIosWeb: 1,
+                                                        backgroundColor: color3,
+                                                        textColor: color1,
+                                                        fontSize: 16.0
+                                                    );
+                                                    Navigator.of(context).pop();
+                                                  }
+                                                },
+                                              ),
+                                              FlatButton(
+                                                child: Text("Cancelar", style: TextStyle(color: color7, fontSize: 18),),
+                                                onPressed: (){
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                    );
+                                  },
                                   color: color7,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
