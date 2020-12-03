@@ -266,7 +266,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                     SizedBox(width: size.width*0.15,),
                     RaisedButton(
                       onPressed: (){
-                        if(tipoAdmi=="Usuario"){
+                        if(tipoAdmi=="usuario"){
                           if(cardCollection2.isEmpty){
                             showDialog(context: context,barrierDismissible: false,builder: (context){
                               return AlertDialog(
