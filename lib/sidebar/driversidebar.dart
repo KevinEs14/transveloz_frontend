@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/Driver.dart';
+import 'package:transveloz_frontend/pages/loginPage.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
+import 'package:transveloz_frontend/repository/url.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
@@ -141,7 +143,7 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                     ),
                                   ),
                                   leading: CircleAvatar(
-                                    backgroundImage: driver1.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(driver1.picture.toString())),
+                                    backgroundImage: driver1.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/driver/image/"+driver1.picture)),
                                     backgroundColor: color1,
                                     radius: size.width*0.07,
                                   ),
@@ -163,14 +165,14 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                           SizedBox(
                                             height: 30,
                                           ),
-                                          MenuItem(
+                                          /*MenuItem(
                                             icon: Icons.home,
                                             title: "Inicio",
                                             onTap: () {
                                               onIconPressed();
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehiclesEvent);
                                             },
-                                          ),
+                                          ),*/
                                           MenuItem(
                                             icon: Icons.person,
                                             title: "Perfil",
@@ -206,7 +208,8 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                             onTap: (){
                                               onIconPressed();
                                               // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
-                                              Navigator.pop(context);
+                                              //Navigator.pop(context);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                             },
                                           ),
                                         ],

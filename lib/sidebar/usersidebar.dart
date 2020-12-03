@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/User.dart';
+import 'package:transveloz_frontend/pages/loginPage.dart';
+import 'package:transveloz_frontend/repository/url.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
@@ -139,7 +141,7 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                     ),
                                   ),
                                   leading: CircleAvatar(
-                                    backgroundImage: user1.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(user1.picture.toString())),
+                                    backgroundImage: user1.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/user/image/"+user1.picture)),
                                     backgroundColor: color1,
                                     radius: size.width*0.07,
                                   ),
@@ -161,14 +163,14 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                           SizedBox(
                                             height: 30,
                                           ),
-                                          MenuItem(
+                                          /*MenuItem(
                                             icon: Icons.home,
                                             title: "Inicio",
                                             onTap: () {
                                               onIconPressed();
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehiclesEvent);
                                             },
-                                          ),
+                                          ),*/
                                           MenuItem(
                                             icon: Icons.person,
                                             title: "Perfil",
@@ -211,7 +213,8 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                             onTap: (){
                                               onIconPressed();
                                               // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
-                                              Navigator.pop(context);
+                                              //Navigator.pop(context);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                             },
                                           ),
                                         ],

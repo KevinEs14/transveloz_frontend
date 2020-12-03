@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/User.dart';
 import 'package:transveloz_frontend/pages/User/userImage.dart';
+import 'package:transveloz_frontend/repository/url.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 
@@ -111,7 +112,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                           child: CircleAvatar(
                             backgroundColor: color5,
                             foregroundColor: color5,
-                            backgroundImage: user.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(user.picture.toString())),
+                            backgroundImage: user.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/user/image/"+user.picture)),
                           ),
                         ),
                         SizedBox(width: 10.0),

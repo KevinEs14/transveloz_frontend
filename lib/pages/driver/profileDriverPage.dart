@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/Driver.dart';
+import 'package:transveloz_frontend/pages/driver/driverImage.dart';
 import 'package:transveloz_frontend/pages/driver/driverregister.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
+import 'package:transveloz_frontend/repository/url.dart';
 import 'package:transveloz_frontend/sidebar/driversidebar_layout.dart';
 
 
@@ -113,7 +115,7 @@ class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
                           child: CircleAvatar(
                             backgroundColor: color5,
                             foregroundColor: color5,
-                            backgroundImage: driver.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(driver.picture.toString())),
+                            backgroundImage: driver.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/driver/image/"+driver.picture)),
                           ),
                         ),
                         SizedBox(width: 10.0),
@@ -151,7 +153,9 @@ class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
                           height: 25.0,
                           //color: color5,
                           child: FlatButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>DriverImage()));
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
