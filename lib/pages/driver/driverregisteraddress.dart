@@ -3,6 +3,7 @@ import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/color.dart';
 import 'package:transveloz_frontend/models/CompanyRequest.dart';
 import 'package:transveloz_frontend/models/Driver.dart';
+import 'package:transveloz_frontend/pages/driver/driver_list.dart';
 import 'package:transveloz_frontend/repository/driver_repository.dart';
 import 'package:transveloz_frontend/sidebar/sidebar_layout.dart';
 

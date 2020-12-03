@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:transveloz_frontend/models/UserHistory.dart';
+import 'package:transveloz_frontend/models/UserHistoryPayment.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
 import 'package:transveloz_frontend/repository/userhistory_repository.dart';
 import '../../color.dart';
@@ -13,33 +13,33 @@ class UserHistoryPage extends StatefulWidget with NavigationStates {
   _UserHistoryPageState createState() => _UserHistoryPageState();
 }
 class _UserHistoryPageState extends State<UserHistoryPage> {
-  int _id;
-  int finid;
+  int user_id;
   SharedPreferences user;
+  List<UserHistoryPayment> data = List<UserHistoryPayment>();
+  UserRepository userRepository = UserRepository();
 
   _initSharedPreferences() async{
     user = await SharedPreferences.getInstance();
     print("Sidebar");
     print(user.getInt("id").toString());
-    _id = user.getInt("id");
-    print("dato obbbb  "+_id.toString());
-    finid = _id;
+    user_id = user.getInt("id");
+    userRepository.tomar_datos(user_id).then((value){
+      setState(() {
+        data.addAll(value);
+      });
+    });
   }
-  List<UserHistory> data = List<UserHistory>();
-  //UserHistoryRepository userHistoryRepository = UserHistoryRepository();
-  UserRepository userRepository = UserRepository();
+// <<<<<<< HEAD
+//   List<UserHistory> data = List<UserHistory>();
+//   UserRepository userRepository = UserRepository();
+// =======
+//
+// >>>>>>> 40715effa7b3e2e84ae14ef2d9cf164f1a4a7fc3
   @override
   void initState(){
     // TODO: implement initState
     super.initState();
     _initSharedPreferences();
-      userRepository.tomar_datos(finid).then((value){
-      setState(() {
-        data.addAll(value);
-        print("es esto el aidi del USUARIO "+finid.toString());
-      });
-    });
-
   }
 
   Size size;
@@ -138,26 +138,26 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                   Row(
                                     children: [
                                       Text("Conductor: ", style: TextStyle(color: color1,
-                                          fontSize: 18.0, fontWeight: FontWeight.bold),),
-                                      Text(data[index].driverFirstName, style: TextStyle(color: color5,
                                           fontSize: 17.0, fontWeight: FontWeight.bold),),
+                                      Text(data[index].driverFirstName, style: TextStyle(color: color5,
+                                          fontSize: 15.0, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Direccion:  ", style: TextStyle(color: color1,
+                                      Text("Estado:  ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
-                                      Text(data[index].deliveryStreet, style: TextStyle(color: color5,
+                                      Text(data[index].paymentStatus, style: TextStyle(color: color5,
                                           fontSize: 16.0),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
                                   Row(
                                     children: [
-                                      Text("Estado Entrega: ", style: TextStyle(color: color1,
+                                      Text("Pago de Monto: ", style: TextStyle(color: color1,
                                           fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                      Text(data[index].travelStatus, style: TextStyle(color: color5,
+                                      Text(data[index].amount.toString(), style: TextStyle(color: color5,
                                           fontSize: 15.0),),
                                     ],
                                   ),

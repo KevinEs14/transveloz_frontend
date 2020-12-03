@@ -179,6 +179,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
               GestureDetector(
                 onTap: () async{
                   list = await administratorRepository.getAdmiLogList();
+                  //Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
                   bool flag = await Confirm();
                   if(flag){
                     Fluttertoast.showToast(

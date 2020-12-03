@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/User.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
+import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 
 import '../../bloc.navigation_bloc/navigation_bloc.dart';
 import '../../color.dart';
@@ -15,41 +17,66 @@ class ProfilePageDesign extends StatefulWidget with NavigationStates {
 
 class _ProfilePageDesignState extends State<ProfilePageDesign>{
 
+  int userId;
   User user = User();
-  UserProfileRepository userProfileRepository = UserProfileRepository();
   TextEditingController ci = TextEditingController();
   TextEditingController firstName = TextEditingController();
+  TextEditingController firstSurname = TextEditingController();
+  TextEditingController secondSurname = TextEditingController();
+  TextEditingController birthDate = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController number = TextEditingController();
+  TextEditingController street = TextEditingController();
+  TextEditingController zone = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController country = TextEditingController();
+  UserRepository userRepository = UserRepository();
   Size size;
+  MostrarDatosUsuario()async{
+    setState(() {
+      user.userId=userId;
+      print("Se Muestra el Id: "+user.userId.toString());
+      ci.text = user.ci.toString();
+      firstName.text = user.firstname.toString();
+      firstSurname.text = user.firstsurname.toString();
+      secondSurname.text = user.secondsurname.toString();
+      birthDate.text = user.birthdate.toString();
+      phone.text = user.phone.toString();
+      email.text = user.email.toString();
+      password.text = user.password.toString();
+      number.text = user.number.toString();
+      street.text = user.street.toString();
+      zone.text = user.zone.toString();
+      city.text = user.city.toString();
+      country.text = user.country.toString();
+    });
+  }
+
+  SharedPreferences userProfile;
+  _initSharedPreferences() async{
+    userProfile = await SharedPreferences.getInstance();
+    //print("Sidebar");
+    //print("entro ${user2.firstsurname.toString()}");
+    //print(user.getInt("id").toString());
+    userId = userProfile.getInt("id");
+    user = await userRepository.obtener_datos_usuario(user, userId);
+    MostrarDatosUsuario();
+  }
   @override
   void initState(){
     // TODO: implement initState
+
     super.initState();
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    userProfileRepository.obtener_datos_usuario(user);
-    //user.firstname.toString();
-    ci.text = user.ci.toString();
-    firstName.text = user.firstname.toString();
+    _initSharedPreferences();
+    print("Sidebar");
   }
 
   @override
   Widget build(BuildContext context) {
-    /*
-    return MaterialApp(
-      title: "Profile",
-      home: ProfilePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-class ProfilePage extends StatelessWidget {
-
-  User user = User();
-  @override
-  Widget build(BuildContext context) {
-    */
+  print("EL Id user es correcot: "+user.userId.toString());
     return Scaffold(
-      //appBar: CustomAppBar(user.firstname.toString(),user.firstsurname.toString(),user.secondsurname.toString(),user.email.toString(),user.birthdate.toString(),ci,firstName),
-      //appBar: CustomAppBar(user),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -81,7 +108,6 @@ class ProfilePage extends StatelessWidget {
                               image: DecorationImage(
                                   fit: BoxFit.fill,
                                   image: NetworkImage(imperfil)
-
                               )
                           ),
                         ),
@@ -110,10 +136,32 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 7.0),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        SizedBox(width: 30.0),
+                        Container(
+                          width: 60.0,
+                          height: 25.0,
+                          //color: color5,
+                          child: FlatButton(
+                            onPressed: (){},
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                              child: Icon(
+                                Icons.add_a_photo_outlined,
+                                color: color2,
+                              ),
+                            highlightColor: color1,
+                          ),
+                          decoration: BoxDecoration(
+                            color: color9,
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          ),
+                        ),
+                        SizedBox(width: 28.0),
                         Text("Fecha de Nacimiento:", style: TextStyle(
                             color: color2,
                             fontSize: 19,
@@ -133,7 +181,7 @@ class ProfilePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(width: 100.0),
+                        SizedBox(width: 95.0),
                         Column(
                           children: [
                             Text("Dia", style: TextStyle(
@@ -196,7 +244,7 @@ class ProfilePage extends StatelessWidget {
                             ),),
                           ],
                         ),
-                        SizedBox(width: 28.0),
+                        SizedBox(width: 58.0),
                       ],
                     ),
                     SizedBox(height: 8.0),
@@ -282,6 +330,7 @@ class ProfilePage extends StatelessWidget {
                                                     width: 130,
                                                     height: 48,
                                                     child: TextField(
+                                                      controller: firstSurname,
                                                       cursorColor: color1,
                                                       decoration: InputDecoration(
                                                         hintText: "Ap. Paterno",
@@ -305,6 +354,7 @@ class ProfilePage extends StatelessWidget {
                                                     width: 130,
                                                     height: 48,
                                                     child: TextField(
+                                                      controller: secondSurname,
                                                       cursorColor: color1,
                                                       decoration: InputDecoration(
                                                         hintText: "Ap. Materno",
@@ -328,8 +378,9 @@ class ProfilePage extends StatelessWidget {
                                               SizedBox(height: 9.0),
                                               Container(
                                                 width: 290,
-                                                height: 48,
+                                                //height: 48,
                                                 child: TextField(
+                                                  controller: birthDate,
                                                   cursorColor: color1,
                                                   keyboardType: TextInputType.datetime,
                                                   decoration: InputDecoration(
@@ -355,6 +406,7 @@ class ProfilePage extends StatelessWidget {
                                                 width: 290,
                                                 height: 48,
                                                 child: TextField(
+                                                  controller: phone,
                                                   cursorColor: color1,
                                                   decoration: InputDecoration(
                                                     hintText: "Celular",
@@ -385,6 +437,31 @@ class ProfilePage extends StatelessWidget {
                                                 width: 290,
                                                 height: 48,
                                                 child: TextField(
+                                                  controller: number,
+                                                  cursorColor: color1,
+                                                  decoration: InputDecoration(
+                                                    hintText: "Nro Puerta",
+                                                    labelText: "Nro Puerta",
+                                                    labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                    enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                        borderSide: BorderSide(
+                                                            color: color1,
+                                                            width: 2
+                                                        )
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 9.0),
+                                              Container(
+                                                width: 290,
+                                                height: 48,
+                                                child: TextField(
+                                                  controller: street,
                                                   cursorColor: color1,
                                                   decoration: InputDecoration(
                                                     hintText: "Calle",
@@ -408,6 +485,7 @@ class ProfilePage extends StatelessWidget {
                                                 width: 290,
                                                 height: 48,
                                                 child: TextField(
+                                                  controller: zone,
                                                   cursorColor: color1,
                                                   decoration: InputDecoration(
                                                     hintText: "Zona",
@@ -431,6 +509,7 @@ class ProfilePage extends StatelessWidget {
                                                 width: 290,
                                                 height: 48,
                                                 child: TextField(
+                                                  controller: city,
                                                   cursorColor: color1,
                                                   decoration: InputDecoration(
                                                     hintText: "Ciudad",
@@ -454,10 +533,66 @@ class ProfilePage extends StatelessWidget {
                                                 width: 290,
                                                 height: 48,
                                                 child: TextField(
+                                                  controller: country,
                                                   cursorColor: color1,
                                                   decoration: InputDecoration(
                                                     hintText: "Pais",
                                                     labelText: "Pais",
+                                                    labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                    enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                        borderSide: BorderSide(
+                                                            color: color1,
+                                                            width: 2
+                                                        )
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 8.0),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text("Datos de Ingreso",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              Container(
+                                                width: 290,
+                                                height: 48,
+                                                child: TextField(
+                                                  controller: email,
+                                                  cursorColor: color1,
+                                                  decoration: InputDecoration(
+                                                    hintText: "Email",
+                                                    labelText: "Email",
+                                                    labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                    enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                        borderSide: BorderSide(
+                                                            color: color1,
+                                                            width: 2
+                                                        )
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 9.0),
+                                              Container(
+                                                width: 290,
+                                                height: 48,
+                                                child: TextField(
+                                                  controller: password,
+                                                  cursorColor: color1,
+                                                  decoration: InputDecoration(
+                                                    hintText: "Password",
+                                                    labelText: "Password",
                                                     labelStyle: TextStyle(color: color1, fontSize: 16),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.all(Radius.circular(7)),
@@ -480,8 +615,19 @@ class ProfilePage extends StatelessWidget {
                                         FlatButton(
                                           child: Text("Aceptar", style: TextStyle(color: color1, fontSize: 18),),
                                           onPressed: (){
-                                            Navigator.of(context).pop();
+                                            bool check = Submit();
+                                            if(check){
+                                              userRepository.updateUser(user);
+                                              //Navigator.of(context).pop();
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> UserSideBarLayout()));
+                                              print("Entro al if ");
+                                            }else{
+                                              print("No entro al if ");
+                                            }
+
                                           },
+                                          //onTap: (){
+                                          //},
                                         ),
                                         FlatButton(
                                           child: Text("Cancelar", style: TextStyle(color: Colors.red, fontSize: 18),),
@@ -744,500 +890,32 @@ class ProfilePage extends StatelessWidget {
 
     );
   }
+  bool Submit(){
+    bool aux = false;
+    if(ci.text.isNotEmpty && firstName.text.isNotEmpty && firstSurname.text.isNotEmpty && secondSurname.text.isNotEmpty && birthDate.text.isNotEmpty && email.text.isNotEmpty && phone.text.isNotEmpty && street.text.isNotEmpty && zone.text.isNotEmpty && city.text.isNotEmpty && country.text.isNotEmpty){
+    //if(firstName.text.isNotEmpty){
+      aux = true;
+      user.userId;
+      user.ci=ci.text;
+      user.firstname=firstName.text;
+      user.firstsurname=firstSurname.text;
+      user.birthdate=birthDate.text;
+      user.phone=phone.text;
+      user.email=email.text;
+      user.password=password.text;
+      user.number=number.text;
+      user.street=street.text;
+      user.zone=zone.text;
+      user.city=city.text;
+      user.country=country.text;
+    }else{
+      aux = false;
+    }
+    return aux;
+  }
 }
 
 final String imperfil = "https://cdnmd.lavoz.com.ar/sites/default/files/styles/width_1072/public/nota_periodistica/messi-gol_1606660614.jpg";
-
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
-
-  String nombreUser;
-  String apelpatUser;
-  String apelmatUser;
-  String emailUser;
-  String fechaUser;
-  TextEditingController ci;
-  TextEditingController firstName;
-  // ignore: missing_return
-  //User user2 = User();
-  CustomAppBar(this.nombreUser,this.apelpatUser,this.apelmatUser,this.emailUser,this.fechaUser,this.ci,this.firstName);
-  //CustomAppBar(this.user2);
-  var fet;
-  var dia;
-  var mes;
-  var anho;
-
-  @override
-  void initState(){
-    // TODO: implement initState
-    //ci.text = user.ci.toString();
-    firstName.text = nombreUser;
-  }
-
-  @override
-  Size get preferredSize => Size(double.infinity, 275);
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipPath(
-      clipper: MyClipper(),
-      child: Container(
-        decoration: BoxDecoration(
-          color: color1,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.teal,
-              blurRadius: 20,
-              offset: Offset(0, 0)
-            )
-          ]
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: 30.0),
-            Row(
-              children: [
-                SizedBox(width: 26.0),
-                Container(
-                  width: 68,
-                  height: 68,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(imperfil)
-
-                      )
-                  ),
-                ),
-                SizedBox(width: 10.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(nombreUser+" "+apelpatUser+" "+apelmatUser, style: TextStyle(
-                      color: color2,
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            color: color5,
-                            offset: Offset(3,4),
-                            blurRadius: 4,
-                          ),
-                        ]
-                    ),),
-                    SizedBox(height: 2.0),
-                    Text(emailUser, style: TextStyle(
-                      color: color2,
-                      fontSize: 17,
-                    ),),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Fecha de Nacimiento:", style: TextStyle(
-                  color: color2,
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  shadows: [
-                    Shadow(
-                      color: color5,
-                      offset: Offset(3,4),
-                      blurRadius: 4,
-                    ),
-                  ]
-                ),),
-              ],
-            ),
-            SizedBox(height: 8.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(width: 100.0),
-                Column(
-                  children: [
-                    Text("Dia", style: TextStyle(
-                      color: color2,
-                      fontSize: 16,
-                        shadows: [
-                          Shadow(
-                            color: color5,
-                            offset: Offset(3,4),
-                            blurRadius: 4,
-                          ),
-                        ]
-                    ),),
-                    //fet = fechaUser.split("-"),
-                    //dia = fet[0].trim(),
-                    //List split(Pattern pattern){},
-                    Text("01", style: TextStyle(
-                      color: color2,
-                      fontSize: 28,
-                    ),),
-                  ],
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  children: [
-                    Text("Mes", style: TextStyle(
-                      color: color2,
-                      fontSize: 16,
-                        shadows: [
-                          Shadow(
-                            color: color5,
-                            offset: Offset(3,4),
-                            blurRadius: 4,
-                          ),
-                        ]
-                    ),),
-                    Text("01", style: TextStyle(
-                      color: color2,
-                      fontSize: 28,
-                    ),),
-                  ],
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  children: [
-                    Text("Año", style: TextStyle(
-                      color: color2,
-                      fontSize: 16,
-                        shadows: [
-                          Shadow(
-                            color: color5,
-                            offset: Offset(3,4),
-                            blurRadius: 4,
-                          ),
-                        ]
-                    ),),
-                    Text("2020", style: TextStyle(
-                      color: color2,
-                      fontSize: 28,
-                    ),),
-                  ],
-                ),
-                SizedBox(width: 28.0),
-              ],
-            ),
-            SizedBox(height: 8.0),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Transform.rotate(
-                  angle: (math.pi*0.045),
-                  child: FlatButton(
-                    color: color2,
-                    onPressed: (){
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context){
-                            return AlertDialog(
-                              title: Center(
-                                child: Text("Actualizar Perfil"),
-                              ),
-                              content: SingleChildScrollView(
-                                 child: Container(
-                                   width: 300,
-                                   child: Column(
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     children: [
-                                       SizedBox(height: 9.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           controller: ci,
-                                           cursorColor: color1,
-                                           decoration: InputDecoration(
-                                             hintText: "CI",
-                                             labelText: "CI",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                       SizedBox(height: 9.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           controller: firstName,
-                                           cursorColor: color1,
-                                           decoration: InputDecoration(
-                                             hintText: "Nombre",
-                                             labelText: "Nombre",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                       SizedBox(height: 6.0),
-                                       Container(
-                                         child: Text("Apellidos:", style: TextStyle(fontStyle: FontStyle.italic,),),
-                                       ),
-                                       SizedBox(height: 6.0),
-                                       Row(
-                                         children: [
-                                           Container(
-                                             width: 130,
-                                             height: 48,
-                                             child: TextField(
-                                               cursorColor: color1,
-                                               decoration: InputDecoration(
-                                                 hintText: "Ap. Paterno",
-                                                 labelText: "Ap. Paterno",
-                                                 labelStyle: TextStyle(color: color1, fontSize: 16),
-                                                 enabledBorder: OutlineInputBorder(
-                                                     borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                     borderSide: BorderSide(
-                                                         color: color1,
-                                                         width: 2
-                                                     )
-                                                 ),
-                                                 focusedBorder: OutlineInputBorder(
-                                                   borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 ),
-                                               ),
-                                             ),
-                                           ),
-                                           SizedBox(width: 4.0),
-                                           Container(
-                                             width: 130,
-                                             height: 48,
-                                             child: TextField(
-                                               cursorColor: color1,
-                                               decoration: InputDecoration(
-                                                 hintText: "Ap. Materno",
-                                                 labelText: "Ap. Materno",
-                                                 labelStyle: TextStyle(color: color1, fontSize: 16),
-                                                 enabledBorder: OutlineInputBorder(
-                                                     borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                     borderSide: BorderSide(
-                                                         color: color1,
-                                                         width: 2
-                                                     )
-                                                 ),
-                                                 focusedBorder: OutlineInputBorder(
-                                                   borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 ),
-                                               ),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                       SizedBox(height: 9.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           cursorColor: color1,
-                                           keyboardType: TextInputType.datetime,
-                                           decoration: InputDecoration(
-                                             suffixIcon: Icon(Icons.date_range_sharp, color: color5,),
-                                             hintText: "yyyy-mm-dd",
-                                             labelText: "Fecha de Nacimiento",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                       SizedBox(height: 9.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           cursorColor: color1,
-                                           decoration: InputDecoration(
-                                             hintText: "Celular",
-                                             labelText: "Celular",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                       SizedBox(height: 8.0),
-                                       Row(
-                                         mainAxisAlignment: MainAxisAlignment.center,
-                                         children: [
-                                           Text("Direccion",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),
-                                         ],
-                                       ),
-                                       SizedBox(height: 5.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           cursorColor: color1,
-                                           decoration: InputDecoration(
-                                             hintText: "Calle",
-                                             labelText: "Calle",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                       SizedBox(height: 9.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           cursorColor: color1,
-                                           decoration: InputDecoration(
-                                             hintText: "Zona",
-                                             labelText: "Zona",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                       SizedBox(height: 9.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           cursorColor: color1,
-                                           decoration: InputDecoration(
-                                             hintText: "Ciudad",
-                                             labelText: "Ciudad",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                       SizedBox(height: 9.0),
-                                       Container(
-                                         width: 290,
-                                         height: 48,
-                                         child: TextField(
-                                           cursorColor: color1,
-                                           decoration: InputDecoration(
-                                             hintText: "Pais",
-                                             labelText: "Pais",
-                                             labelStyle: TextStyle(color: color1, fontSize: 16),
-                                             enabledBorder: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.all(Radius.circular(7)),
-                                                 borderSide: BorderSide(
-                                                     color: color1,
-                                                     width: 2
-                                                 )
-                                             ),
-                                             focusedBorder: OutlineInputBorder(
-                                               borderRadius: BorderRadius.all(Radius.circular(7)),
-                                             ),
-                                           ),
-                                         ),
-                                       ),
-                                     ],
-                                   ),
-                                 ),
-                              ),
-                              actions: [
-                                FlatButton(
-                                  child: Text("Aceptar", style: TextStyle(color: color1, fontSize: 18),),
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                FlatButton(
-                                  child: Text("Cancelar", style: TextStyle(color: Colors.red, fontSize: 18),),
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          }
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Text("Editar Perfil", style: TextStyle(
-                      color: color5,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                    ),),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 
 class MyClipper extends CustomClipper<Path>{
   @override
