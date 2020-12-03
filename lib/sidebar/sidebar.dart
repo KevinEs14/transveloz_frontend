@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transveloz_frontend/pages/loginPage.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../color.dart';
@@ -155,14 +156,14 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                           SizedBox(
                                             height: 30,
                                           ),
-                                          MenuItem(
+                                          /*MenuItem(
                                             icon: Icons.home,
                                             title: "Inicio",
                                             onTap: () {
                                               onIconPressed();
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
                                             },
-                                          ),
+                                          ),*/
                                           // MenuItem(
                                           //   icon: Icons.person,
                                           //   title: "Reporte",
@@ -180,7 +181,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                           //   },
                                           // ),
                                           MenuItem(
-                                            icon: Icons.add_circle_outline_sharp,
+                                            icon: Icons.drive_eta_outlined,
                                             title: "Drivers",
                                             onTap: () {
                                               onIconPressed();
@@ -230,7 +231,8 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             onTap: (){
                                               onIconPressed();
                                               //BlocProvider.of<LoginBloc>(context).add(NavigationEvents.M);
-                                              Navigator.pop(context);
+                                              //Navigator.pop(context);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                             },
                                           ),
                                         ],

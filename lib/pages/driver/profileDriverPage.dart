@@ -1,29 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:transveloz_frontend/models/User.dart';
-import 'package:transveloz_frontend/pages/User/userImage.dart';
+import 'package:transveloz_frontend/models/Driver.dart';
+import 'package:transveloz_frontend/pages/driver/driverImage.dart';
+import 'package:transveloz_frontend/pages/driver/driverregister.dart';
+import 'package:transveloz_frontend/repository/driver_repository.dart';
 import 'package:transveloz_frontend/repository/url.dart';
-import 'package:transveloz_frontend/repository/user_repository.dart';
-import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
+import 'package:transveloz_frontend/sidebar/driversidebar_layout.dart';
+
 
 import '../../bloc.navigation_bloc/navigation_bloc.dart';
 import '../../color.dart';
 import 'dart:math' as math;
 
-class ProfilePageDesign extends StatefulWidget with NavigationStates {
+class ProfileDriverPageDesign extends StatefulWidget with NavigationStates {
   @override
-  _ProfilePageDesignState createState() => _ProfilePageDesignState();
+  _ProfileDriverPageDesignState createState() => _ProfileDriverPageDesignState();
 }
 
-class _ProfilePageDesignState extends State<ProfilePageDesign>{
-
-  int userId;
-  DateTime fechaNacimiento;
-  List fechaList = [2020,01,01];
-  User user = User();
+class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
+  int driverId;
+  DateTime fNacimiento;
+  List ListFecha = [1999,01,01];
+  Driver driver = Driver();
   TextEditingController ci = TextEditingController();
   TextEditingController firstName = TextEditingController();
   TextEditingController firstSurname = TextEditingController();
@@ -37,38 +37,40 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
   TextEditingController zone = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController country = TextEditingController();
-  UserRepository userRepository = UserRepository();
+  DriverRepository driverRepository = DriverRepository();
   Size size;
-  MostrarDatosUsuario()async{
+  int companyId;
+  MostrarDatosDriver()async{
     setState(() {
-      user.userId=userId;
-      print("Se Muestra el Id: "+user.userId.toString());
-      fechaNacimiento = DateTime.parse(user.birthdate.toString());
+      driver.driverId=driverId;
+      print("Se Muestra el Id: "+driver.driverId.toString());
+      fNacimiento = DateTime.parse(driver.birthdate.toString());
       var formatter = new DateFormat("yyyy-MM-dd");
-      String formattedDate = formatter.format(fechaNacimiento);
-      ci.text = user.ci.toString();
-      firstName.text = user.firstname.toString();
-      firstSurname.text = user.firstsurname.toString();
-      secondSurname.text = user.secondsurname.toString();
+      String formattedDate = formatter.format(fNacimiento);
+      companyId = 1;
+      driver.companyId=companyId;
+      ci.text = driver.ci.toString();
+      firstName.text = driver.firstname.toString();
+      firstSurname.text = driver.firstsurname.toString();
+      secondSurname.text = driver.secondsurname.toString();
       birthDate.text = formattedDate;
-      phone.text = user.phone.toString();
-      email.text = user.email.toString();
-      password.text = user.password.toString();
-      number.text = user.number.toString();
-      street.text = user.street.toString();
-      zone.text = user.zone.toString();
-      city.text = user.city.toString();
-      country.text = user.country.toString();
-      fechaList = formattedDate.split("-");
+      phone.text = driver.phone.toString();
+      email.text = driver.email.toString();
+      password.text = driver.password.toString();
+      number.text = driver.number.toString();
+      street.text = driver.street.toString();
+      zone.text = driver.zone.toString();
+      city.text = driver.city.toString();
+      country.text = driver.country.toString();
+      ListFecha = formattedDate.split("-");
     });
   }
-
-  SharedPreferences userProfile;
+  SharedPreferences driverProfile;
   _initSharedPreferences() async{
-    userProfile = await SharedPreferences.getInstance();
-    userId = userProfile.getInt("id");
-    user = await userRepository.obtener_datos_usuario(user, userId);
-    MostrarDatosUsuario();
+    driverProfile = await SharedPreferences.getInstance();
+    driverId = driverProfile.getInt("id");
+    driver = await driverRepository.obtener_datos_conductor(driver, driverId);
+    MostrarDatosDriver();
   }
   @override
   void initState(){
@@ -78,10 +80,11 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
     print("Sidebar");
 
   }
-  //bool _obscureText = true;
+
   @override
   Widget build(BuildContext context) {
-  print("EL Id user es correcot: "+user.userId.toString());
+    print("driverId es correcto: "+driver.driverId.toString());
+    //var now = new DateTime.now();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -91,7 +94,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
               child: Container(
                 height: 276,
                 decoration: BoxDecoration(
-                    color: color1,
+                    color: color9,
                     boxShadow: [
                       BoxShadow(
                           color: Colors.teal,
@@ -112,14 +115,14 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                           child: CircleAvatar(
                             backgroundColor: color5,
                             foregroundColor: color5,
-                            backgroundImage: user.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/user/image/"+user.picture)),
+                            backgroundImage: driver.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/driver/image/"+driver.picture)),
                           ),
                         ),
                         SizedBox(width: 10.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("${user.firstname} ${user.firstsurname} ${user.secondsurname}", style: TextStyle(
+                            Text("${driver.firstname} ${driver.firstsurname} ${driver.secondsurname}", style: TextStyle(
                                 color: color2,
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
@@ -132,7 +135,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                 ]
                             ),),
                             SizedBox(height: 2.0),
-                            Text("${user.email}", style: TextStyle(
+                            Text("${driver.email}", style: TextStyle(
                               color: color2,
                               fontSize: 17,
                             ),),
@@ -151,19 +154,19 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                           //color: color5,
                           child: FlatButton(
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserImage()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>DriverImage()));
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                              child: Icon(
-                                Icons.add_a_photo_outlined,
-                                color: color2,
-                              ),
-                            highlightColor: color1,
+                            child: Icon(
+                              Icons.add_a_photo_outlined,
+                              color: color2,
+                            ),
+                            highlightColor: color9,
                           ),
                           decoration: BoxDecoration(
-                            color: color9,
+                            color: color5,
                             borderRadius: BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
@@ -201,7 +204,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                   ),
                                 ]
                             ),),
-                            Text(fechaList[2].toString(), style: TextStyle(
+                            Text(ListFecha[2].toString(), style: TextStyle(
                               color: color2,
                               fontSize: 28,
                             ),),
@@ -221,7 +224,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                   ),
                                 ]
                             ),),
-                            Text(fechaList[1].toString(), style: TextStyle(
+                            Text(ListFecha[1].toString(), style: TextStyle(
                               color: color2,
                               fontSize: 28,
                             ),),
@@ -241,7 +244,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                   ),
                                 ]
                             ),),
-                            Text(fechaList[0].toString(), style: TextStyle(
+                            Text(ListFecha[0].toString(), style: TextStyle(
                               color: color2,
                               fontSize: 28,
                             ),),
@@ -569,7 +572,6 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                                 child: TextField(
                                                   controller: email,
                                                   cursorColor: color1,
-                                                  keyboardType: TextInputType.emailAddress,
                                                   decoration: InputDecoration(
                                                     hintText: "Email",
                                                     labelText: "Email",
@@ -592,8 +594,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                                 width: 290,
                                                 height: 48,
                                                 child: TextField(
-                                                  //obscureText: _obscureText,
-                                                  keyboardType: TextInputType.text,
+                                                  controller: password,
                                                   cursorColor: color1,
                                                   decoration: InputDecoration(
                                                     hintText: "Password",
@@ -610,7 +611,6 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                                       borderRadius: BorderRadius.all(Radius.circular(7)),
                                                     ),
                                                   ),
-                                                  controller: password,
                                                 ),
                                               ),
                                             ],
@@ -623,9 +623,9 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                           onPressed: (){
                                             bool check = Submit();
                                             if(check){
-                                              userRepository.updateUser(user);
+                                              driverRepository.updateDriver(driver);
                                               //Navigator.of(context).pop();
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> UserSideBarLayout()));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> DriverSideBarLayout()));
                                               print("Se Guardo los datos ");
                                             }else{
                                               print("No Se Guardo los datos ");
@@ -677,7 +677,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.ci.toString(), style: TextStyle(
+                  Text(driver.ci.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -702,7 +702,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.firstname.toString(), style: TextStyle(
+                  Text(driver.firstname.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -727,7 +727,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.firstsurname.toString()+" "+user.secondsurname.toString(), style: TextStyle(
+                  Text(driver.firstsurname.toString()+" "+driver.secondsurname.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -752,7 +752,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.phone.toString(), style: TextStyle(
+                  Text(driver.phone.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -796,7 +796,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.street.toString(), style: TextStyle(
+                  Text(driver.street.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -821,7 +821,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.zone.toString(), style: TextStyle(
+                  Text(driver.zone.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -846,7 +846,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.city.toString(), style: TextStyle(
+                  Text(driver.city.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -871,7 +871,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                       ]
                   ),),
                   SizedBox(height: 3.0),
-                  Text(user.country.toString(), style: TextStyle(
+                  Text(driver.country.toString(), style: TextStyle(
                       color: color5,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -896,26 +896,30 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
   bool Submit(){
     bool aux = false;
     if(ci.text.isNotEmpty && firstName.text.isNotEmpty && firstSurname.text.isNotEmpty && secondSurname.text.isNotEmpty && birthDate.text.isNotEmpty && email.text.isNotEmpty && phone.text.isNotEmpty && street.text.isNotEmpty && zone.text.isNotEmpty && city.text.isNotEmpty && country.text.isNotEmpty){
-    //if(firstName.text.isNotEmpty){
+      //if(firstName.text.isNotEmpty){
       aux = true;
-      user.userId;
-      user.ci=ci.text;
-      user.firstname=firstName.text;
-      user.firstsurname=firstSurname.text;
-      user.birthdate=birthDate.text;
-      user.phone=phone.text;
-      user.email=email.text;
-      user.password=password.text;
-      user.number=number.text;
-      user.street=street.text;
-      user.zone=zone.text;
-      user.city=city.text;
-      user.country=country.text;
+      driver.driverId;
+      driver.ci=ci.text;
+      driver.firstname=firstName.text;
+      driver.firstsurname=firstSurname.text;
+      driver.birthdate=birthDate.text;
+      driver.phone=phone.text;
+      driver.email=email.text;
+      driver.password=password.text;
+      driver.number=number.text;
+      driver.street=street.text;
+      driver.zone=zone.text;
+      driver.city=city.text;
+      driver.country=country.text;
+      driver.companyId=companyId;
+      print("CompaniaId = "+driver.companyId.toString());
+      print("CompaniaId SIII= "+companyId.toString());
     }else{
       aux = false;
     }
     return aux;
   }
+
 }
 
 final String imperfil = "https://cdnmd.lavoz.com.ar/sites/default/files/styles/width_1072/public/nota_periodistica/messi-gol_1606660614.jpg";

@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:transveloz_frontend/models/UserHistoryPayment.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
-import 'package:transveloz_frontend/repository/userhistory_repository.dart';
 import '../../color.dart';
 
 class UserHistoryPage extends StatefulWidget with NavigationStates {
@@ -29,12 +28,6 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
       });
     });
   }
-// <<<<<<< HEAD
-//   List<UserHistory> data = List<UserHistory>();
-//   UserRepository userRepository = UserRepository();
-// =======
-//
-// >>>>>>> 40715effa7b3e2e84ae14ef2d9cf164f1a4a7fc3
   @override
   void initState(){
     // TODO: implement initState
@@ -127,7 +120,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                 child: CircleAvatar(
                                   //backgroundColor: Colors.green,
                                   //foregroundColor: Colors.green,
-                                  backgroundImage: NetworkImage('https://www.woolha.com/media/2020/03/eevee.png'),
+                                  backgroundImage: data[index].driverPicture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(data[index].driverPicture)),
                                 ),
                               ),
                               SizedBox(width: 10.0),
@@ -149,7 +142,7 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                       Text("Estado:  ", style: TextStyle(color: color1,
                                           fontSize: 16.0, fontWeight: FontWeight.bold),),
                                       Text(data[index].paymentStatus, style: TextStyle(color: color5,
-                                          fontSize: 16.0),),
+                                          fontSize: 16.0,fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
@@ -157,8 +150,8 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                                     children: [
                                       Text("Pago de Monto: ", style: TextStyle(color: color1,
                                           fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                      Text(data[index].amount.toString(), style: TextStyle(color: color5,
-                                          fontSize: 15.0),),
+                                      Text(data[index].amount.toString()+" Bs.", style: TextStyle(color: color5,
+                                          fontSize: 15.0,fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                   SizedBox(height: 8.0),
@@ -170,7 +163,290 @@ class _UserHistoryPageState extends State<UserHistoryPage> {
                             alignment: Alignment.bottomRight,
                             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                             child: FlatButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                print("Los Datos de es "+data[index].datePayment);
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context){
+                                    return AlertDialog(
+                                      title: Center(
+                                        child: Text("Resumen de Datos"),
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: Container(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(height: 1.0),
+                                              Container(
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                  color: color1,
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(15.0),
+                                                    bottomLeft: Radius.circular(8.0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text("  Conductor",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,color: color2),),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(left: 8.0,top: 6.0,bottom: 2.0),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: color1,
+                                                    width: 2,
+                                                  ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                                ),
+                                                child: Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width: 55.0,
+                                                      height: 55.0,
+                                                      child: CircleAvatar(
+                                                        //backgroundColor: Colors.green,
+                                                        //foregroundColor: Colors.green,
+                                                        backgroundImage: data[index].driverPicture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(data[index].driverPicture)),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10.0),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        SizedBox(height: 3.0),
+                                                        Row(
+                                                          children: [
+                                                            Text(data[index].driverFirstName, style: TextStyle(color: color5,
+                                                                fontSize: 18.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 8.0),
+                                                        Row(
+                                                          children: [
+                                                            Text(data[index].driverFirstSurname+" "+data[index].driverSecondSurname, style: TextStyle(color: color5,
+                                                                fontSize: 16.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 8.0),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 10.0),
+                                              Container(
+                                                width: 155,
+                                                decoration: BoxDecoration(
+                                                  color: color1,
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(15.0),
+                                                    bottomLeft: Radius.circular(8.0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text("  Dirección de Envío",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,color: color2),),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(left: 15.0,top: 6.0,bottom: 2.0),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: color1,
+                                                    width: 2,
+                                                  ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Calle:    ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].startStreet, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Zona:    ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].startZone, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Ciudad: ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].startCity, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Pais:     ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].startCountry, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 8.0),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 10.0),
+                                              Container(
+                                                width: 168,
+                                                decoration: BoxDecoration(
+                                                  color: color1,
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(15.0),
+                                                    bottomLeft: Radius.circular(8.0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text("  Dirección de Entrega",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,color: color2),),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(left: 15.0,top: 6.0,bottom: 2.0),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: color1,
+                                                    width: 2,
+                                                  ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Calle:    ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].deliveryStreet, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Zona:    ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].deliveryZone, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Ciudad: ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].deliveryCity, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Pais:     ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].deliveryCountry, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 8.0),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 10.0),
+                                              Container(
+                                                width: 140,
+                                                decoration: BoxDecoration(
+                                                  color: color1,
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(15.0),
+                                                    bottomLeft: Radius.circular(8.0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text("  Datos del Pago",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,color: color2),),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(left: 15.0,top: 6.0,bottom: 2.0),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: color1,
+                                                    width: 2,
+                                                  ),
+                                                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Monto:    ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].amount.toString()+" Bs.", style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 3.0),
+                                                    Row(
+                                                      children: [
+                                                        Text("Fecha de Pago: ", style: TextStyle(color: color1,
+                                                            fontSize: 16.0, fontWeight: FontWeight.bold),),
+                                                        Text(data[index].datePayment, style: TextStyle(color: color5,
+                                                            fontSize: 15.0, fontWeight: FontWeight.normal,fontStyle: FontStyle.italic),),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 8.0),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      actions: [
+                                        FlatButton(
+                                          child: Text("Aceptar", style: TextStyle(color: color1, fontSize: 18),),
+                                          onPressed: (){
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                );
+                              },
                               color: color1,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),

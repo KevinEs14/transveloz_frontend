@@ -66,7 +66,7 @@ class VehicleRepository{
       }
       return registros;
     }catch(error){
-      debugPrint(error);
+      debugPrint(error.toString());
     }
   }
 

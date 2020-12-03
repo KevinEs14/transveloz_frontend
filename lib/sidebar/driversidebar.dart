@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transveloz_frontend/models/Driver.dart';
+import 'package:transveloz_frontend/pages/loginPage.dart';
+import 'package:transveloz_frontend/repository/driver_repository.dart';
+import 'package:transveloz_frontend/repository/url.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
@@ -16,18 +20,27 @@ class DriverSideBar extends StatefulWidget {
 }
 
 class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProviderStateMixin<DriverSideBar> {
+  int driverId;
+  Driver driver1 = Driver();
+  DriverRepository driverRepository = DriverRepository();
   AnimationController _animationController;
   StreamController<bool> isSidebarOpenedStreamController;
   Stream<bool> isSidebarOpenedStream;
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 500);
 
-  SharedPreferences user;
-
+  ObtenerNombre()async{
+    setState(() {
+      driver1.driverId=driverId;
+    });
+  }
+  SharedPreferences driver;
   _initSharedPreferences() async{
-    user = await SharedPreferences.getInstance();
+    driver = await SharedPreferences.getInstance();
+    driverId = driver.getInt("id");
+    driver1 = await driverRepository.obtener_datos_conductor(driver1, driverId);
     print("Sidebar");
-    print(user.getInt("id").toString());
+    print(driver.getInt("id").toString());
   }
 
   @override
@@ -118,26 +131,21 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                 padding: EdgeInsets.symmetric(vertical: size.height*0.08),
                                 child: ListTile(
                                   title: Text(
-                                    "Nombre",
-                                    style: TextStyle(color: Color(0xFF225957), fontSize: 30, fontWeight: FontWeight.w800),
+                                    "${driver1.firstname}",
+                                    style: TextStyle(color: Color(0xFF225957), fontSize: 20, fontWeight: FontWeight.w800),
                                   ),
-
                                   subtitle: Text(
-                                    "Email",
+                                    "${driver1.email}",
                                     style: TextStyle(
                                       height: 2,
                                       color: color1.withOpacity(0.8),
-                                      fontSize: 18,
+                                      fontSize: 15,
                                     ),
                                   ),
                                   leading: CircleAvatar(
+                                    backgroundImage: driver1.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/driver/image/"+driver1.picture)),
                                     backgroundColor: color1,
-                                    child: Icon(
-                                      Icons.perm_identity,
-                                      color: color2,
-                                      size: 35,
-                                    ),
-                                    radius: size.width*0.09,
+                                    radius: size.width*0.07,
                                   ),
                                 ),
                               ),
@@ -157,20 +165,20 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                           SizedBox(
                                             height: 30,
                                           ),
-                                          MenuItem(
+                                          /*MenuItem(
                                             icon: Icons.home,
                                             title: "Inicio",
                                             onTap: () {
                                               onIconPressed();
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehiclesEvent);
                                             },
-                                          ),
+                                          ),*/
                                           MenuItem(
                                             icon: Icons.person,
                                             title: "Perfil",
                                             onTap: () {
                                               onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ProfileClickedEvent);
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ProfileDriverClickedEvent);
                                             },
                                           ),
                                           MenuItem(
@@ -200,7 +208,8 @@ class _DriverSideBarState extends State<DriverSideBar> with SingleTickerProvider
                                             onTap: (){
                                               onIconPressed();
                                               // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
-                                              Navigator.pop(context);
+                                              //Navigator.pop(context);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                             },
                                           ),
                                         ],

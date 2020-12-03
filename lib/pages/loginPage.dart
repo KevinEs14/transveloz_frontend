@@ -180,7 +180,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                 onTap: () async{
                   list = await administratorRepository.getAdmiLogList();
                   //Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
-                  bool flag = await Confirm();
+                  bool flag = await Confirm(1);
                   if(flag){
                     Fluttertoast.showToast(
                         msg: "Bienvenido",
@@ -191,7 +191,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                         textColor: color1,
                         fontSize: 16.0
                     );
-                    print("Logueado con "+user.getInt('id').toString());
+                    print("Logueado con "+user.getInt('id').toString()+" "+user.getString('tipo'));
                     Navigator.push(context, MaterialPageRoute(builder: (conext)=>SideBarLayout()));
                   }else{
                     Fluttertoast.showToast(
@@ -223,7 +223,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
               GestureDetector(
                 onTap: ()async{
                   list = await userRepository.getUserLogList();
-                  bool flag = await Confirm();
+                  bool flag = await Confirm(2);
                   if(flag){
                     Fluttertoast.showToast(
                         msg: "Bienvenido",
@@ -267,7 +267,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                 onTap: () async{
 
                   list = await driverRepository.getDriverLogList();
-                  bool flag = await Confirm();
+                  bool flag = await Confirm(3);
                   if(flag){
                     Fluttertoast.showToast(
                         msg: "Bienvenido",
@@ -278,7 +278,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
                         textColor: color1,
                         fontSize: 16.0
                     );
-                    print("Logueado con "+user.getInt('id').toString());
+                    print("Logueado con "+user.getInt('id').toString()+" "+user.getString('tipo'));
                     Navigator.push(context, MaterialPageRoute(builder: (conext)=>DriverSideBarLayout()));
                   }else{
                     Fluttertoast.showToast(
@@ -313,7 +313,7 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
     );
   }
 
-  Future<bool> Confirm() async{
+  Future<bool> Confirm(int x) async{
     int length = list.length;
     print(length);
     bool compare = false;
@@ -322,6 +322,15 @@ class _LoginPageState extends State<LoginPage> with NavigationStates {
         if(list[i].email==email.text && list[i].password==password.text){
           print(list[i]);
           user.setInt('id', list[i].id);
+          if(x==1){
+            user.setString('tipo', "administrador");
+          }
+          if(x==2){
+            user.setString('tipo', "usuario");
+          }
+          if(x==3){
+            user.setString('tipo', "conductor");
+          }
           compare = true;
           break;
         }

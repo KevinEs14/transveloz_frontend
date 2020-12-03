@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transveloz_frontend/models/User.dart';
+import 'package:transveloz_frontend/pages/loginPage.dart';
+import 'package:transveloz_frontend/repository/url.dart';
+import 'package:transveloz_frontend/repository/user_repository.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import '../color.dart';
@@ -15,18 +19,28 @@ class UserSideBar extends StatefulWidget {
 }
 
 class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStateMixin<UserSideBar> {
+  int userId;
+  User user1 = User();
+  UserRepository userRepository = UserRepository();
   AnimationController _animationController;
   StreamController<bool> isSidebarOpenedStreamController;
   Stream<bool> isSidebarOpenedStream;
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 500);
 
+  ObtenerNombre()async{
+    setState(() {
+      user1.userId=userId;
+    });
+  }
   SharedPreferences user;
-
   _initSharedPreferences() async{
     user = await SharedPreferences.getInstance();
-    print("Sidebar");
+    userId = user.getInt("id");
+    user1 = await userRepository.obtener_datos_usuario(user1, userId);
+    print("Sidebar AQUI");
     print(user.getInt("id").toString());
+    ObtenerNombre();
   }
 
   @override
@@ -81,9 +95,7 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                 child:  GestureDetector(
                   onTap: (){
                     onIconPressed();
-
                   },
-
                 ),
               ),
             ),
@@ -117,25 +129,21 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                 padding: EdgeInsets.symmetric(vertical: size.height*0.08),
                                 child: ListTile(
                                   title: Text(
-                                    "Nombre",
-                                    style: TextStyle(color: Color(0xFF225957), fontSize: 30, fontWeight: FontWeight.w800),
+                                    "${user1.firstname}",
+                                    style: TextStyle(color: Color(0xFF225957), fontSize: 20, fontWeight: FontWeight.w800),
                                   ),
                                   subtitle: Text(
-                                    "Email",
+                                    "${user1.email}",
                                     style: TextStyle(
                                       height: 2,
                                       color: color1.withOpacity(0.8),
-                                      fontSize: 18,
+                                      fontSize: 15,
                                     ),
                                   ),
                                   leading: CircleAvatar(
+                                    backgroundImage: user1.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(directionUrl+"v1/user/image/"+user1.picture)),
                                     backgroundColor: color1,
-                                    child: Icon(
-                                      Icons.perm_identity,
-                                      color: color2,
-                                      size: 35,
-                                    ),
-                                    radius: size.width*0.09,
+                                    radius: size.width*0.07,
                                   ),
                                 ),
                               ),
@@ -155,28 +163,20 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                           SizedBox(
                                             height: 30,
                                           ),
-                                          MenuItem(
+                                          /*MenuItem(
                                             icon: Icons.home,
                                             title: "Inicio",
                                             onTap: () {
                                               onIconPressed();
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.SearchVehiclesEvent);
                                             },
-                                          ),
+                                          ),*/
                                           MenuItem(
                                             icon: Icons.person,
                                             title: "Perfil",
                                             onTap: () {
                                               onIconPressed();
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ProfileClickedEvent);
-                                            },
-                                          ),
-                                          MenuItem(
-                                            icon: Icons.airport_shuttle_outlined,
-                                            title: "Servicio",
-                                            onTap: () {
-                                              onIconPressed();
-                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.RequestServiceClickedEvent);
                                             },
                                           ),
                                           MenuItem(
@@ -205,7 +205,8 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                             onTap: (){
                                               onIconPressed();
                                               // BlocProvider.of<LoginBloc>(context).add(CerrarLogin());
-                                              Navigator.pop(context);
+                                              //Navigator.pop(context);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                             },
                                           ),
                                         ],

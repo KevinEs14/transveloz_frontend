@@ -1,6 +1,14 @@
 import 'package:intl/intl.dart';
 
 class Driver{
+  int _driverId;
+
+  int get driverId => _driverId;
+
+  set driverId(int value) {
+    _driverId = value;
+  }
+
   String _ci;
   String _firstname;
   String _firstsurname;
@@ -15,6 +23,7 @@ class Driver{
   String _city;
   String _country;
   int _companyId;
+  String _picture;
 
   Driver();
 
@@ -103,6 +112,13 @@ class Driver{
     _companyId = value;
   }
 
+
+  String get picture => _picture;
+
+  set picture(String value) {
+    _picture = value;
+  }
+
   Map toJson()=>{
     "ci":ci,
     "firstName": firstname,
@@ -118,5 +134,22 @@ class Driver{
     "city":city,
     "country":country,
     "companyId":companyId
+  };
+  Map toJsonUp() => {
+    "driverId":driverId,
+    "companyId":companyId,
+    "ci":ci,
+    "firstName": firstname,
+    "firstSurname": firstsurname,
+    "secondSurname": secondsurname,
+    "birthDate":birthdate,
+    "phone": phone,
+    "email": email,
+    "password": password,
+    "number":number,
+    "street":street,
+    "zone":zone,
+    "city":city,
+    "country":country
   };
 }
