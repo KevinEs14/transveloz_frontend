@@ -15,6 +15,7 @@ class VehicleListPage extends StatefulWidget with NavigationStates{
 }
 
 class _VehicleListPage extends State<VehicleListPage>{
+  String auxFilter="";
   bool closeTopContainer = false;
   double topContainer = 0;
   Size size;
@@ -23,10 +24,12 @@ class _VehicleListPage extends State<VehicleListPage>{
     "SELECCIONAR FILTRO",
     "ORDENAR POR MARCA",
     "ORDENAR POR COMPAÑIA",
-    "ORDENAR POR TIPO VEHICULO",
-    "ORDENAR POR CAPACIDAD"];
+    "ORDENAR POR TIPO VEHICULO"];
   List<VehicleModel> data = List<VehicleModel>();
+
   VehicleRepository vehicleRepository = VehicleRepository();
+
+  TextEditingController filterSearch = TextEditingController();
 
   @override
   void initState(){
@@ -79,7 +82,7 @@ class _VehicleListPage extends State<VehicleListPage>{
                       height: 10,
                     ),
                     Container(
-                        padding: EdgeInsets.only(left:16,right: 16),
+                        padding: EdgeInsets.only(left:30,right: 10),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2.0),
                           borderRadius: BorderRadius.circular(10),
@@ -93,6 +96,25 @@ class _VehicleListPage extends State<VehicleListPage>{
                           onChanged: (newValue){
                             setState(() {
                               _nameFilter = newValue;
+                              if(_nameFilter == _filterList[1]){
+                                auxFilter="A";
+                              }
+
+                              if(_nameFilter == _filterList[2]){
+                                auxFilter="B";
+                              }
+                              if(_nameFilter == _filterList[3]){
+                                auxFilter="C";
+                              }
+
+                              if(_nameFilter == _filterList[0]){
+                                vehicleRepository.getData().then((value){
+                                  setState(() {
+                                    data.addAll(value);
+                                  });
+                                });
+
+                              }
                             });
                           },
                           items: _filterList.map((newValue){
@@ -105,7 +127,78 @@ class _VehicleListPage extends State<VehicleListPage>{
                     SizedBox(
                       height: 20,
                     ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          width: size.width*0.62,//Se debe incrementar a 0.62
+                          padding: EdgeInsets.all(1),
+                          child: TextFormField(
+                            decoration:InputDecoration(
+                              fillColor: Color(0xFFEEEBD3),
+                              filled: true,
+                              prefixText: "    ",
+                              border: InputBorder.none,
+                              hintText: "Ingrese nombre",
+                              hintStyle: TextStyle(color: Color(0xFF0F4C5C)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF0F4C5C),
+                                      width: 3
+                                  )
+                              ),
+                            ),
+                            controller: filterSearch,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            data.clear();
+                            if (auxFilter=='A'){
+                              vehicleRepository.getDatabyBrand(filterSearch.text).then((value){
+                                setState(() {
+                                  data.addAll(value);
+                                });
+                              });
+                            }
 
+                            if (auxFilter=='B'){
+                              vehicleRepository.getDatabyCompany(filterSearch.text).then((value){
+                                setState(() {
+                                  data.addAll(value);
+                                });
+                              });
+                            }
+
+                            if (auxFilter=='C'){
+                              vehicleRepository.getDatabyType(filterSearch.text).then((value){
+                                setState(() {
+                                  data.addAll(value);
+                                });
+                              });
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Color(0xFF0F4C5C),
+                            ),
+                            child: Center(child: Text("  BUSCAR  ",style: TextStyle(fontSize:size.width*0.058,color: Colors.white,fontWeight: FontWeight.bold),)),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Expanded(
                         child: ListView.builder(
                           padding: EdgeInsets.all(5),
@@ -134,6 +227,7 @@ class _VehicleListPage extends State<VehicleListPage>{
                                           children: <Widget>[
                                             Image.asset(
                                               "assets/images/3cf0d408681a5b28ddbb099e9bcfb8a5.jpg",
+                                              //"${data[index].vehiclePicture}",
                                               height: 110,
                                               width: 100,
                                             ),
@@ -190,10 +284,8 @@ class _VehicleListPage extends State<VehicleListPage>{
                             ),
                     ),
                   ]
-
               ),
             ),
-
               ],
             ),
           ),
