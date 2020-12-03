@@ -7,9 +7,7 @@ class VehicleRegister{
   String _vehicleBrand;
   String _vehicleModel;
 
-  VehicleRegister(this._vehicleDriverId, this._vehicleLicensePlate,
-      this._vehicleCapacity, this._vehicleType, this._vehiclePrice,
-      this._vehicleBrand, this._vehicleModel);
+  VehicleRegister();
 
   String get vehicleModel => _vehicleModel;
 
@@ -52,6 +50,15 @@ class VehicleRegister{
   set vehicleDriverId(int value) {
     _vehicleDriverId = value;
   }
+  Map toJson() => {
+    "vehicleDriverId": vehicleDriverId,
+    "vehicleLicensePlate": vehicleLicensePlate,
+    "vehicleCapacity": vehicleCapacity,
+    "vehicleType": vehicleType,
+    "vehiclePrice": vehiclePrice,
+    "vehicleBrand": vehicleBrand,
+    "vehicleModel": vehicleModel
+  };
 
 
 }
