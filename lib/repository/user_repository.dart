@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:transveloz_frontend/models/LogIn.dart';
 import 'package:transveloz_frontend/models/User.dart';
+import 'package:transveloz_frontend/models/UserHistory.dart';
 import 'package:transveloz_frontend/repository/url.dart';
 
 class UserRepository{
@@ -50,6 +51,70 @@ class UserRepository{
         return list;
       }
       else{
+        return null;
+      }
+    }
+    catch(error){
+      print(error);
+      return null;
+    }
+  }
+
+  Future<List<UserHistory>> tomar_datos(int fid) async{
+    try{
+      var url = directionUrl+"v1/user/1/payment";
+      print(url);
+      var response = await   http.get(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          }
+      );
+      var datos = jsonDecode(response.body);
+      var registros = List<UserHistory>();
+
+      for(datos in datos){
+        registros.add(UserHistory.fromJson(datos));
+      }
+
+      return registros;
+    }
+    catch(error){
+      print(error);
+      return null;
+    }
+  }
+}
+
+class UserProfileRepository{
+  Future<User> obtener_datos_usuario(User user) async{
+    try{
+
+      String url=directionUrl+"v1/user/1";
+
+      var response = await http.get(url, //ip for virtualized devices
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+      var user2=jsonDecode(response.body);
+      // print(singleDriver2);
+      user.ci=(user2["ci"]);
+      user.firstname=(user2["firstName"]);
+      user.firstsurname=(user2["firstSurname"]);
+      user.secondsurname=(user2["secondSurname"]);
+      user.birthdate=(user2["birthDate"]);
+      user.phone=(user2["phone"]);
+      user.email=(user2["email"]);
+      user.password=(user2["password"]);
+      user.number=(user2["number"]);
+      user.street=(user2["street"]);
+      user.zone=(user2["zone"]);
+      user.city=(user2["city"]);
+      user.country=(user2["country"]);
+
+      if(response.statusCode == 200){
+        print("Done Profile");
+        return user;
+      }else{
         return null;
       }
     }

@@ -7,7 +7,7 @@ import 'package:transveloz_frontend/models/VehicleModel.dart';
 import 'package:transveloz_frontend/repository/url.dart';
 class VehicleRepository{
 
-  
+
   Future<List<VehicleModel>>getData() async{
     try{
       var url=directionUrl+"v1/vehicle";
