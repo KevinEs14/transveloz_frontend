@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:transveloz_frontend/models/LogIn.dart';
 import 'package:transveloz_frontend/models/User.dart';
@@ -7,6 +8,26 @@ import 'package:transveloz_frontend/models/UserHistoryPayment.dart';
 import 'package:transveloz_frontend/repository/url.dart';
 
 class UserRepository{
+
+  Future<bool> updateImage(File image, int id) async{
+    try{
+      var url =Uri.parse(directionUrl+"v1/user/"+id.toString()+"/image") ;
+      var res = http.MultipartRequest('PUT',url);
+      res.files.add(await http.MultipartFile.fromPath("image", image.path));
+      var response = await res.send();
+
+      if(response.statusCode == 200){
+        print("Done Image");
+        return true;
+      }else{
+        return false;
+      }
+    }
+    catch(error){
+      print(error);
+      return false;
+    }
+  }
 
   Future<bool> createUser(User user) async{
     try{

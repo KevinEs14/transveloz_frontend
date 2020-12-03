@@ -58,11 +58,11 @@ class _DriverRegisterAddress extends State<DriverRegisterAddress>{
                 height: size.height,
                 width: size.width,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/fondoRegistro.jpg'),
-                        fit: BoxFit.fill
-                    )
-                ),
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/fondoRegistro.jpg'),
+                      fit: BoxFit.fill
+                  )
+              ),
               ),
               Column(
                 children: [

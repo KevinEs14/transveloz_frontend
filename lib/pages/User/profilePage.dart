@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/User.dart';
+import 'package:transveloz_frontend/pages/User/userImage.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 
@@ -146,7 +147,9 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                           height: 25.0,
                           //color: color5,
                           child: FlatButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserImage()));
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
