@@ -196,7 +196,6 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                             },
                                           ),
                                           MenuItem(
-
                                             icon: Icons.add_circle_outline_sharp,
                                             title: "Add User",
                                             onTap: () {
@@ -204,6 +203,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                               BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.UserRegisterClickedEvent);
                                             },
                                           ),
+                                          MenuItem(
+                                            icon: Icons.restore_page,
+                                            title: "Reportes",
+                                            onTap: () {
+                                              onIconPressed();
+                                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ReportServicesClickedEvent);
+                                            },
+                                          ),
+
                                           Divider(
                                             height: 50,
                                             thickness: 0.5,

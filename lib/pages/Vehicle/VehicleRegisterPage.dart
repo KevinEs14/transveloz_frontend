@@ -127,6 +127,7 @@ class _VehicleRegisterPage extends State<VehicleRegisterPage>{
                         width: size.width*0.82,
                         padding: EdgeInsets.all(1),
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           decoration:InputDecoration(
                             fillColor: Color(0xFFEEEBD3),
                             filled: true,
@@ -176,8 +177,6 @@ class _VehicleRegisterPage extends State<VehicleRegisterPage>{
                             setState(() {
                               _nameTypeVehicle = newValue;
                               vehicleType = newValue;
-
-
                             });
                           },
                           items: _itemsTypeVehicle.map((newValue){
@@ -194,7 +193,9 @@ class _VehicleRegisterPage extends State<VehicleRegisterPage>{
                         width: size.width*0.82,
                         padding: EdgeInsets.all(1),
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           decoration:InputDecoration(
+
                             fillColor: Color(0xFFEEEBD3),
                             filled: true,
                             prefixText: "    ",
