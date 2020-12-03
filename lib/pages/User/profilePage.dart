@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/User.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
@@ -18,6 +19,8 @@ class ProfilePageDesign extends StatefulWidget with NavigationStates {
 class _ProfilePageDesignState extends State<ProfilePageDesign>{
 
   int userId;
+  DateTime fechaNacimiento;
+  List fechaList = [2020,01,01];
   User user = User();
   TextEditingController ci = TextEditingController();
   TextEditingController firstName = TextEditingController();
@@ -38,11 +41,14 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
     setState(() {
       user.userId=userId;
       print("Se Muestra el Id: "+user.userId.toString());
+      fechaNacimiento = DateTime.parse(user.birthdate.toString());
+      var formatter = new DateFormat("yyyy-MM-dd");
+      String formattedDate = formatter.format(fechaNacimiento);
       ci.text = user.ci.toString();
       firstName.text = user.firstname.toString();
       firstSurname.text = user.firstsurname.toString();
       secondSurname.text = user.secondsurname.toString();
-      birthDate.text = user.birthdate.toString();
+      birthDate.text = formattedDate;
       phone.text = user.phone.toString();
       email.text = user.email.toString();
       password.text = user.password.toString();
@@ -51,15 +57,13 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
       zone.text = user.zone.toString();
       city.text = user.city.toString();
       country.text = user.country.toString();
+      fechaList = formattedDate.split("-");
     });
   }
 
   SharedPreferences userProfile;
   _initSharedPreferences() async{
     userProfile = await SharedPreferences.getInstance();
-    //print("Sidebar");
-    //print("entro ${user2.firstsurname.toString()}");
-    //print(user.getInt("id").toString());
     userId = userProfile.getInt("id");
     user = await userRepository.obtener_datos_usuario(user, userId);
     MostrarDatosUsuario();
@@ -67,15 +71,16 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
   @override
   void initState(){
     // TODO: implement initState
-
     super.initState();
     _initSharedPreferences();
     print("Sidebar");
+
   }
 
   @override
   Widget build(BuildContext context) {
   print("EL Id user es correcot: "+user.userId.toString());
+  //var now = new DateTime.now();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -195,10 +200,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                   ),
                                 ]
                             ),),
-                            //fet = fechaUser.split("-"),
-                            //dia = fet[0].trim(),
-                            //List split(Pattern pattern){},
-                            Text("01", style: TextStyle(
+                            Text(fechaList[2].toString(), style: TextStyle(
                               color: color2,
                               fontSize: 28,
                             ),),
@@ -218,7 +220,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                   ),
                                 ]
                             ),),
-                            Text("01", style: TextStyle(
+                            Text(fechaList[1].toString(), style: TextStyle(
                               color: color2,
                               fontSize: 28,
                             ),),
@@ -238,7 +240,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                   ),
                                 ]
                             ),),
-                            Text("2020", style: TextStyle(
+                            Text(fechaList[0].toString(), style: TextStyle(
                               color: color2,
                               fontSize: 28,
                             ),),
@@ -620,14 +622,11 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                                               userRepository.updateUser(user);
                                               //Navigator.of(context).pop();
                                               Navigator.push(context, MaterialPageRoute(builder: (context)=> UserSideBarLayout()));
-                                              print("Entro al if ");
+                                              print("Se Guardo los datos ");
                                             }else{
-                                              print("No entro al if ");
+                                              print("No Se Guardo los datos ");
                                             }
-
                                           },
-                                          //onTap: (){
-                                          //},
                                         ),
                                         FlatButton(
                                           child: Text("Cancelar", style: TextStyle(color: Colors.red, fontSize: 18),),

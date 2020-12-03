@@ -1,10 +1,11 @@
 
 class UserHistoryPayment{
+  String _driverFirstName;
+  String _driverFirstSurname;
+  String _driverSecondSurname;
   String _datePayment;
   String _paymentStatus;
   double _amount;
-  String _driverFirstName;
-  String _driverFirstSurname;
   String _startStreet;
   String _startZone;
   String _startCity;
@@ -13,55 +14,14 @@ class UserHistoryPayment{
   String _deliveryZone;
   String _deliveryCity;
   String _deliveryCountry;
+  String _driverPicture;
 
-  UserHistoryPayment(this._datePayment,this._paymentStatus,this._amount,this._driverFirstName,this._driverFirstSurname,this._startStreet,this._deliveryStreet);
+  UserHistoryPayment(this._driverFirstName,this._driverFirstSurname,this._driverSecondSurname,this._datePayment,this._paymentStatus,this._amount,this._startStreet,this._startZone,this._startCity,this._startCountry,this._deliveryStreet,this._deliveryZone,this._deliveryCity,this._deliveryCountry,this._driverPicture);
 
-  String get deliveryCountry => _deliveryCountry;
+  String get driverFirstName => _driverFirstName;
 
-  set deliveryCountry(String value) {
-    _deliveryCountry = value;
-  }
-
-  String get deliveryCity => _deliveryCity;
-
-  set deliveryCity(String value) {
-    _deliveryCity = value;
-  }
-
-  String get deliveryZone => _deliveryZone;
-
-  set deliveryZone(String value) {
-    _deliveryZone = value;
-  }
-
-  String get deliveryStreet => _deliveryStreet;
-
-  set deliveryStreet(String value) {
-    _deliveryStreet = value;
-  }
-
-  String get startCountry => _startCountry;
-
-  set startCountry(String value) {
-    _startCountry = value;
-  }
-
-  String get startCity => _startCity;
-
-  set startCity(String value) {
-    _startCity = value;
-  }
-
-  String get startZone => _startZone;
-
-  set startZone(String value) {
-    _startZone = value;
-  }
-
-  String get startStreet => _startStreet;
-
-  set startStreet(String value) {
-    _startStreet = value;
+  set driverFirstName(String value) {
+    _driverFirstName = value;
   }
 
   String get driverFirstSurname => _driverFirstSurname;
@@ -70,16 +30,16 @@ class UserHistoryPayment{
     _driverFirstSurname = value;
   }
 
-  String get driverFirstName => _driverFirstName;
+  String get driverSecondSurname => _driverSecondSurname;
 
-  set driverFirstName(String value) {
-    _driverFirstName = value;
+  set driverSecondSurname(String value) {
+    _driverSecondSurname = value;
   }
 
-  double get amount => _amount;
+  String get datePayment => _datePayment;
 
-  set amount(double value) {
-    _amount = value;
+  set datePayment(String value) {
+    _datePayment = value;
   }
 
   String get paymentStatus => _paymentStatus;
@@ -88,19 +48,83 @@ class UserHistoryPayment{
     _paymentStatus = value;
   }
 
-  String get datePayment => _datePayment;
+  double get amount => _amount;
 
-  set datePayment(String value) {
-    _datePayment = value;
+  set amount(double value) {
+    _amount = value;
   }
+
+  String get startStreet => _startStreet;
+
+  set startStreet(String value) {
+    _startStreet = value;
+  }
+
+  String get startZone => _startZone;
+
+  set startZone(String value) {
+    _startZone = value;
+  }
+
+  String get startCity => _startCity;
+
+  set startCity(String value) {
+    _startCity = value;
+  }
+
+  String get startCountry => _startCountry;
+
+  set startCountry(String value) {
+    _startCountry = value;
+  }
+
+  String get deliveryStreet => _deliveryStreet;
+
+  set deliveryStreet(String value) {
+    _deliveryStreet = value;
+  }
+
+  String get deliveryZone => _deliveryZone;
+
+  set deliveryZone(String value) {
+    _deliveryZone = value;
+  }
+
+  String get deliveryCity => _deliveryCity;
+
+  set deliveryCity(String value) {
+    _deliveryCity = value;
+  }
+
+  String get deliveryCountry => _deliveryCountry;
+
+  set deliveryCountry(String value) {
+    _deliveryCountry = value;
+  }
+
+  String get driverPicture => _driverPicture;
+
+  set driverPicture(String value) {
+    _driverPicture = value;
+  }
+
+
   UserHistoryPayment.fromJson(Map<String, dynamic> json){
+    driverFirstName = json['driverFirstName'];
+    driverFirstSurname = json['driverFirstSurname'];
+    driverSecondSurname = json['driverSecondSurname'];
     datePayment = json['datePayment'];
     paymentStatus = json['paymentStatus'];
     amount = json['amount'];
-    driverFirstName = json['driverFirstName'];
-    driverFirstSurname = json['driverFirstSurname'];
     startStreet = json['startStreet'];
+    startZone = json['startZone'];
+    startCity = json['startCity'];
+    startCountry = json['startCountry'];
     deliveryStreet = json['deliveryStreet'];
+    deliveryZone = json['deliveryZone'];
+    deliveryCity = json['deliveryCity'];
+    deliveryCountry = json['deliveryCountry'];
+    driverPicture = json['driverPicture'];
   }
 
 }
