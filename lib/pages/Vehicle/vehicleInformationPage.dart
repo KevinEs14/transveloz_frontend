@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transveloz_frontend/models/CardCollection.dart';
 import 'package:transveloz_frontend/models/SingleDriver.dart';
+import 'package:transveloz_frontend/repository/card_collection_repository.dart';
 import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 
 import '../../color.dart';
@@ -24,16 +26,25 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   SingleDriver singleDriver=SingleDriver();
   SingleDriver singleDriver2=SingleDriver();
   SingleDriver singleDriver3=SingleDriver();
+  CardCollection cardCollection=CardCollection();
+  CardCollection _value=CardCollection();
+  List<CardCollection> cardCollection2=List<CardCollection>();
+  List<CardCollection> listaCard=List<CardCollection>();
   var estado="";var nombre="";var apellido="";var capacidad=""; var tipo=""; var marca=""; var modelo="";var precio="";
   SingleDriverRepository vehiclerepository=SingleDriverRepository();
+  CardCollectionRepository cardCollectionRepository=CardCollectionRepository();
   Size size;
   var userId="";
   // singleDriver.vehicleId=vehicleId;
   ObtenerDatos()async{
     singleDriver.vehicleId=vehicleId;
     singleDriver3=await vehiclerepository.obtainVehicle(singleDriver);
+    cardCollection.userId=int.parse(userId);
+    cardCollection2=await cardCollectionRepository.obtainListCard(cardCollection);
+    // print(cardCollection2[0].accountNumber);
+    // print(cardCollection2[1].accountNumber);
     setState(()  {
-      userId=user.getInt("id").toString();
+
       singleDriver2=singleDriver3;
       nombre=singleDriver2.personFirstName.toString();
       apellido=singleDriver2.personFirstSurname.toString();
@@ -49,6 +60,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
   SharedPreferences user;
   _initSharedPreferences() async{
     user = await SharedPreferences.getInstance();
+    userId=user.getInt("id").toString();
     // print("Sidebar");
     // print(user.getInt("id").toString());
   }
@@ -120,7 +132,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                         children: [
                           Text("Capacidad: ",style: TextStyle(color: color1,fontSize: size.height*0.025),),
                           Text("$capacidad",style: TextStyle(color: color3,fontSize: size.height*0.025),),
-                          Text(" toneladas",style: TextStyle(color: color3,fontSize: size.height*0.025),),
+                          Text(" ton",style: TextStyle(color: color3,fontSize: size.height*0.025),),
                         ],
                       ),
                       SizedBox(height: 10,),
@@ -196,7 +208,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                         //     content: SingleChildScrollView(
                         //         child:ListBody(
                         //           children: [
-                        //             Text('Ganaste!! Vuelve pronto. Tu score fue de '),
+                        //             Text('Necesitas registrar una tarjeta '),
                         //             TextField(
                         //               decoration: InputDecoration(
                         //                 fillColor: Color(0xFFEEEBD3),
@@ -356,105 +368,42 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                             content: SingleChildScrollView(
                                 child:ListBody(
                                   children: [
-                                    Text("Llene los siguientes datos para realizar el pago"),
-                                    TextField(
-                                      decoration: InputDecoration(
-                                        fillColor: Color(0xFFEEEBD3),
-                                        filled: true,
-                                        prefixText: "    ",
-                                        border: InputBorder.none,
-                                        hintText: "Fecha",
-                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                            borderSide: BorderSide(
-                                                color: color2,
-                                                width: 5
-                                            )
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                                        ),
+                                    Text("¿Está seguro de realizar el pago por $precio bs?"),
+                                    Container(
+                                      padding: EdgeInsets.only(left:16,right: 16),
+                                      decoration: BoxDecoration(
+                                        color: color4,
+                                        border: Border.all(color: color4, width: 2.0),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ),
-                                    TextField(
-                                      decoration: InputDecoration(
-                                        fillColor: Color(0xFFEEEBD3),
-                                        filled: true,
-                                        prefixText: "    ",
-                                        border: InputBorder.none,
-                                        hintText: "Pin",
-                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                            borderSide: BorderSide(
-                                                color: color2,
-                                                width: 5
-                                            )
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                                        ),
-                                      ),
-                                    ),
-                                    TextField(
-                                      decoration: InputDecoration(
-                                        fillColor: Color(0xFFEEEBD3),
-                                        filled: true,
-                                        prefixText: "    ",
-                                        border: InputBorder.none,
-                                        hintText: "Banco",
-                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                            borderSide: BorderSide(
-                                                color: color2,
-                                                width: 5
-                                            )
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                                        ),
-                                      ),
-                                    ),
-                                    TextField(
-                                      decoration: InputDecoration(
-                                        fillColor: Color(0xFFEEEBD3),
-                                        filled: true,
-                                        prefixText: "    ",
-                                        border: InputBorder.none,
-                                        hintText: "Tipo de cuenta",
-                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                            borderSide: BorderSide(
-                                                color: color2,
-                                                width: 5
-                                            )
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                                        ),
-                                      ),
-                                    ),
-                                    TextField(
-                                      decoration: InputDecoration(
-                                        fillColor: Color(0xFFEEEBD3),
-                                        filled: true,
-                                        prefixText: "    ",
-                                        border: InputBorder.none,
-                                        hintText: "Codigo CVV",
-                                        hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(24)),
-                                            borderSide: BorderSide(
-                                                color: color2,
-                                                width: 5
-                                            )
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                                        ),
+                                      child: DropdownButton(
+
+                                        dropdownColor: color4,
+                                        elevation: 5,
+                                        value: _value.accountNumber,
+                                        iconEnabledColor: color1,
+
+                                        hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
+                                        onChanged: (newValue){
+                                          setState(() {
+                                            _value = cardCollection2.firstWhere((element) {
+                                              if(element.accountNumber==newValue){
+                                                return true;
+                                              }
+                                              else{
+                                                return false;
+                                              }
+                                            });
+
+                                          });
+                                          print(_value.accountNumber);
+                                        },
+                                        items: cardCollection2.map((newValue){
+                                          return DropdownMenuItem(
+                                            value: newValue.accountNumber,
+
+                                            child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
+                                        }).toList(),
                                       ),
                                     ),
 
@@ -481,7 +430,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                                 Color(0xff121212)]
                                           ),
                                         ),
-                                        child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                        child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
                                       ),
                                     ),
                                     SizedBox(width: size.width*0.04,),
