@@ -60,9 +60,10 @@ class UserRepository{
     }
   }
 
-  Future<List<UserHistory>> tomar_datos(int fid) async{
+  Future<List<UserHistory>> tomar_datos(int id) async{
     try{
-      var url = directionUrl+"v1/user/1/payment";
+      print("UserId: "+id.toString());
+      var url = directionUrl+"v1/user/"+id.toString()+"/payment";
       print(url);
       var response = await   http.get(url,
           headers: <String, String>{
@@ -86,11 +87,10 @@ class UserRepository{
 }
 
 class UserProfileRepository{
-  Future<User> obtener_datos_usuario(User user) async{
+  Future<User> obtener_datos_usuario(User user,int userId) async{
     try{
-
-      String url=directionUrl+"v1/user/1";
-
+      print("UserId Profile: "+userId.toString());
+      String url=directionUrl+"v1/user/"+userId.toString();
       var response = await http.get(url, //ip for virtualized devices
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',

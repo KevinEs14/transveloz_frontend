@@ -2,6 +2,14 @@
 import 'package:flutter/material.dart';
 
 class User{
+  int _userId;
+
+  int get userId => _userId;
+
+  set userId(int value) {
+    _userId = value;
+  }
+
   String _ci;
   String _firstname;
   String _firstsurname;
