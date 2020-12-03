@@ -139,12 +139,8 @@ class _UserSideBarState extends State<UserSideBar> with SingleTickerProviderStat
                                     ),
                                   ),
                                   leading: CircleAvatar(
+                                    backgroundImage: user1.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(user1.picture.toString())),
                                     backgroundColor: color1,
-                                    child: Icon(
-                                      Icons.perm_identity,
-                                      color: color2,
-                                      size: 30,
-                                    ),
                                     radius: size.width*0.07,
                                   ),
                                 ),

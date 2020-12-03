@@ -37,6 +37,7 @@ class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
   TextEditingController country = TextEditingController();
   DriverRepository driverRepository = DriverRepository();
   Size size;
+  int companyId;
   MostrarDatosDriver()async{
     setState(() {
       driver.driverId=driverId;
@@ -44,6 +45,8 @@ class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
       fNacimiento = DateTime.parse(driver.birthdate.toString());
       var formatter = new DateFormat("yyyy-MM-dd");
       String formattedDate = formatter.format(fNacimiento);
+      companyId = 1;
+      driver.companyId=companyId;
       ci.text = driver.ci.toString();
       firstName.text = driver.firstname.toString();
       firstSurname.text = driver.firstsurname.toString();
@@ -87,7 +90,7 @@ class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
             ClipPath(
               clipper: MyClipper(),
               child: Container(
-                height: 272,
+                height: 276,
                 decoration: BoxDecoration(
                     color: color9,
                     boxShadow: [
@@ -100,19 +103,17 @@ class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 30.0),
+                    SizedBox(height: 35.0),
                     Row(
                       children: [
-                        SizedBox(width: 26.0),
+                        SizedBox(width: 28.0),
                         Container(
-                          width: 68,
+                          width: 65,
                           height: 68,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(imperfil)
-                              )
+                          child: CircleAvatar(
+                            backgroundColor: color5,
+                            foregroundColor: color5,
+                            backgroundImage: driver.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(driver.picture.toString())),
                           ),
                         ),
                         SizedBox(width: 10.0),
@@ -906,6 +907,9 @@ class _ProfileDriverPageDesignState extends State<ProfileDriverPageDesign>{
       driver.zone=zone.text;
       driver.city=city.text;
       driver.country=country.text;
+      driver.companyId=companyId;
+      print("CompaniaId = "+driver.companyId.toString());
+      print("CompaniaId SIII= "+companyId.toString());
     }else{
       aux = false;
     }

@@ -139,21 +139,22 @@ class DriverRepository{
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           });
-      var user2=jsonDecode(response.body);
+      var driver2=jsonDecode(response.body);
       // print(singleDriver2);
-      driver.ci=(user2["ci"]);
-      driver.firstname=(user2["firstName"]);
-      driver.firstsurname=(user2["firstSurname"]);
-      driver.secondsurname=(user2["secondSurname"]);
-      driver.birthdate=(user2["birthDate"]);
-      driver.phone=(user2["phone"]);
-      driver.email=(user2["email"]);
-      driver.password=(user2["password"]);
-      driver.number=(user2["number"]);
-      driver.street=(user2["street"]);
-      driver.zone=(user2["zone"]);
-      driver.city=(user2["city"]);
-      driver.country=(user2["country"]);
+      driver.ci=(driver2["ci"]);
+      driver.firstname=(driver2["firstName"]);
+      driver.firstsurname=(driver2["firstSurname"]);
+      driver.secondsurname=(driver2["secondSurname"]);
+      driver.birthdate=(driver2["birthDate"]);
+      driver.phone=(driver2["phone"]);
+      driver.email=(driver2["email"]);
+      driver.password=(driver2["password"]);
+      driver.number=(driver2["number"]);
+      driver.street=(driver2["street"]);
+      driver.zone=(driver2["zone"]);
+      driver.city=(driver2["city"]);
+      driver.country=(driver2["country"]);
+      driver.picture=(driver2["picture"]);
 
       if(response.statusCode == 200){
         print("Done Profile Driver");
@@ -175,7 +176,7 @@ class DriverRepository{
           },
           body: jsonEncode(driver.toJsonUp()));
       if(res.statusCode == 200){
-        print("Done Update");
+        print("Done Update Driver");
         return true;
       }else{
         return false;

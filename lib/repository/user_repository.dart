@@ -126,6 +126,7 @@ class UserRepository{
       user.zone=(user2["zone"]);
       user.city=(user2["city"]);
       user.country=(user2["country"]);
+      user.picture=(user2["picture"]);
 
       if(response.statusCode == 200){
         print("Done Profile");

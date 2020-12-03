@@ -23,6 +23,7 @@ class Driver{
   String _city;
   String _country;
   int _companyId;
+  String _picture;
 
   Driver();
 
@@ -111,6 +112,13 @@ class Driver{
     _companyId = value;
   }
 
+
+  String get picture => _picture;
+
+  set picture(String value) {
+    _picture = value;
+  }
+
   Map toJson()=>{
     "ci":ci,
     "firstName": firstname,
@@ -129,6 +137,7 @@ class Driver{
   };
   Map toJsonUp() => {
     "driverId":driverId,
+    "companyId":companyId,
     "ci":ci,
     "firstName": firstname,
     "firstSurname": firstsurname,

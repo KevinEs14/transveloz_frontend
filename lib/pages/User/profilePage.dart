@@ -80,7 +80,6 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
   @override
   Widget build(BuildContext context) {
   print("EL Id user es correcot: "+user.userId.toString());
-  //var now = new DateTime.now();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -88,7 +87,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
             ClipPath(
               clipper: MyClipper(),
               child: Container(
-                height: 272,
+                height: 276,
                 decoration: BoxDecoration(
                     color: color1,
                     boxShadow: [
@@ -101,19 +100,17 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 30.0),
+                    SizedBox(height: 35.0),
                     Row(
                       children: [
-                        SizedBox(width: 26.0),
+                        SizedBox(width: 28.0),
                         Container(
-                          width: 68,
+                          width: 65,
                           height: 68,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(imperfil)
-                              )
+                          child: CircleAvatar(
+                            backgroundColor: color5,
+                            foregroundColor: color5,
+                            backgroundImage: user.picture==null?(AssetImage("assets/images/fotoperfil.png")):(NetworkImage(user.picture.toString())),
                           ),
                         ),
                         SizedBox(width: 10.0),
