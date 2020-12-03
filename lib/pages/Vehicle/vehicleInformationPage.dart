@@ -203,266 +203,267 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                     SizedBox(width: size.width*0.15,),
                     RaisedButton(
                       onPressed: (){
-                        // showDialog(context: context,barrierDismissible: false,builder: (context){
-                        //   return AlertDialog(
-                        //     content: SingleChildScrollView(
-                        //         child:ListBody(
-                        //           children: [
-                        //             Text('Necesitas registrar una tarjeta '),
-                        //             TextField(
-                        //               decoration: InputDecoration(
-                        //                 fillColor: Color(0xFFEEEBD3),
-                        //                 filled: true,
-                        //                 prefixText: "    ",
-                        //                 border: InputBorder.none,
-                        //                 hintText: "Numero de cuenta",
-                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                        //                 enabledBorder: OutlineInputBorder(
-                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                     borderSide: BorderSide(
-                        //                         color: color2,
-                        //                         width: 5
-                        //                     )
-                        //                 ),
-                        //                 focusedBorder: OutlineInputBorder(
-                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             TextField(
-                        //               decoration: InputDecoration(
-                        //                 fillColor: Color(0xFFEEEBD3),
-                        //                 filled: true,
-                        //                 prefixText: "    ",
-                        //                 border: InputBorder.none,
-                        //                 hintText: "Pin",
-                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                        //                 enabledBorder: OutlineInputBorder(
-                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                     borderSide: BorderSide(
-                        //                         color: color2,
-                        //                         width: 5
-                        //                     )
-                        //                 ),
-                        //                 focusedBorder: OutlineInputBorder(
-                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             TextField(
-                        //               decoration: InputDecoration(
-                        //                 fillColor: Color(0xFFEEEBD3),
-                        //                 filled: true,
-                        //                 prefixText: "    ",
-                        //                 border: InputBorder.none,
-                        //                 hintText: "Banco",
-                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                        //                 enabledBorder: OutlineInputBorder(
-                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                     borderSide: BorderSide(
-                        //                         color: color2,
-                        //                         width: 5
-                        //                     )
-                        //                 ),
-                        //                 focusedBorder: OutlineInputBorder(
-                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             TextField(
-                        //               decoration: InputDecoration(
-                        //                 fillColor: Color(0xFFEEEBD3),
-                        //                 filled: true,
-                        //                 prefixText: "    ",
-                        //                 border: InputBorder.none,
-                        //                 hintText: "Tipo de cuenta",
-                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                        //                 enabledBorder: OutlineInputBorder(
-                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                     borderSide: BorderSide(
-                        //                         color: color2,
-                        //                         width: 5
-                        //                     )
-                        //                 ),
-                        //                 focusedBorder: OutlineInputBorder(
-                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             TextField(
-                        //               decoration: InputDecoration(
-                        //                 fillColor: Color(0xFFEEEBD3),
-                        //                 filled: true,
-                        //                 prefixText: "    ",
-                        //                 border: InputBorder.none,
-                        //                 hintText: "Codigo CVV",
-                        //                 hintStyle: TextStyle(color: color1.withOpacity(0.7)),
-                        //                 enabledBorder: OutlineInputBorder(
-                        //                     borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                     borderSide: BorderSide(
-                        //                         color: color2,
-                        //                         width: 5
-                        //                     )
-                        //                 ),
-                        //                 focusedBorder: OutlineInputBorder(
-                        //                   borderRadius: BorderRadius.all(Radius.circular(24)),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //
-                        //           ],
-                        //         )
-                        //     ),
-                        //     actions: <Widget>[
-                        //       Container(
-                        //         child: Row(
-                        //           children: <Widget>[
-                        //             GestureDetector(
-                        //               onTap: () {
-                        //                 Navigator.pop(context);
-                        //               },
-                        //               child: Container(
-                        //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                        //                 height: size.height*0.05,
-                        //                 width: size.width*0.2,
-                        //                 decoration: BoxDecoration(
-                        //                   borderRadius: BorderRadius.circular(10.0),
-                        //                   gradient: LinearGradient(
-                        //                       colors: [
-                        //                         Color(0xff121212),color6,
-                        //                         Color(0xff121212)]
-                        //                   ),
-                        //                 ),
-                        //                 child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                        //               ),
-                        //             ),
-                        //             SizedBox(width: size.width*0.04,),
-                        //             GestureDetector(
-                        //               onTap: () {
-                        //                 Navigator.pop(context);
-                        //               },
-                        //               child: Container(
-                        //                 // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                        //                 height: size.height*0.05,
-                        //                 width: size.width*0.2,
-                        //                 decoration: BoxDecoration(
-                        //                   borderRadius: BorderRadius.circular(10.0),
-                        //                   gradient: LinearGradient(
-                        //                       colors: [
-                        //                         Color(0xff121212),color1,
-                        //                         Color(0xff121212)]
-                        //                   ),
-                        //                 ),
-                        //                 child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       )
-                        //     ],
-                        //   );
-                        // }
-
-                        showDialog(context: context,barrierDismissible: false,builder: (context){
-                          return AlertDialog(
-                            content: SingleChildScrollView(
-                                child:ListBody(
-                                  children: [
-                                    Text("¿Está seguro de realizar el pago por $precio bs?"),
-                                    Container(
-                                      padding: EdgeInsets.only(left:16,right: 16),
-                                      decoration: BoxDecoration(
-                                        color: color4,
-                                        border: Border.all(color: color4, width: 2.0),
-                                        borderRadius: BorderRadius.circular(10),
+                        if(cardCollection2.isEmpty){
+                          showDialog(context: context,barrierDismissible: false,builder: (context){
+                            return AlertDialog(
+                              content: SingleChildScrollView(
+                                  child:ListBody(
+                                    children: [
+                                      Text('Necesitas registrar una tarjeta '),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Numero de cuenta",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
                                       ),
-                                      child: DropdownButton(
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Pin",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Banco",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Tipo de cuenta",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                      ),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          fillColor: Color(0xFFEEEBD3),
+                                          filled: true,
+                                          prefixText: "    ",
+                                          border: InputBorder.none,
+                                          hintText: "Codigo CVV",
+                                          hintStyle: TextStyle(color: color1.withOpacity(0.7)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(24)),
+                                              borderSide: BorderSide(
+                                                  color: color2,
+                                                  width: 5
+                                              )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                                          ),
+                                        ),
+                                      ),
 
-                                        dropdownColor: color4,
-                                        elevation: 5,
-                                        value: _value.accountNumber,
-                                        iconEnabledColor: color1,
-
-                                        hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
-                                        onChanged: (newValue){
-                                          setState(() {
-                                            _value = cardCollection2.firstWhere((element) {
-                                              if(element.accountNumber==newValue){
-                                                return true;
-                                              }
-                                              else{
-                                                return false;
-                                              }
-                                            });
-
-                                          });
-                                          print(_value.accountNumber);
+                                    ],
+                                  )
+                              ),
+                              actions: <Widget>[
+                                Container(
+                                  child: Row(
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
                                         },
-                                        items: cardCollection2.map((newValue){
-                                          return DropdownMenuItem(
-                                            value: newValue.accountNumber,
-
-                                            child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
-                                        }).toList(),
+                                        child: Container(
+                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                          height: size.height*0.05,
+                                          width: size.width*0.2,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xff121212),color6,
+                                                  Color(0xff121212)]
+                                            ),
+                                          ),
+                                          child: Center(child: Text("Agregar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                        ),
                                       ),
-                                    ),
-
-                                  ],
+                                      SizedBox(width: size.width*0.04,),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                          height: size.height*0.05,
+                                          width: size.width*0.2,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xff121212),color1,
+                                                  Color(0xff121212)]
+                                            ),
+                                          ),
+                                          child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 )
-                            ),
-                            actions: <Widget>[
-                              Container(
-                                child: Row(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                        // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                        height: size.height*0.05,
-                                        width: size.width*0.2,
+                              ],
+                            );
+                          }
+                          );
+                        }else{
+                          showDialog(context: context,barrierDismissible: false,builder: (context){
+                            return AlertDialog(
+                              content: SingleChildScrollView(
+                                  child:ListBody(
+                                    children: [
+                                      Text("¿Está seguro de realizar el pago por $precio bs?"),
+                                      Container(
+                                        padding: EdgeInsets.only(left:16,right: 16),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff121212),color6,
-                                                Color(0xff121212)]
-                                          ),
+                                          color: color4,
+                                          border: Border.all(color: color4, width: 2.0),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
-                                        child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
-                                      ),
-                                    ),
-                                    SizedBox(width: size.width*0.04,),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                        // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
-                                        height: size.height*0.05,
-                                        width: size.width*0.2,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xff121212),color1,
-                                                Color(0xff121212)]
-                                          ),
+                                        child: DropdownButton(
+
+                                          dropdownColor: color4,
+                                          elevation: 5,
+                                          value: _value.accountNumber,
+                                          iconEnabledColor: color1,
+
+                                          hint: Text("Seleccione un opción", style: TextStyle(color: color1),),
+                                          onChanged: (newValue){
+                                            setState(() {
+                                              _value = cardCollection2.firstWhere((element) {
+                                                if(element.accountNumber==newValue){
+                                                  return true;
+                                                }
+                                                else{
+                                                  return false;
+                                                }
+                                              });
+
+                                            });
+                                            print(_value.accountNumber);
+                                          },
+                                          items: cardCollection2.map((newValue){
+                                            return DropdownMenuItem(
+                                              value: newValue.accountNumber,
+
+                                              child: Text(newValue.accountNumber, style: TextStyle(color: color1)),);
+                                          }).toList(),
                                         ),
-                                        child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+
+                                    ],
+                                  )
+                              ),
+                              actions: <Widget>[
+                                Container(
+                                  child: Row(
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                          height: size.height*0.05,
+                                          width: size.width*0.2,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xff121212),color6,
+                                                  Color(0xff121212)]
+                                            ),
+                                          ),
+                                          child: Center(child: Text("Pagar",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                        ),
+                                      ),
+                                      SizedBox(width: size.width*0.04,),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          // margin: EdgeInsets.only(left: size.width*0.2,right: size.width*0.2),
+                                          height: size.height*0.05,
+                                          width: size.width*0.2,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xff121212),color1,
+                                                  Color(0xff121212)]
+                                            ),
+                                          ),
+                                          child: Center(child: Text("Volver",style: TextStyle(fontSize:size.width*0.04,color: Colors.white,fontWeight: FontWeight.bold),)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            );
+                          }
                           );
                         }
-                        );
-
                         // Navigator.pop(context);
-
                       },
                       color: color6,
                       padding: EdgeInsets.only(top: 10,bottom: 10,left: 15,right: 15),
@@ -553,3 +554,15 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
     );
   }
 }
+class AlertPago extends StatefulWidget {
+  @override
+  _AlertPagoState createState() => _AlertPagoState();
+}
+
+class _AlertPagoState extends State<AlertPago> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
