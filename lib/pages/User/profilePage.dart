@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transveloz_frontend/models/User.dart';
 import 'package:transveloz_frontend/repository/user_repository.dart';
+import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 
 import '../../bloc.navigation_bloc/navigation_bloc.dart';
 import '../../color.dart';
@@ -18,8 +19,6 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
 
   int userId;
   User user = User();
-  //User user2 = User();
-  //User user3 = User();
   TextEditingController ci = TextEditingController();
   TextEditingController firstName = TextEditingController();
   TextEditingController firstSurname = TextEditingController();
@@ -27,36 +26,27 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
   TextEditingController birthDate = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController number = TextEditingController();
   TextEditingController street = TextEditingController();
   TextEditingController zone = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController country = TextEditingController();
-  //TextEditingController firstName = TextEditingController();
-  //var ci="";var firstName="";var firstSurname="";var secondSurname="";var birthDate="";
-  //var phone="";var email="";var password="";var number="";var street="";
-  //var zone="";var city=""; var country="";
-  UserProfileRepository userProfileRepository = UserProfileRepository();
-
+  UserRepository userRepository = UserRepository();
   Size size;
   MostrarDatosUsuario()async{
     setState(() {
-      //ci=user.ci.toString();
-      //firstName=user.firstname.toString();
-      //firstSurname=user.firstsurname.toString();
-      //secondSurname=user.secondsurname.toString();
-      //birthDate=user.birthdate.toString();
-      //phone=user.phone.toString();
-      //email=user.email.toString();
-      //street=user.street.toString();
-      //zone=user.zone.toString();
-      //city=user.city.toString();
-      //country=user.country.toString();
+      user.userId=userId;
+      print("Se Muestra el Id: "+user.userId.toString());
       ci.text = user.ci.toString();
       firstName.text = user.firstname.toString();
       firstSurname.text = user.firstsurname.toString();
       secondSurname.text = user.secondsurname.toString();
       birthDate.text = user.birthdate.toString();
       phone.text = user.phone.toString();
+      email.text = user.email.toString();
+      password.text = user.password.toString();
+      number.text = user.number.toString();
       street.text = user.street.toString();
       zone.text = user.zone.toString();
       city.text = user.city.toString();
@@ -71,7 +61,7 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
     //print("entro ${user2.firstsurname.toString()}");
     //print(user.getInt("id").toString());
     userId = userProfile.getInt("id");
-    user = await userProfileRepository.obtener_datos_usuario(user, userId);
+    user = await userRepository.obtener_datos_usuario(user, userId);
     MostrarDatosUsuario();
   }
   @override
@@ -79,44 +69,15 @@ class _ProfilePageDesignState extends State<ProfilePageDesign>{
     // TODO: implement initState
 
     super.initState();
-    //SystemChrome.setEnabledSystemUIOverlays([]);
-    //MostrarDatosUsuario();
-    //ciUser.text = user2.ci.toString();
-    //user.firstname.toString();
-    /*
-    setState(() {
-      ci.text = user2.ci.toString();
-      firstName.text = user2.firstname.toString();
-    });
-
-     */
     _initSharedPreferences();
 
     print("Sidebar");
-    //print("entro ${user2.firstsurname.toString()}");
   }
 
   @override
   Widget build(BuildContext context) {
-
-    //ci.text=user2.ci.toString();
-    /*
-    return MaterialApp(
-      title: "Profile",
-      home: ProfilePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-class ProfilePage extends StatelessWidget {
-
-  User user = User();
-  @override
-  Widget build(BuildContext context) {
-    */
+  print("EL Id user es correcot: "+user.userId.toString());
     return Scaffold(
-      //appBar: CustomAppBar(user.firstname.toString(),user.firstsurname.toString(),user.secondsurname.toString(),user.email.toString(),user.birthdate.toString(),ci,firstName),
-      //appBar: CustomAppBar(user),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -397,7 +358,7 @@ class ProfilePage extends StatelessWidget {
                                               SizedBox(height: 9.0),
                                               Container(
                                                 width: 290,
-                                                height: 48,
+                                                //height: 48,
                                                 child: TextField(
                                                   controller: birthDate,
                                                   cursorColor: color1,
@@ -452,6 +413,30 @@ class ProfilePage extends StatelessWidget {
                                                 ],
                                               ),
                                               SizedBox(height: 5.0),
+                                              Container(
+                                                width: 290,
+                                                height: 48,
+                                                child: TextField(
+                                                  controller: number,
+                                                  cursorColor: color1,
+                                                  decoration: InputDecoration(
+                                                    hintText: "Nro Puerta",
+                                                    labelText: "Nro Puerta",
+                                                    labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                    enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                        borderSide: BorderSide(
+                                                            color: color1,
+                                                            width: 2
+                                                        )
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 9.0),
                                               Container(
                                                 width: 290,
                                                 height: 48,
@@ -547,6 +532,61 @@ class ProfilePage extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
+                                              SizedBox(height: 8.0),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text("Datos de Ingreso",style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              Container(
+                                                width: 290,
+                                                height: 48,
+                                                child: TextField(
+                                                  controller: email,
+                                                  cursorColor: color1,
+                                                  decoration: InputDecoration(
+                                                    hintText: "Email",
+                                                    labelText: "Email",
+                                                    labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                    enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                        borderSide: BorderSide(
+                                                            color: color1,
+                                                            width: 2
+                                                        )
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 9.0),
+                                              Container(
+                                                width: 290,
+                                                height: 48,
+                                                child: TextField(
+                                                  controller: password,
+                                                  cursorColor: color1,
+                                                  decoration: InputDecoration(
+                                                    hintText: "Password",
+                                                    labelText: "Password",
+                                                    labelStyle: TextStyle(color: color1, fontSize: 16),
+                                                    enabledBorder: OutlineInputBorder(
+                                                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                        borderSide: BorderSide(
+                                                            color: color1,
+                                                            width: 2
+                                                        )
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -555,8 +595,19 @@ class ProfilePage extends StatelessWidget {
                                         FlatButton(
                                           child: Text("Aceptar", style: TextStyle(color: color1, fontSize: 18),),
                                           onPressed: (){
-                                            Navigator.of(context).pop();
+                                            bool check = Submit();
+                                            if(check){
+                                              userRepository.updateUser(user);
+                                              //Navigator.of(context).pop();
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> UserSideBarLayout()));
+                                              print("Entro al if ");
+                                            }else{
+                                              print("No entro al if ");
+                                            }
+
                                           },
+                                          //onTap: (){
+                                          //},
                                         ),
                                         FlatButton(
                                           child: Text("Cancelar", style: TextStyle(color: Colors.red, fontSize: 18),),
@@ -818,6 +869,29 @@ class ProfilePage extends StatelessWidget {
       ),
 
     );
+  }
+  bool Submit(){
+    bool aux = false;
+    if(ci.text.isNotEmpty && firstName.text.isNotEmpty && firstSurname.text.isNotEmpty && secondSurname.text.isNotEmpty && birthDate.text.isNotEmpty && email.text.isNotEmpty && phone.text.isNotEmpty && street.text.isNotEmpty && zone.text.isNotEmpty && city.text.isNotEmpty && country.text.isNotEmpty){
+    //if(firstName.text.isNotEmpty){
+      aux = true;
+      user.userId;
+      user.ci=ci.text;
+      user.firstname=firstName.text;
+      user.firstsurname=firstSurname.text;
+      user.birthdate=birthDate.text;
+      user.phone=phone.text;
+      user.email=email.text;
+      user.password=password.text;
+      user.number=number.text;
+      user.street=street.text;
+      user.zone=zone.text;
+      user.city=city.text;
+      user.country=country.text;
+    }else{
+      aux = false;
+    }
+    return aux;
   }
 }
 

@@ -119,6 +119,22 @@ class User{
     "city":city,
     "country":country
   };
+  Map toJsonUp() => {
+    "userId":userId,
+    "ci":ci,
+    "firstName": firstname,
+    "firstSurname": firstsurname,
+    "secondSurname": secondsurname,
+    "birthDate":birthdate,
+    "phone": phone,
+    "email": email,
+    "password": password,
+    "number":number,
+    "street":street,
+    "zone":zone,
+    "city":city,
+    "country":country
+  };
 
   User.fromJson(Map<String, dynamic> json){
     ci = json['ci'];
