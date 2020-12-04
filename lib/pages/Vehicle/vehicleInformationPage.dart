@@ -18,6 +18,7 @@ import 'package:transveloz_frontend/repository/singledriver_repository.dart';
 import 'package:transveloz_frontend/repository/travel_id_repository.dart';
 import 'package:transveloz_frontend/repository/travel_repository.dart';
 import 'package:transveloz_frontend/sidebar/usersidebar.dart';
+import 'package:transveloz_frontend/sidebar/usersidebar_layout.dart';
 
 import '../../color.dart';
 class VehicleInformationPage extends StatefulWidget {
@@ -393,7 +394,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                             if(card!=null){
                                               cardRepository.createCard(card);
                                               // Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSideBar()));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSideBarLayout()));
                                             }else{
                                               Navigator.pop(context);
                                             }
@@ -751,7 +752,7 @@ class _VehicleInformationPageState extends State<VehicleInformationPage> {
                                                               // card=Submit();
                                                               if(creationPayment!=null){
                                                                 paymentRepository.createPayment(creationPayment);
-                                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleListPage()));
+                                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSideBarLayout()));
                                                               }else{
                                                                 // Navigator.pop(context);
                                                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>VehicleInformationPage(vehicleId)));
